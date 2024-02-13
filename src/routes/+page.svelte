@@ -1,8 +1,17 @@
+<script>
+    import LyricEditor from "./LyricEditor.svelte"
+    import Saved from "./Saved.svelte"
+</script>
+
 <nav id="navbar">
 </nav>
 <div id="content">
-    <div id="saved"></div>
-    <div id="editor"></div>
+    <div id="saved">
+        <Saved/>
+    </div>
+    <div id="editor">
+        <LyricEditor/>
+    </div>
     <div id="settings"></div>
 </div>
 
@@ -17,7 +26,7 @@
     /* position: fixed; */
     width: 100vw;
     height: 12vh;
-    background-color: red;
+    background-color: pink;
 }
 
 #content {
@@ -31,12 +40,13 @@
     height: 100%;
     width: 20vw;
     background-color: green;
+    position: relative;
 }
 
 #editor {
     background-color: grey;
     height: 100%;
-    width: 60vw;
+    width: 100vw;
 }
 
 #settings {
