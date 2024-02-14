@@ -1,12 +1,13 @@
 <script>
     import LyricEditor from "./LyricEditor.svelte"
     import Saved from "./Saved.svelte"
+    import { savedSongsIsOpen } from "./stores";
 </script>
 
 <nav id="navbar">
 </nav>
 <div id="content">
-    <div id="saved">
+    <div id="saved" style="--loc: {$savedSongsIsOpen ? 0 : -14.5}vw">
         <Saved/>
     </div>
     <div id="editor">
@@ -41,6 +42,8 @@
     width: 20vw;
     background-color: green;
     position: relative;
+    left: var(--loc);
+    transition: left 1s;
 }
 
 #editor {
