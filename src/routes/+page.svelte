@@ -49,6 +49,7 @@
     position: relative;
     left: var(--loc);
     transition: left 1s;
+    border-top-right-radius: 20px;
 }
 
 #editor {
@@ -64,6 +65,7 @@
     position: relative;
     right: var(--loc);
     transition: right 1s;
+    border-top-left-radius: 20px;
 }
 
 </style>
