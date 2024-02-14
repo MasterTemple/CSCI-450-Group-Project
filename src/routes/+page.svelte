@@ -1,7 +1,9 @@
 <script>
     import LyricEditor from "./LyricEditor.svelte"
     import Saved from "./Saved.svelte"
+    import Settings from "./Settings.svelte"
     import { savedSongsIsOpen } from "./stores";
+    import { settingsIsOpen } from "./stores";
 </script>
 
 <nav id="navbar">
@@ -13,7 +15,10 @@
     <div id="editor">
         <LyricEditor/>
     </div>
-    <div id="settings"></div>
+    <div id="settings" style="--loc: {$settingsIsOpen ? 0: -14.5}vw">
+        <Settings/>
+    </div>
+    
 </div>
 
 <style>
@@ -56,6 +61,9 @@
     background-color: blue;
     height: 100%;
     width: 20vw;
+    position: relative;
+    right: var(--loc);
+    transition: right 1s;
 }
 
 </style>
