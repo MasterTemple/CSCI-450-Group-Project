@@ -1,5 +1,7 @@
 <script>
-    import { settingsIsOpen, settingsToggleOption, settingsSelection } from "./stores";
+    import EditorSettings from "./EditorSettings.svelte";
+  import PresentationSettings from "./PresentationSettings.svelte";
+import { settingsIsOpen, settingsToggleOption, settingsSelection } from "./stores";
 
     let icons = ["<", ">"];
     var icon = 1;
@@ -37,6 +39,14 @@
 <div id="editorOrPresentationToggle">
     <button id="editorToggle" on:click={editorToggled} style="--color: {editorColor}">Editor</button>
     <button id="presentationToggle" on:click={presentationToggled} style="--color: {presentationColor}">Presentation</button>
+</div>
+
+<div id="editorSettings" style="--visibility: {$settingsSelection == settingsToggleOption.editor ? "visible" : "hidden"}">
+<EditorSettings/>
+</div>
+
+<div id="presentationSettings" style="--visibility: {$settingsSelection == settingsToggleOption.presentation ? "visible" : "hidden"}">
+<PresentationSettings/>
 </div>
 
 
@@ -79,6 +89,20 @@
     background-color: var(--color);
     border: none;
     height: 50px;
+}
+
+#editorSettings {
+    visibility: var(--visibility);
+    position: absolute;
+    left: 0;
+    top: 100;
+}
+
+#presentationSettings {
+    visibility: var(--visibility);
+    position: absolute;
+    left: 0;
+    top: 100;
 }
 
 
