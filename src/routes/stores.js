@@ -6,3 +6,4 @@ export const lines = writable([]);
 export const numberOfColumns = writable(20);
 
 export const savedSongsIsOpen = writable(true);
+export const settingsIsOpen = writable(true);
