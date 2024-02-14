@@ -10,6 +10,6 @@ export const savedSongsIsOpen = writable(true);
 export const settingsIsOpen = writable(true);
 export const settingsToggleOption = {
     editor: 0,
-    prestentation: 1,
+    presentation: 1,
  };
 export const settingsSelection = writable(settingsToggleOption.editor)

@@ -1,13 +1,31 @@
 <script>
-    import { settingsIsOpen } from "./stores";
+    import { settingsIsOpen, settingsToggleOption, settingsSelection } from "./stores";
 
-    let icons = ["<", ">"]
+    let icons = ["<", ">"];
     var icon = 1;
+
+    let selectedColor = '#ff0000';
+    let nonSelectedColor = '#810000';
+
+    let editorColor = selectedColor;
+    let presentationColor = nonSelectedColor;
+
+    
     function toggleDrawer() {
-        console.log("Toggle Drawer:" + $settingsIsOpen)
-        settingsIsOpen.set(!$settingsIsOpen)        
+        settingsIsOpen.set(!$settingsIsOpen); 
     }
 
+    function editorToggled() {
+        settingsSelection.set(settingsToggleOption.editor)
+        editorColor = selectedColor
+        presentationColor = nonSelectedColor
+    }
+
+    function presentationToggled() {
+        settingsSelection.set(settingsToggleOption.presentation)
+        editorColor = nonSelectedColor
+        presentationColor = selectedColor
+    }
 
 </script>
 
@@ -17,8 +35,8 @@
 </div>
 
 <div id="editorOrPresentationToggle">
-    <button id="editorToggle">Editor</button>
-    <button id="presentationToggle">Presentation</button>
+    <button id="editorToggle" on:click={editorToggled} style="--color: {editorColor}">Editor</button>
+    <button id="presentationToggle" on:click={presentationToggled} style="--color: {presentationColor}">Presentation</button>
 </div>
 
 
@@ -48,7 +66,7 @@
     flex: 1;
     width: 50%;
     position: relative;
-    background-color: red;
+    background-color: var(--color);
     border: none;
     height: 50px;
     border-top-left-radius: 19px;
@@ -58,7 +76,7 @@
     flex: 1;
     position: relative;
     width: 50%;
-    background-color: rgb(129, 0, 0);
+    background-color: var(--color);
     border: none;
     height: 50px;
 }
