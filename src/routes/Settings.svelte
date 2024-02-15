@@ -1,7 +1,7 @@
 <script>
     import EditorSettings from "./EditorSettings.svelte";
-  import PresentationSettings from "./PresentationSettings.svelte";
-import { settingsIsOpen, settingsToggleOption, settingsSelection } from "./stores";
+    import PresentationSettings from "./PresentationSettings.svelte"
+    import { settingsIsOpen, settingsToggleOption, settingsSelection } from "./stores";
 
     let icons = ["<", ">"];
     var icon = 1;
@@ -45,7 +45,7 @@ import { settingsIsOpen, settingsToggleOption, settingsSelection } from "./store
 <EditorSettings/>
 </div>
 
-<div id="presentationSettings" style="--visibility: {$settingsSelection == settingsToggleOption.presentation ? "visible" : "hidden"}">
+<div id="presentationSettingsDiv" style="--visibility: {$settingsSelection == settingsToggleOption.presentation ? "visible" : "hidden"}">
 <PresentationSettings/>
 </div>
 
@@ -98,7 +98,7 @@ import { settingsIsOpen, settingsToggleOption, settingsSelection } from "./store
     top: 100;
 }
 
-#presentationSettings {
+#presentationSettingsDiv {
     visibility: var(--visibility);
     position: absolute;
     left: 0;

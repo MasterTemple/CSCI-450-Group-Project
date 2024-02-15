@@ -13,3 +13,5 @@ export const settingsToggleOption = {
     presentation: 1,
  };
 export const settingsSelection = writable(settingsToggleOption.editor)
+
+export const settings = writable(false);
