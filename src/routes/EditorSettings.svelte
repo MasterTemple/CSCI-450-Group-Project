@@ -1,15 +1,22 @@
 <script>
-
+    
 
 
 </script>
+<div>
+    <div id="colorPicker">
+        <p id="colorPickerText">Hello</p>
+        <input type="color" id="colorPickerBar"/>
 
-<p>Editor settings go here</p>
+    </div>
+</div>
 
 <style>
-
+    #colorPicker{
+       display: flex; 
+       flex-direction: row;
+       align-items: center;
+    }
 
 
 </style>
-
-

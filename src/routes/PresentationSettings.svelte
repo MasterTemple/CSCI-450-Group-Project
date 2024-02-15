@@ -1,30 +1,26 @@
 <script>
 
-    let checked = [false, false, false]
+    let divideEveryNLines = false;
+    let divideEveryNLinesCount = 4;
+    let divideFromSpacing = false;
+    let divideAtMatch = false;
 
-    const checkBoxCliked = function(input) {
-        for (let i = 0; i < checked.length; i++) {
-            i == input ? checked[i] = true : checked[i] = false
-        }
-        console.log(checked)
+    function applySettings() {
+        console.log({divideEveryNLines, divideEveryNLinesCount, divideFromSpacing, divideAtMatch});
+        
     }
-
-    function applyChanges() {
-    
-    }
-
 
 </script>
 
 <div>
-    <input type="checkbox" id="divideEveryCheck" on:click={() => checkBoxCliked(0)} checked={checked[0]}><label>Divide every <input type="text" id="divideEveryLines" name="divideEveryLines" placeholder="n"> lines</label>
+    <input name="presentation-settings" type="radio" id="divideEveryCheck" bind:value={divideEveryNLines}><label>Divide every <input type="number" id="divideEveryLines" name="divideEveryLines" placeholder="n" bind:value={divideEveryNLinesCount}> lines</label>
     <br>
-    <label><input type="checkbox" id="autodetectCheck" on:click={() => checkBoxCliked(1)} checked ={checked[1]}>Autodetect from spacing</label>
+    <label><input name="presentation-settings" type="radio" id="autodetectCheck" bind:value={divideFromSpacing}>Autodetect from spacing</label>
     <br>
-    <input type="checkbox" id="divideAtMatchCheck" on:click={() => checkBoxCliked(2)} checked = {checked[2]}><label>Divide at match: <input type="text" id="divideAtMatch" name="divideAtMatch" placeholder="text"></label>
+    <input name="presentation-settings" type="radio" id="divideAtMatchCheck" bind:value={divideAtMatch}><label>Divide at match: <input type="text" id="divideAtMatch" name="divideAtMatch" placeholder="text"></label>
 </div>
 
-<button id="applyChangesButton" on:click={applyChanges}>Apply Changes</button>
+<button id="applyChangesButton" on:click={applySettings}>Apply Changes</button>
 
 <style>
 
@@ -33,7 +29,7 @@
     background-color: antiquewhite;
     border: none;
     border-radius: 10px;
-    height: 3vw;
+    height: 3vh;
     width: 95%;
     
 }
@@ -47,6 +43,20 @@
     position: relative;
     width: 50%;
     left: 25%;
+}
+
+/* https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp */
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 </style>
