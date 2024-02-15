@@ -1,7 +1,7 @@
 <script>
     import EditorSettings from "./EditorSettings.svelte";
   import PresentationSettings from "./PresentationSettings.svelte";
-import { settingsIsOpen, settingsToggleOption, settingsSelection } from "./stores";
+    import { settingsIsOpen, settingsToggleOption, settingsSelection } from "./stores";
 
     let icons = ["<", ">"];
     var icon = 1;
