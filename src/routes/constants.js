@@ -38,5 +38,5 @@ All glory be to Christ.
 All glory be to Christ our King,
 All glory be to Christ.
 His rule and reign we’ll ever sing,
-All glory be to Christ. Ammmeeeennnnnn!
+All glory be to Christ.
         `
