@@ -19,7 +19,7 @@
         dividerList.set(new Array($lines.length).fill(false));
     }
 
-    const NUMBER_OF_LINES_PER_COLUMN = 12;
+    const NUMBER_OF_LINES_PER_COLUMN = 8;
     function min(a, b) {
         return a > b ? b : a;
     }
@@ -32,29 +32,34 @@
 <div id="lyric-region">
     {#each {length: NUMBER_OF_LINES_PER_COLUMN} as _, i}
         <div id="column-{i}" class="lyric-column">
-        {#each $lines.slice(i*NUMBER_OF_LINES_PER_COLUMN, min((i+1)*NUMBER_OF_LINES_PER_COLUMN), $lines.length) as line, j}
-            <p>{line}</p>
-        <button class="divider" on:click={() => $dividerList[i*NUMBER_OF_LINES_PER_COLUMN+j] = !$dividerList[i*NUMBER_OF_LINES_PER_COLUMN+j]} class:selected={$dividerList[i*NUMBER_OF_LINES_PER_COLUMN+j]}/>
-        {/each}
+            {#each $lines.slice(i*NUMBER_OF_LINES_PER_COLUMN, min((i+1)*NUMBER_OF_LINES_PER_COLUMN), $lines.length) as line, j}
+                <p>{line}</p>
+                <button class="divider"
+                    on:click={() => $dividerList[i*NUMBER_OF_LINES_PER_COLUMN+j] = !$dividerList[i*NUMBER_OF_LINES_PER_COLUMN+j]}
+                    class:selected={$dividerList[i*NUMBER_OF_LINES_PER_COLUMN+j]}
+                />
+            {/each}
         </div>
     {/each}
 </div>
 
 <style>
 #lyric-region {
-    align-items: center;
     display: flex;
     flex-direction: row;
     color: white;
     width: 60rem;
     height: 40rem;
     background-color: black;
+    justify-content: center;
+    align-items: center;
 }
 
 #lyric-column {
     align-items: center;
     display: flex;
     flex-direction: column;
+    align-items: center;
 
 }
 
@@ -63,9 +68,10 @@ p {
 }
 
 .divider {
-    width: 90%;
-    border-top-width: 0.5rem;
-    border-color: red;
+    background-color: red;
+    border: none;
+    height: 0.5rem;
+    width: 70%;
     opacity: 0.4;
     border-radius: 4px;
 }
