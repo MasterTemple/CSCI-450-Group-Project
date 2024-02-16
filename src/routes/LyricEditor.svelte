@@ -3,6 +3,36 @@
     import { EXAMPLE_CONTENTS } from "./constants.js"
     import { rawClipboardContents, lines, numberOfColumns, dividerList } from "./stores.js"
 
+    // TODO: we should let the user set this
+    const MAX_LINE_LENGTH = 12;
+
+    /**
+     * @param {String} str - Check if a line should be split in half
+     * @returns {Boolean}
+     */
+    function shouldSplitLine(str) {
+        return str.length > MAX_LINE_LENGTH;
+    }
+
+    /**
+     * @param {String} str - Split a string into 2 strings as equally as possible
+     * @returns {Array<String>}
+     */
+    function splitLine(str) {
+        const middle = Math.floor(str.length / 2);
+        let offset = 0;
+        while(offset < str.length - middle) {
+            if(str.charAt(middle + offset) == " ") {
+                    return [str.slice(0, middle + offset), str.slice(middle + offset + 1)];
+            }
+            else if(str.charAt(middle - offset) == " ") {
+                    return [str.slice(0, middle + offset), str.slice(middle + offset + 1)];
+            }
+            offset++;
+        }
+        return [str];
+    }
+
     async function readClipboard() {
         // save the clipboard contents
         rawClipboardContents.set(EXAMPLE_CONTENTS)
