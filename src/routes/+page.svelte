@@ -34,7 +34,7 @@
     /* position: fixed; */
     width: 100vw;
     height: 12vh;
-    background-color: pink;
+    /* background-color: pink;      <-- Uncomment to see outline */
 }
 
 #content {
