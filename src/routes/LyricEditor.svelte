@@ -2,6 +2,7 @@
     import { writable } from 'svelte/store';
     import { EXAMPLE_CONTENTS } from "./constants.js"
     import { rawClipboardContents, lines } from "./stores.js"
+    import { color } from './stores.js';
 
     async function readClipboard() {
         // save the clipboard contents
@@ -18,7 +19,7 @@
 
 </script>
     
-<div id="lyric-region">
+<div id="lyric-region" style="--color: {color.darkBlue}">
     <button on:click={readClipboard}>Paste from Clipboard</button>
     <!-- {#each $lines as line} -->
         <div class="lyric-column">
@@ -37,8 +38,9 @@
     color: white;
     width: 60rem;
     height: 40rem;
-    background-color: black;
+    background-color: var(--color);
     margin: 0 auto;
+    border-radius: 10px;
 }
 
 p {
