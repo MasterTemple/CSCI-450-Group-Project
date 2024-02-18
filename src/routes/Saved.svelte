@@ -1,5 +1,6 @@
 <script>
     import { savedSongsIsOpen } from "./stores";
+    import { color } from "./stores";
 
     let icons = [">", "<"]
     var icon = 1;
@@ -11,7 +12,7 @@
 
 
 <div id="drawerDiv">
-    <button id="drawerButton" on:click={toggleDrawer} >{icons[$savedSongsIsOpen ? 1 : 0]}</button>
+    <button id="drawerButton" style="--color: {color.brown}" on:click={toggleDrawer} >{icons[$savedSongsIsOpen ? 1 : 0]}</button>
 </div>
 
 
@@ -20,10 +21,11 @@
     position: absolute;
     bottom: 50%;
     left: 100%;
+    
 }
 
 #drawerButton {
-  background-color: orange; /* Green */
+  background-color: var(--color); /* Green */
   border: none;
   text-align: center;
   font-size: 16px;  
@@ -31,6 +33,7 @@
   height: 75px;
   border-top-right-radius: 10px; 
   border-bottom-right-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 </style>

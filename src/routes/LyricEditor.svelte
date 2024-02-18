@@ -17,8 +17,6 @@
     }
 
 </script>
-
-<h2>Paste Lyrics Here</h2>
     
 <div id="lyric-region">
     <button on:click={readClipboard}>Paste from Clipboard</button>
@@ -40,6 +38,7 @@
     width: 60rem;
     height: 40rem;
     background-color: black;
+    margin: 0 auto;
 }
 
 p {
