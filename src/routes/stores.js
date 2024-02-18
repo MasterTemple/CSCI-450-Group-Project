@@ -15,3 +15,13 @@ export const settingsToggleOption = {
 export const settingsSelection = writable(settingsToggleOption.editor)
 
 export const settings = writable(false);
+
+export const color = {
+    darkBlue: '#1C3845',
+    brown: '#A38560',
+    brownShaddow: '#907554',
+    black: '#000000',
+    white: '#FFFFFF',
+    darkPurple: '#b2b2e6',
+    lightPurple: '#c5c5e6'
+}

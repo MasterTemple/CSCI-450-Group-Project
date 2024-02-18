@@ -31,7 +31,7 @@
     </select>
     <!-- <label> Font Family <input name="editor-settings" type="text" id="fontFamily" bind:value={fontFamily}></label> -->
     <br>
-    <label> Title Slide <input name="editor-settings" type="radio" id="titleSlide" bind:value={titleSlide}></label>
+    <label> Title Slide <input name="editor-settings" type="checkbox" id="titleSlide" bind:value={titleSlide}></label>
     <br>
     <label>Number of Columns <input name="editor-settings" type="number" min="1" max="6" id="numberOfColumns" bind:value={numberOfColumns}></label>
     <br>
