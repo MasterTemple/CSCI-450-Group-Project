@@ -36,6 +36,7 @@
     width: 100vw;
     height: 12vh;
     position: relative;
+    display: flex;
     /* background-color: pink;      <-- Uncomment to see outline */
 }
 
