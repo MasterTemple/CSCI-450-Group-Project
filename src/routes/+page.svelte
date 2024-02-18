@@ -2,11 +2,13 @@
     import LyricEditor from "./LyricEditor.svelte"
     import Saved from "./Saved.svelte"
     import Settings from "./Settings.svelte"
+    import NavBar from "./NavBar.svelte";
     import { savedSongsIsOpen } from "./stores";
     import { settingsIsOpen } from "./stores";
 </script>
 
 <nav id="navbar">
+    <NavBar/>
 </nav>
 <div id="content">
     <div id="saved" style="--loc: {$savedSongsIsOpen ? 0 : -14.5}vw">
