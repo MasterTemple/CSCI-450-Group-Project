@@ -1,5 +1,6 @@
 <script>
-    import { savedSongsIsOpen } from "./stores";
+    import SavedSong from "./SavedSong.svelte";
+import { savedSongsIsOpen } from "./stores";
     import { color } from "./stores";
 
     let icons = [">", "<"]
@@ -13,7 +14,18 @@
 
 <div id="drawerDiv">
     <button id="drawerButton" style="--color: {color.brown}" on:click={toggleDrawer} >{icons[$savedSongsIsOpen ? 1 : 0]}</button>
+
+    
 </div>
+
+<div id = "songs">
+    <input type="text" placeholder="Search.." id="searchBar">
+    <SavedSong/>
+    <SavedSong/>
+    <SavedSong/>
+    <SavedSong/>
+</div>
+
 
 
 <style>
@@ -21,7 +33,6 @@
     position: absolute;
     bottom: 50%;
     left: 100%;
-    
 }
 
 #drawerButton {
@@ -34,6 +45,21 @@
   border-top-right-radius: 10px; 
   border-bottom-right-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#searchBar {
+    border-radius: 10px;
+    border: none;
+    width: 150px;
+    left: 20px;
+    position: relative;
+    top: 10px;
+}
+
+#songs {
+    height: 720px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 </style>
