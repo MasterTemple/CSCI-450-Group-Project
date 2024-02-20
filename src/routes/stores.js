@@ -4,7 +4,7 @@ export const rawClipboardContents = writable("user clipboard");
 export const lines = writable([]);
 export const dividerList = writable([]);
 
-export const numberOfColumns = writable(4);
+export const numberOfColumns = writable(3);
 
 export const savedSongsIsOpen = writable(true);
 
