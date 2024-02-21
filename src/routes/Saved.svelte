@@ -60,6 +60,10 @@ import { savedSongsIsOpen } from "./stores";
     height: 720px;
     overflow-y: scroll;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
 }
 
 </style>

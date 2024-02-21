@@ -63,6 +63,9 @@
     /* background-color: red;       <-- Uncomment to see outline */
     height: 100%;
     width: 100vw;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 #settings {

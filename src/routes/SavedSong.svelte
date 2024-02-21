@@ -1,9 +1,9 @@
 <script>
-
+    import { color } from "./stores";
 </script>
 
 <div>
-    <button id="image"> </button>
+    <button id="image" style="--color: {color.lightPurple}"> </button>
     <p id="songTitle">Song Title</p>
     <p id="dateCreated">Date Created</p>
 </div>
@@ -13,7 +13,7 @@
 <style>
 
 #image {
-    background-color: blue;
+    background-color: var(--color);
     width: 90%;
     height: 120px;
     position: relative;
