@@ -1,5 +1,5 @@
 // TODO: we should let the user set this
-const MAX_LINE_LENGTH = 12;
+const MAX_LINE_LENGTH = 20;
 
 const DIVIDING_CHARACTERS = [..." ,;."];
 
@@ -16,6 +16,8 @@ export function shouldSplitLine(str) {
  * @returns {Array<String>}
  */
 export function splitLine(str) {
+    if(!shouldSplitLine(str))
+        return [str];
     const middle = Math.floor(str.length / 2);
     let offset = 0;
     while(offset < str.length - middle) {
@@ -25,9 +27,22 @@ export function splitLine(str) {
         }
         else if(DIVIDING_CHARACTERS.includes(str.charAt(middle - offset))) {
         // else if(str.charAt(middle - offset) == " ") {
-                return [str.slice(0, middle + offset), str.slice(middle + offset + 1)];
+                return [str.slice(0, middle - offset), str.slice(middle - offset + 1)];
         }
         offset++;
     }
     return [str];
+}
+
+/**
+ * @template T
+ * @param {T[]} arr
+ * @param {T} value
+ * @param {T} index
+ * @returns {T[]}
+ */
+export function insertAtIndex(arr, value, index) {
+	let front = arr.slice(0, index)
+	let back = arr.slice(index)
+	return [...front, value, ...back];
 }
