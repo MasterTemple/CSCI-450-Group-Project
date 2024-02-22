@@ -80,12 +80,13 @@
     }
     let leftMostDisplayColumn = writable(0);
 </script>
-
-<h2>Paste Lyrics Here</h2>
     
 <button on:click={readClipboard}>Paste from Clipboard</button>
-
-<div id="lyric-region">
+<div id="songInformation">
+    <input type="text" placeholder="Song Title" id="songTitle" style="--color: {color.darkBlue}"/>
+    <input type="text" placeholder="Artist" id="songArtist" style="--color: {color.darkBlue}"/>
+</div>
+<div id="lyric-region" style="--color: {color.darkBlue}">
     {#each {length: NUMBER_OF_LINES_PER_COLUMN} as _, i}
         <div
             id="column-{i}"
@@ -138,6 +139,9 @@
     /* flex: 0 0 auto; */
     align-items: center;
     width: 14vw;
+    background-color: var(--color);
+    margin: 0 auto;
+    border-radius: 10px;
 }
 
 p {
@@ -189,4 +193,33 @@ p {
     flex-direction: row;
 }
 
+
+#songInformation {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
+#songTitle {
+    text-align: center;
+    border: none;
+    background-color: var(--color);
+    color: white;
+    border-radius: 5px;
+    font-size: larger;
+}
+
+#songArtist {
+    text-align: center;
+    border: none;
+    background-color: var(--color);
+    color: white;
+    border-radius: 5px;
+    font-size: small;
+}
+
+::placeholder {
+    color: white;
+}
 </style>

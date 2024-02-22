@@ -2,12 +2,13 @@
     import EditorSettings from "./EditorSettings.svelte";
     import PresentationSettings from "./PresentationSettings.svelte"
     import { settingsIsOpen, settingsToggleOption, settingsSelection } from "./stores";
+    import { color } from "./stores";
 
     let icons = ["<", ">"];
     var icon = 1;
 
-    let selectedColor = '#ff0000';
-    let nonSelectedColor = '#810000';
+    let selectedColor = color.darkPurple;
+    let nonSelectedColor = color.lightPurple;
 
     let editorColor = selectedColor;
     let presentationColor = nonSelectedColor;
@@ -33,7 +34,7 @@
 
 
 <div id="drawerDiv">
-    <button id="drawerButton" on:click={toggleDrawer} >{icons[$settingsIsOpen ? 1 : 0]}</button>
+    <button id="drawerButton" style="--color: {color.brown}" on:click={toggleDrawer} >{icons[$settingsIsOpen ? 1 : 0]}</button>
 </div>
 
 <div id="editorOrPresentationToggle">
@@ -58,7 +59,7 @@
 }
 
 #drawerButton {
-  background-color: orange; /* Green */
+  background-color: var(--color); 
   border: none;
   text-align: center;
   font-size: 16px;  
@@ -66,6 +67,7 @@
   height: 75px;
   border-top-left-radius: 10px; 
   border-bottom-left-radius: 10px;
+  box-shadow: 2px 1px 15px #907554
 }
 
 #editorOrPresentationToggle {
