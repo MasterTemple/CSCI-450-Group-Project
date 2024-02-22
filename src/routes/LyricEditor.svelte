@@ -2,7 +2,7 @@
     import { writable } from 'svelte/store';
     import { EXAMPLE_CONTENTS_2 } from "./constants.js"
     import { splitLine } from "./functions.js"
-    import { rawClipboardContents, lines, numberOfColumnsToDisplay, dividerList, breakIndexes } from "./stores.js"
+    import { rawClipboardContents, lines, numberOfColumnsToDisplay, dividerList, breakIndexes, color } from "./stores.js"
     import { onMount } from 'svelte';
 
     onMount(() => {
