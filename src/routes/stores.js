@@ -1,9 +1,11 @@
 import { writable } from 'svelte/store';
 
-export const rawClipboardContents = writable("user clipboard");
+export const rawClipboardContents = writable("");
 export const lines = writable([]);
+export const dividerList = writable([]);
+export const lyricsBySlide = writable([]);
 
-export const numberOfColumns = writable(20);
+export const numberOfColumnsToDisplay = writable(3);
 
 export const savedSongsIsOpen = writable(true);
 
@@ -16,6 +18,13 @@ export const settingsSelection = writable(settingsToggleOption.editor)
 
 export const settings = writable(false);
 
+export const breakIndexes = writable([])
+// export const lyricData = {
+//     rawClipboardContents,
+//     breakIndexes,
+//     lines,
+//     lyricsBySlide,
+// };
 export const color = {
     darkBlue: '#1C3845',
     brown: '#A38560',
