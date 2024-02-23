@@ -93,6 +93,7 @@
 		}
 		// ignore all other input
 		else {
+			lines.set(allLines);
 			return;
 		}
 		// set lines
