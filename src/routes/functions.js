@@ -46,3 +46,31 @@ export function insertAtIndex(arr, value, index) {
 	let back = arr.slice(index)
 	return [...front, value, ...back];
 }
+
+/**
+ * @param {Array<String>} lyricLines
+ * @returns {Array<Array<String>>}
+ */
+export function convertLyricLinesToSlides(lyricLines) {
+    let slides = [];
+    let thisSlide = [];
+    for(let line of lyricLines) {
+        thisSlide.push(line.text);
+        if(line.divider == true) {
+            slides.push(thisSlide);
+            thisSlide = [];
+        }
+    }
+    if(thisSlide.length)
+        slides.push(thisSlide);
+    return slides;
+}
+
+
+export function max(a, b) {
+    return a < b ? b : a;
+}
+
+export function min(a, b) {
+    return a > b ? b : a;
+}
