@@ -23,22 +23,22 @@
                     counter ++
                     $lyricsBySlide[counter] = []
                 }
-                $lyricsBySlide.at(counter).push($lines.at(i))
+                $lyricsBySlide[counter].push($lines[i].text)
             }
+            console.log($lyricsBySlide)
         }
 
         else if (document.getElementById('autodetectCheck').checked) {
             console.log("autodetect")
             var counter = 0;
             $lyricsBySlide = [[]]
-            console.log($dividerList)
             for (i = 0; i < $lines.length; i++) {
-                if ($lines[i] == "") {
+                if ($lines[i].divider) {
                     counter ++
                     $lyricsBySlide[counter] = []
                 }
                 else {
-                    $lyricsBySlide.push($lines[i])
+                    $lyricsBySlide[counter].push($lines[i].text)
                 }
             }
             console.log($lyricsBySlide)
