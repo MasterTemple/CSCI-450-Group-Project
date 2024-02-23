@@ -4,6 +4,7 @@ export const rawClipboardContents = writable("");
 export const lines = writable([]);
 export const dividerList = writable([]);
 export const lyricsBySlide = writable([]);
+export const currentSlideIndex = writable(0);
 
 export const numberOfColumnsToDisplay = writable(3);
 
@@ -11,14 +12,14 @@ export const savedSongsIsOpen = writable(true);
 
 export const settingsIsOpen = writable(true);
 export const settingsToggleOption = {
-    editor: 0,
-    presentation: 1,
- };
-export const settingsSelection = writable(settingsToggleOption.editor)
+	editor: 0,
+	presentation: 1,
+};
+export const settingsSelection = writable(settingsToggleOption.editor);
 
 export const settings = writable(false);
 
-export const breakIndexes = writable([])
+export const breakIndexes = writable([]);
 // export const lyricData = {
 //     rawClipboardContents,
 //     breakIndexes,
@@ -26,11 +27,11 @@ export const breakIndexes = writable([])
 //     lyricsBySlide,
 // };
 export const color = {
-    darkBlue: '#1C3845',
-    brown: '#A38560',
-    brownShaddow: '#907554',
-    black: '#000000',
-    white: '#FFFFFF',
-    darkPurple: '#b2b2e6',
-    lightPurple: '#c5c5e6'
-}
+	darkBlue: '#1C3845',
+	brown: '#A38560',
+	brownShaddow: '#907554',
+	black: '#000000',
+	white: '#FFFFFF',
+	darkPurple: '#b2b2e6',
+	lightPurple: '#c5c5e6'
+};

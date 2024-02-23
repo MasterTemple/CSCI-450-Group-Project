@@ -1,7 +1,34 @@
-// TODO: we should let the user set this
 const MAX_LINE_LENGTH = 20;
 
 const DIVIDING_CHARACTERS = [..." ,;."];
+
+export function saveLyricData(lyricsBySlide) {
+	localStorage.setItem("lyricsBySlide", JSON.stringify(lyricsBySlide));
+}
+
+export function getLyricData() {
+	return JSON.parse(localStorage.getItem("lyricsBySlide"));
+}
+
+export function setWindowFullscreen(window) {
+	var element = window.document.documentElement;
+	// basic
+	if (element.requestFullscreen) {
+		element.requestFullscreen();
+		// firefox
+	}
+	else if (element.mozRequestFullScreen) {
+		element.mozRequestFullScreen();
+	}
+	// chrome, safari, opera
+	else if (element.webkitRequestFullscreen) {
+		element.webkitRequestFullscreen();
+	}
+	// edge lol
+	else if (element.msRequestFullscreen) {
+		element.msRequestFullscreen();
+	}
+}
 
 /**
  * @param {String} str - Check if a line should be split in half
