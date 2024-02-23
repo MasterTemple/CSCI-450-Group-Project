@@ -16,6 +16,15 @@
 		numberOfColumnsToDisplay,
 		rawClipboardContents,
 	} from "./stores.js";
+	import {
+		textColor,
+		backgroundColor,
+		fontSize,
+		fontFamily,
+		titleSlide
+	}from "./stores.js";
+
+
 
 	onMount(() => {
 		rawClipboardContents.set(EXAMPLE_CONTENTS_2);
@@ -183,7 +192,7 @@
 		style="--color: {color.darkBlue}"
 	/>
 </div>
-<div id="lyric-region" style="--color: {color.darkBlue}">
+<div id="lyric-region" style="--color: {$backgroundColor}">
 	{#each { length: NUMBER_OF_LINES_PER_COLUMN } as _, i}
 		<div
 			id="column-{i}"
@@ -192,7 +201,7 @@
 				$leftMostDisplayColumn + $numberOfColumnsToDisplay <= i}
 		>
 			{#each $lines.slice(i * NUMBER_OF_LINES_PER_COLUMN, min((i + 1) * NUMBER_OF_LINES_PER_COLUMN), $lines.length) as line, j}
-				<p class="lyric-text">
+				<p class="lyric-text" style="font-size: {$fontSize}px; font-family: {$fontFamily}; --color: {$textColor}">
 					<!-- {line} -->
 					<textarea
 						type="text"
@@ -203,6 +212,8 @@
 						on:keydown={checkForEnter}
 						value={line.text}
 						rows="2"
+						
+						
 					/>
 					<!-- <textarea name="" id="" rows="1" class="lyric-input" value="{line.text}"/> -->
 					<!-- {#each [...line.text.match(/\S+/g)] as word, i}
@@ -319,6 +330,7 @@
 	.lyric-input {
 		all: unset;
 		height: fit-content;
+		
 	}
 
 	#column-nagivation {
