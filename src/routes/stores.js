@@ -34,3 +34,11 @@ export const color = {
     darkPurple: '#b2b2e6',
     lightPurple: '#c5c5e6'
 }
+
+
+
+export const textColor = writable('#ffffff');
+export const backgroundColor = writable('#000000');
+export const fontSize = writable(12);
+export const fontFamily = writable('Arial');
+export const titleSlide = writable(true);
