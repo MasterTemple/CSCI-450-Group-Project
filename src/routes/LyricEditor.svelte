@@ -51,7 +51,12 @@
 				.split("\n")
 				.map((e) => e.trim());
 			// enter at the end of the line -> empty next line
-			if (lyrics.length == 1) lyrics[1] = "";
+			if (lyrics.length == 1) {
+				lyrics[1] = "";
+				// remove \n from input
+				let el = document.getElementById(`lyric-input-${index}`);
+				el.value = el.value.trim();
+			}
 			// add the new line, with divider value of previous line
 			allLines = insertAtIndex(
 				allLines,
@@ -202,7 +207,7 @@
 							j}
 						on:keydown={checkForEnter}
 						value={line.text}
-						rows="2"
+						rows="1"
 					/>
 					<!-- <textarea name="" id="" rows="1" class="lyric-input" value="{line.text}"/> -->
 					<!-- {#each [...line.text.match(/\S+/g)] as word, i}
