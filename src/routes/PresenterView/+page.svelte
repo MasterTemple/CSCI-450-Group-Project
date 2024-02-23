@@ -8,10 +8,14 @@
 
 	bc.onmessage = (event) => {
 		// console.log(event);
+		currentSlideIndex.set(-1);
+		currentSlideIndex.set(0);
 		if (event.data.msg == "goFullscreen") setWindowFullscreen(window);
 	};
 
 	currentSlideIndex.subscribe((newIndex) => {
+		if ($currentSlideIndex < 0) return;
+		if (!$lyricsBySlide[newIndex]) return;
 		console.log({ lyrics: $lyricsBySlide[newIndex], newIndex });
 		bc.postMessage({
 			msg: "setLyrics",
