@@ -6,6 +6,7 @@
     let titleSlide = false;
     let numberOfColumns = 1;
 
+    //new branch
     //determine if color input is RBG, HEX, HSL
     //currently only works if user sets input to HEX manually
 
