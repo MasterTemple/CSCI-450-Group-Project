@@ -3,7 +3,7 @@ import { writable } from 'svelte/store';
 export const rawClipboardContents = writable("");
 export const lines = writable([]);
 export const dividerList = writable([]);
-export const lyricsBySlide = writable([]);
+export const lyricsBySlide = writable([[]]);
 
 export const numberOfColumnsToDisplay = writable(3);
 
