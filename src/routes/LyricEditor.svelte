@@ -18,7 +18,8 @@
 	} from "./stores.js";
 
 	onMount(() => {
-		readClipboard();
+		rawClipboardContents.set(EXAMPLE_CONTENTS_2);
+		setLyricDataFromClipboard($rawClipboardContents);
 		// YOU MUST WAIT UNTIL IT IS SET
 		lines.subscribe((value) => {
 			lyricsBySlide.set(convertLyricLinesToSlides(value));
@@ -27,7 +28,7 @@
 	});
 
 	async function checkForEnter(input) {
-		console.log({ input });
+		// console.log({ input });
 		// get index of lyric/textarea
 		const index = parseInt(input.target.dataset["lyricLineNumber"]);
 		// get cursor location
@@ -41,7 +42,7 @@
 		let focusIndex = index;
 		let focusCursor = cursor;
 
-		console.log(input.key == "Delete", cursor == input.target.value.length);
+		// console.log(input.key == "Delete", cursor == input.target.value.length);
 		// break into multiple lines as necessary
 		if (input.key == "Enter") {
 			// get contents into list of lines
@@ -150,12 +151,10 @@
 
 	async function readClipboard() {
 		// save the clipboard contents
-		rawClipboardContents.set(EXAMPLE_CONTENTS_2);
+		rawClipboardContents.set(await navigator.clipboard.readText());
 		setLyricDataFromClipboard($rawClipboardContents);
-		// rawClipboardContents = await navigator.clipboard.readText()
 	}
 	// numberOfColumns = Math.floor($lines.length /NUMBER_OF_LINES_PER_COLUMN + 0.99)
-	// console.log({numberOfColumns})
 
 	function divideLine(line) {}
 
