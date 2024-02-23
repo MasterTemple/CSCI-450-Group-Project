@@ -13,13 +13,13 @@
 	function present() {
 		// if user has 1 screen, make the audience view their current screen
 		if (!window.screen.isExtended) {
-			window.open("./PresenterView");
+			window.open("./AudienceView");
 		}
 		// otherwise make the current screen the presenter view & the child window is the audience view
 		else {
 			// open a new window
 			const child = window.open(
-				"AudienceView",
+				"ChildAudienceView",
 				"",
 				"width=720,height=480",
 			);
