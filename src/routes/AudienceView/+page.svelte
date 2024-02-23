@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
 	import { setWindowFullscreen } from "../functions";
 
@@ -21,6 +22,16 @@
 			lyrics.set([...event.data.lyrics]);
 		}
 	};
+
+	// send keys to presenter view
+	onMount(() => {
+		document.addEventListener("keydown", (event) => {
+			if (event.key != "Escape") {
+				event.preventDefault();
+				bc.postMessage({ msg: "sendKey", key: event.key });
+			}
+		});
+	});
 </script>
 
 <h1>audience view!</h1>

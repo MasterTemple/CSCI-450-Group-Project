@@ -8,9 +8,13 @@
 
 	bc.onmessage = (event) => {
 		// console.log(event);
-		currentSlideIndex.set(-1);
-		currentSlideIndex.set(0);
-		if (event.data.msg == "goFullscreen") setWindowFullscreen(window);
+		if (event.data.msg == "goFullscreen") {
+			setWindowFullscreen(window);
+			currentSlideIndex.set(-1);
+			currentSlideIndex.set(0);
+		} else if (event.data.msg == "sendKey") {
+			onKey(event.data.key);
+		}
 	};
 
 	currentSlideIndex.subscribe((newIndex) => {
@@ -23,23 +27,25 @@
 		});
 	});
 
+	function onKey(key) {
+		// right arrow: advance slide
+		if (key == "ArrowRight") {
+			// currentSlideIndex.update((i) => i + 1);
+			currentSlideIndex.set(
+				min($lyricsBySlide.length, $currentSlideIndex + 1),
+			);
+		}
+		// left arrow: retreat slide
+		else if (key == "ArrowLeft") {
+			// currentSlideIndex.update((i) => i - 1);
+			currentSlideIndex.set(max(0, $currentSlideIndex - 1));
+		}
+	}
+
 	onMount(() => {
 		lyricsBySlide.set(getLyricData());
-		document.addEventListener("keydown", (event) => {
-			// console.log({ event });
-			// right arrow: advance slide
-			if (event.key == "ArrowRight") {
-				// currentSlideIndex.update((i) => i + 1);
-				currentSlideIndex.set(
-					min($lyricsBySlide.length, $currentSlideIndex + 1),
-				);
-			}
-			// left arrow: retreat slide
-			else if (event.key == "ArrowLeft") {
-				// currentSlideIndex.update((i) => i - 1);
-				currentSlideIndex.set(max(0, $currentSlideIndex - 1));
-			}
-		});
+
+		document.addEventListener("keydown", (event) => onKey(event.key));
 	});
 </script>
 
