@@ -1,17 +1,15 @@
 <script>
     import { lyricsBySlide } from "./stores";
     import { lines } from "./stores";
+    import { dividerList } from "./stores";
 
     
     let divideEveryNLinesCount = 4
     let divideAtMatchWord = ""
-    
+
     function applySettings() {
 
         if (document.getElementById('divideEveryCheck').checked) {
-            
-            console.log("divide every " + divideEveryNLinesCount)
-
             if (divideEveryNLinesCount > $lines.length || divideEveryNLinesCount < 1) {
                 console.log("ERROR") // TODO: Implement error message
                 return
@@ -19,22 +17,31 @@
 
             var counter = -1
             $lyricsBySlide = [[]]
+
             for (var i = 0; i < $lines.length; i++) {
                 if (i % divideEveryNLinesCount == 0) {
                     counter ++
                     $lyricsBySlide[counter] = []
                 }
                 $lyricsBySlide.at(counter).push($lines.at(i))
-                
             }
-
-            console.log($lyricsBySlide)
-
         }
 
         else if (document.getElementById('autodetectCheck').checked) {
             console.log("autodetect")
-
+            var counter = 0;
+            $lyricsBySlide = [[]]
+            console.log($dividerList)
+            for (i = 0; i < $lines.length; i++) {
+                if ($lines[i] == "") {
+                    counter ++
+                    $lyricsBySlide[counter] = []
+                }
+                else {
+                    $lyricsBySlide.push($lines[i])
+                }
+            }
+            console.log($lyricsBySlide)
         }
 
         else if(document.getElementById('divideAtMatchCheck').checked) {

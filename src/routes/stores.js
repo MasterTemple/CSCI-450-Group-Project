@@ -5,6 +5,7 @@ export const lines = writable([]);
 export const dividerList = writable([]);
 export const lyricsBySlide = writable([[]]);
 
+
 export const numberOfColumnsToDisplay = writable(3);
 
 export const savedSongsIsOpen = writable(true);
