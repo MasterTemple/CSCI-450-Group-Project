@@ -1,43 +1,48 @@
 <script>
+    import { lyricsBySlide } from "./stores";
+    import { lines } from "./stores";
+
+    
     let divideEveryNLinesCount = 4
     let divideAtMatchWord = ""
+    
     function applySettings() {
 
-    if (document.getElementById('divideEveryCheck').checked) {
-        
-        console.log("divide every " + divideEveryNLinesCount)
-
-        if (divideEveryNLinesCount > $lines.length || divideEveryNLinesCount < 1) {
-            console.log("ERROR") // TODO: Implement error message
-            return
-        }
-
-        var counter = -1
-        $lyricsBySlide = [[]]
-        for (var i = 0; i < $lines.length; i++) {
-            if (i % divideEveryNLinesCount == 0) {
-                counter ++
-                $lyricsBySlide[counter] = []
-            }
-            $lyricsBySlide.at(counter).push($lines.at(i))
+        if (document.getElementById('divideEveryCheck').checked) {
             
+            console.log("divide every " + divideEveryNLinesCount)
+
+            if (divideEveryNLinesCount > $lines.length || divideEveryNLinesCount < 1) {
+                console.log("ERROR") // TODO: Implement error message
+                return
+            }
+
+            var counter = -1
+            $lyricsBySlide = [[]]
+            for (var i = 0; i < $lines.length; i++) {
+                if (i % divideEveryNLinesCount == 0) {
+                    counter ++
+                    $lyricsBySlide[counter] = []
+                }
+                $lyricsBySlide.at(counter).push($lines.at(i))
+                
+            }
+
+            console.log($lyricsBySlide)
+
         }
 
-        console.log($lyricsBySlide)
+        else if (document.getElementById('autodetectCheck').checked) {
+            console.log("autodetect")
 
+        }
+
+        else if(document.getElementById('divideAtMatchCheck').checked) {
+            console.log("divide at match " + divideAtMatchWord)
+            
+
+        }
     }
-
-    else if (document.getElementById('autodetectCheck').checked) {
-        console.log("autodetect")
-
-    }
-
-    else if(document.getElementById('divideAtMatchCheck').checked) {
-        console.log("divide at match " + divideAtMatchWord)
-        
-
-    }
-}
 
 </script>
 
