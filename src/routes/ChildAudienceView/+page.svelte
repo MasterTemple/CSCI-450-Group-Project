@@ -49,3 +49,24 @@
 		</div>
 	{/if}
 </div>
+
+<style>
+	#body {
+		overflow: hidden;
+		height: 100vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+	#lyrics {
+		align-items: center;
+		align-content: center;
+		text-align: center;
+		vertical-align: middle;
+	}
+	p {
+		text-align: center;
+		font-size: 4rem;
+	}
+</style>
