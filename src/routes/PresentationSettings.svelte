@@ -46,7 +46,7 @@
 
         else if(document.getElementById('divideAtMatchCheck').checked) {
             console.log("divide at match " + divideAtMatchWord)
-            
+            // TODO: Implement this
 
         }
     }
