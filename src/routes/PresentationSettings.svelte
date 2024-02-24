@@ -1,30 +1,70 @@
 <script>
+    import { lyricsBySlide } from "./stores";
+    import { lines } from "./stores";
+    import { dividerList } from "./stores";
 
-    let divideEveryNLines = false;
-    let divideEveryNLinesCount = 4;
-    let divideFromSpacing = false;
-    let divideAtMatch = false;
+    
+    let divideEveryNLinesCount = 4
+    let divideAtMatchWord = ""
 
     function applySettings() {
-        console.log({divideEveryNLines, divideEveryNLinesCount, divideFromSpacing, divideAtMatch});
-        
+
+        if (document.getElementById('divideEveryCheck').checked) {
+            if (divideEveryNLinesCount > $lines.length || divideEveryNLinesCount < 1) {
+                console.log("ERROR") // TODO: Implement error message
+                return
+            }
+
+            var counter = -1
+            $lyricsBySlide = [[]]
+
+            for (var i = 0; i < $lines.length; i++) {
+                if (i % divideEveryNLinesCount == 0) {
+                    counter ++
+                    $lyricsBySlide[counter] = []
+                }
+                $lyricsBySlide[counter].push($lines[i].text)
+            }
+            console.log($lyricsBySlide)
+        }
+
+        else if (document.getElementById('autodetectCheck').checked) {
+            console.log("autodetect")
+            var counter = 0;
+            $lyricsBySlide = [[]]
+            for (i = 0; i < $lines.length; i++) {
+                if ($lines[i].divider) {
+                    counter ++
+                    $lyricsBySlide[counter] = []
+                }
+                else {
+                    $lyricsBySlide[counter].push($lines[i].text)
+                }
+            }
+            console.log($lyricsBySlide)
+        }
+
+        else if(document.getElementById('divideAtMatchCheck').checked) {
+            console.log("divide at match " + divideAtMatchWord)
+            // TODO: Implement this
+
+        }
     }
 
 </script>
 
 <div>
-    <input name="presentation-settings" type="radio" id="divideEveryCheck" bind:value={divideEveryNLines}><label>Divide every <input type="number" id="divideEveryLines" name="divideEveryLines" placeholder="n" bind:value={divideEveryNLinesCount}> lines</label>
+    <input name="presentation-settings" type="radio" id="divideEveryCheck"><label>Divide every <input type="number" id="divideEveryLines" name="divideEveryLines" placeholder="n" bind:value={divideEveryNLinesCount}> lines</label>
     <br>
-    <label><input name="presentation-settings" type="radio" id="autodetectCheck" bind:value={divideFromSpacing}>Autodetect from spacing</label>
+    <label><input name="presentation-settings" type="radio" id="autodetectCheck">Autodetect from spacing</label>
     <br>
-    <input name="presentation-settings" type="radio" id="divideAtMatchCheck" bind:value={divideAtMatch}><label>Divide at match: <input type="text" id="divideAtMatch" name="divideAtMatch" placeholder="text"></label>
+    <input name="presentation-settings" type="radio" id="divideAtMatchCheck"><label>Divide at match: <input type="text" id="divideAtMatch" name="divideAtMatch" placeholder="text" bind:value={divideAtMatchWord}></label>
 </div>
 
 <button id="applyChangesButton" on:click={applySettings}>Apply Changes</button>
 
 <style>
-
-
+    
 #applyChangesButton {
     background-color: antiquewhite;
     border: none;
