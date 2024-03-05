@@ -41,5 +41,5 @@ export const color = {
 export const textColor = writable('#ffffff');
 export const backgroundColor = writable('#000000');
 export const fontSize = writable(12);
-export const fontFamily = writable('Arial');
+export const fontFamily = writable('arial');
 export const titleSlide = writable(true);

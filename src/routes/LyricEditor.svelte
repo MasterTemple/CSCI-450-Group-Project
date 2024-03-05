@@ -201,7 +201,7 @@
 				$leftMostDisplayColumn + $numberOfColumnsToDisplay <= i}
 		>
 			{#each $lines.slice(i * NUMBER_OF_LINES_PER_COLUMN, min((i + 1) * NUMBER_OF_LINES_PER_COLUMN), $lines.length) as line, j}
-				<p class="lyric-text" style="font-size: {$fontSize}px; font-family: {$fontFamily}; --color: {$textColor}">
+				<p class="lyric-text" style="font-size: {$fontSize}px; font-family: {$fontFamily}; --textColor: {$textColor}">
 					<!-- {line} -->
 					<textarea
 						type="text"
@@ -263,7 +263,7 @@
 		color: white;
 		width: 60rem;
 		height: 40rem;
-		background-color: black;
+		background-color: var(--color);
 		justify-content: center;
 		align-items: center;
 		flex-wrap: nowrap;
@@ -325,6 +325,7 @@
 	.lyric-text {
 		margin: 0;
 		padding: 0;
+		color: var(--textColor);
 	}
 
 	.lyric-input {
