@@ -2,10 +2,16 @@
 	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
 	import { setWindowFullscreen } from "../functions";
+	import {
+		breakIndexes,
+		dividerList,
+		lines,
+		lyricsBySlide,
+		rawClipboardContents,
+	} from "../stores.js";
 
 	const bc = new BroadcastChannel("lyric_of_lyrics");
 	const isReady = writable(false);
-	const lyrics = writable([]);
 
 	function goFullscreen() {
 		// tell presenter screen to go fullscreen
@@ -19,7 +25,7 @@
 	bc.onmessage = (event) => {
 		if (event.data.msg == "setLyrics") {
 			console.log({ data: event.data });
-			lyrics.set([...event.data.lyrics]);
+			lyricsBySlide.set([...event.data.lyrics]);
 		}
 	};
 
@@ -32,6 +38,19 @@
 				bc.postMessage({ msg: "sendKey", key: event.key });
 			}
 		});
+
+		// load data
+		const savedCurrentSong = JSON.parse(
+			localStorage.getItem("currentSong"),
+		);
+
+		if (savedCurrentSong) {
+			rawClipboardContents.set(savedCurrentSong["rawClipboardContents"]);
+			lines.set(savedCurrentSong["lines"]);
+			lyricsBySlide.set(savedCurrentSong["lyricsBySlide"]);
+			breakIndexes.set(savedCurrentSong["breakIndexes"]);
+			dividerList.set(savedCurrentSong["dividerList"]);
+		}
 	});
 </script>
 
@@ -43,7 +62,7 @@
 		>
 	{:else}
 		<div id="lyrics">
-			{#each $lyrics as line}
+			{#each $lyricsBySlide as line}
 				<p>{line}</p>
 			{/each}
 		</div>

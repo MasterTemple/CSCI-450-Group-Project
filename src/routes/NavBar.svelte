@@ -13,7 +13,8 @@
 	function present() {
 		// if user has 1 screen, make the audience view their current screen
 		if (!window.screen.isExtended) {
-			window.open("./AudienceView");
+			// window.open("./AudienceView");
+			window.location.href = "./ChildAudienceView";
 		}
 		// otherwise make the current screen the presenter view & the child window is the audience view
 		else {

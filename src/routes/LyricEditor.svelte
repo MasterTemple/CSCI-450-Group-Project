@@ -11,15 +11,51 @@
 	import {
 		breakIndexes,
 		color,
+		currentSong,
+		dividerList,
 		lines,
 		lyricsBySlide,
-		numberOfColumnsToDisplay,
+		numberOfColumns,
 		rawClipboardContents,
 	} from "./stores.js";
 
+	let workIsUnsaved = false;
+
 	onMount(() => {
-		rawClipboardContents.set(EXAMPLE_CONTENTS_2);
-		setLyricDataFromClipboard($rawClipboardContents);
+		// load value if exists
+		const savedCurrentSong = JSON.parse(
+			localStorage.getItem("currentSong"),
+		);
+
+		if (savedCurrentSong) {
+			console.log({ savedCurrentSong });
+			rawClipboardContents.set(savedCurrentSong["rawClipboardContents"]);
+			lines.set(savedCurrentSong["lines"]);
+			lyricsBySlide.set(savedCurrentSong["lyricsBySlide"]);
+			breakIndexes.set(savedCurrentSong["breakIndexes"]);
+			dividerList.set(savedCurrentSong["dividerList"]);
+		} else {
+			rawClipboardContents.set(EXAMPLE_CONTENTS_2);
+			setLyricDataFromClipboard($rawClipboardContents);
+		}
+
+		// keep track if work needs to be saved
+		currentSong.subscribe((v) => (workIsUnsaved = true));
+
+		// save work if edited every n seconds
+		const N = 1;
+		setInterval(() => {
+			if (workIsUnsaved) {
+				console.log("Saving work");
+				console.log({ $currentSong });
+				localStorage.setItem(
+					"currentSong",
+					JSON.stringify($currentSong),
+				);
+				workIsUnsaved = false;
+			}
+		}, N * 1000);
+
 		// YOU MUST WAIT UNTIL IT IS SET
 		lines.subscribe((value) => {
 			lyricsBySlide.set(convertLyricLinesToSlides(value));
@@ -194,7 +230,7 @@
 			id="column-{i}"
 			class="lyric-column"
 			class:hide={i < $leftMostDisplayColumn ||
-				$leftMostDisplayColumn + $numberOfColumnsToDisplay <= i}
+				$leftMostDisplayColumn + $numberOfColumns <= i}
 		>
 			{#each $lines.slice(i * NUMBER_OF_LINES_PER_COLUMN, min((i + 1) * NUMBER_OF_LINES_PER_COLUMN), $lines.length) as line, j}
 				<p class="lyric-text">
@@ -239,7 +275,7 @@
 		>Left</button
 	>
 	<button
-		disabled={$leftMostDisplayColumn + $numberOfColumnsToDisplay ==
+		disabled={$leftMostDisplayColumn + $numberOfColumns ==
 			Math.floor($lines.length / NUMBER_OF_LINES_PER_COLUMN + 0.99)}
 		on:click={leftMostDisplayColumn.set(
 			min(
