@@ -9,14 +9,18 @@
 		splitLine,
 	} from "./functions.js";
 	import {
+		backgroundColor,
 		breakIndexes,
 		color,
 		currentSong,
 		dividerList,
+		fontFamily,
+		fontSize,
 		lines,
 		lyricsBySlide,
 		numberOfColumns,
 		rawClipboardContents,
+		textColor,
 	} from "./stores.js";
 
 	let workIsUnsaved = false;
