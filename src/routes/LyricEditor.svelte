@@ -298,7 +298,7 @@
 		display: flex;
 		flex-direction: row;
 		color: white;
-		width: 60rem;
+		width: 100%;
 		height: 40rem;
 		background-color: black;
 		justify-content: center;
