@@ -1,9 +1,10 @@
 <script>
 	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
-	import { setWindowFullscreen } from "../functions";
+	import { max, min, setWindowFullscreen } from "../functions";
 	import {
 		breakIndexes,
+		currentSlideIndex,
 		dividerList,
 		lines,
 		lyricsBySlide,
@@ -12,30 +13,62 @@
 
 	const bc = new BroadcastChannel("lyric_of_lyrics");
 	const isReady = writable(false);
+	const lyrics = writable([]);
+
+	currentSlideIndex.subscribe((newIndex) => {
+		if ($currentSlideIndex < 0) return;
+		if (!$lyricsBySlide[newIndex]) return;
+		lyrics.set($lyricsBySlide[newIndex]);
+	});
 
 	function goFullscreen() {
 		// tell presenter screen to go fullscreen
-		bc.postMessage({ msg: "goFullscreen" });
+		// bc.postMessage({ msg: "goFullscreen" });
 		// set this window fullscreen
-		setWindowFullscreen(window);
+		setWindowFullscreen(document);
+		// enterFullscreen();
 		// set this window to the audience view
 		isReady.set(true);
+	}
+
+	function onKey(key) {
+		// right arrow: advance slide
+		if (key == "ArrowRight") {
+			// currentSlideIndex.update((i) => i + 1);
+			currentSlideIndex.set(
+				min($lyricsBySlide.length, $currentSlideIndex + 1),
+			);
+		}
+		// left arrow: retreat slide
+		else if (key == "ArrowLeft") {
+			// currentSlideIndex.update((i) => i - 1);
+			currentSlideIndex.set(max(0, $currentSlideIndex - 1));
+		}
+		// escape: return to lyric editor
+		else if (key == "Escape") {
+			window.location.href = "/";
+		}
 	}
 
 	bc.onmessage = (event) => {
 		if (event.data.msg == "setLyrics") {
 			console.log({ data: event.data });
-			lyricsBySlide.set([...event.data.lyrics]);
+			lyrics.set([...event.data.lyrics]);
 		}
 	};
 
-	const RESERVED_KEYS = ["ArrowRight", "ArrowLeft"];
+	// const unsubscribe = lyricsBySlide.subscribe(() => currentSlideIndex.set(0));
+
+	const RESERVED_KEYS = ["ArrowRight", "ArrowLeft", "Escape"];
 	// send keys to presenter view
 	onMount(() => {
+		// setWindowFullscreen(window);
+		setWindowFullscreen(document);
 		document.addEventListener("keydown", (event) => {
 			if (RESERVED_KEYS.includes(event.key)) {
 				event.preventDefault();
-				bc.postMessage({ msg: "sendKey", key: event.key });
+				// bc.postMessage({ msg: "sendKey", key: event.key });
+				onKey(event.key);
 			}
 		});
 
@@ -47,26 +80,23 @@
 		if (savedCurrentSong) {
 			rawClipboardContents.set(savedCurrentSong["rawClipboardContents"]);
 			lines.set(savedCurrentSong["lines"]);
-			lyricsBySlide.set(savedCurrentSong["lyricsBySlide"]);
 			breakIndexes.set(savedCurrentSong["breakIndexes"]);
 			dividerList.set(savedCurrentSong["dividerList"]);
+			lyricsBySlide.set(savedCurrentSong["lyricsBySlide"]);
 		}
+		// setTimeout(() => currentSlideIndex.set(0), 500);
+		// currentSlideIndex.set(0);
+		currentSlideIndex.set(-1);
+		currentSlideIndex.set(0);
 	});
 </script>
 
 <div id="body">
-	{#if !$isReady}
-		<h1>audience view!</h1>
-		<button on:click={goFullscreen}
-			>click when ready to go fullscreen</button
-		>
-	{:else}
-		<div id="lyrics">
-			{#each $lyricsBySlide as line}
-				<p>{line}</p>
-			{/each}
-		</div>
-	{/if}
+	<div id="lyrics">
+		{#each $lyrics as line}
+			<p>{line}</p>
+		{/each}
+	</div>
 </div>
 
 <style>

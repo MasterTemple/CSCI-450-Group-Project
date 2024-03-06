@@ -9,7 +9,7 @@
 	bc.onmessage = (event) => {
 		// console.log(event);
 		if (event.data.msg == "goFullscreen") {
-			setWindowFullscreen(window);
+			setWindowFullscreen(document);
 			currentSlideIndex.set(-1);
 			currentSlideIndex.set(0);
 		} else if (event.data.msg == "sendKey") {

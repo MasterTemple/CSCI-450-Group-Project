@@ -12,12 +12,13 @@
 
 	const bc = new BroadcastChannel("lyric_of_lyrics");
 	const isReady = writable(false);
+	const lyrics = writable([]);
 
 	function goFullscreen() {
 		// tell presenter screen to go fullscreen
 		bc.postMessage({ msg: "goFullscreen" });
 		// set this window fullscreen
-		setWindowFullscreen(window);
+		setWindowFullscreen(document);
 		// set this window to the audience view
 		isReady.set(true);
 	}
@@ -25,7 +26,7 @@
 	bc.onmessage = (event) => {
 		if (event.data.msg == "setLyrics") {
 			console.log({ data: event.data });
-			lyricsBySlide.set([...event.data.lyrics]);
+			lyrics.set([...event.data.lyrics]);
 		}
 	};
 
@@ -62,7 +63,7 @@
 		>
 	{:else}
 		<div id="lyrics">
-			{#each $lyricsBySlide as line}
+			{#each $lyrics as line}
 				<p>{line}</p>
 			{/each}
 		</div>

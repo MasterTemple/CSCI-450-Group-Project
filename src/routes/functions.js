@@ -10,8 +10,8 @@ export function getLyricData() {
 	return JSON.parse(localStorage.getItem("lyricsBySlide"));
 }
 
-export function setWindowFullscreen(window) {
-	var element = window.document.documentElement;
+export function setWindowFullscreen(document) {
+	var element = document.documentElement;
 	// basic
 	if (element.requestFullscreen) {
 		element.requestFullscreen();

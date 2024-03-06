@@ -1,5 +1,5 @@
 <script>
-	import { saveLyricData } from "./functions";
+	import { saveLyricData, setWindowFullscreen } from "./functions";
 	import { color, lyricsBySlide } from "./stores";
 
 	// onMount(() => {
@@ -14,7 +14,8 @@
 		// if user has 1 screen, make the audience view their current screen
 		if (!window.screen.isExtended) {
 			// window.open("./AudienceView");
-			window.location.href = "./ChildAudienceView";
+			setWindowFullscreen(document);
+			window.location.href = "./AudienceView";
 		}
 		// otherwise make the current screen the presenter view & the child window is the audience view
 		else {
