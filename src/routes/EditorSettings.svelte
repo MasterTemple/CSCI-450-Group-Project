@@ -1,20 +1,18 @@
 <script>
-    import { numberOfColumnsToDisplay } from "./stores";
+	// let textColor;
+	// let backgroundColor;
+	// let fontSize = 12;
+	// let fontFamily = "Arial";
+	// let titleSlide = false;
+	// let numberOfColumns = 1;
 	import {
-		textColor,
 		backgroundColor,
-		fontSize,
 		fontFamily,
-		titleSlide
-	}from "./stores.js";
-
-    
-
-
-    function applySettings() {
-        console.log({textColor, backgroundColor,  fontSize, fontFamily, titleSlide, numberOfColumns});
-    }
-
+		fontSize,
+		includeTitleSlide,
+		numberOfColumns,
+		textColor,
+	} from "./stores";
 
 </script>
 
@@ -43,33 +41,18 @@
     </div>
     
     <div class="editor-settings-items" >
-        <label>Title Slide<input name="editor-settings" type="checkbox" id="titleSlide" bind:value={$titleSlide}></label>
+        <label>Title Slide<input name="editor-settings" type="checkbox" id="titleSlide" bind:value={$includeTitleSlide}></label>
     </div>
 
     
     <div class="editor-settings-items" >
-        <label>Columns <input name="editor-settings" type="number" min="1" max="6" id="numberOfColumns" bind:value={$numberOfColumnsToDisplay}></label>
+        <label>Columns <input name="editor-settings" type="number" min="1" max="6" id="numberOfColumns" bind:value={$numberOfColumns}></label>
     </div>
     
     
-    
 </div>
-
-
-
-
 <style>
 
-
-
-#applyChangesButton {
-    background-color: antiquewhite;
-    border: none;
-    border-radius: 10px;
-    height: 3vh;
-    width: 95%;
-    
-}
 #editor-settings-style{
 
     display: flex;
@@ -98,6 +81,5 @@
 }
 
 
+
 </style>
-
-

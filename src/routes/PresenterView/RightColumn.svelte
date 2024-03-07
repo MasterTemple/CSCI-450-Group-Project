@@ -1,5 +1,5 @@
 <script>
-    
+    import SlidePreview from "./SlidePreview.svelte";
 </script>
 
 <div id="previewStack">
@@ -7,7 +7,7 @@
 
     </div>
     <div id="allSlides">
-
+        <SlidePreview/>
     </div>
 </div>
 
