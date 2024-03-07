@@ -1,22 +1,25 @@
 <script>
-    import { color } from '../stores.js';
+    import { color,
+             lyricsBySlide,
+             backgroundColor } from '../stores.js';
+    import Slides from './Slides.svelte';
 </script>
 
 <div id = "column">
     <div id="row">
-        <button id="slide" style="--color: {color.lightBlue}"></button>
-        <button id="slide" style="--color: {color.lightBlue}"></button>
-        <button id="slide" style="--color: {color.lightBlue}"></button>
+        <Slides/>
+        <Slides/>
+        <Slides/>
     </div>
     <div id="row">
-        <button id="slide" style="--color: {color.lightBlue}"></button>
-        <button id="slide" style="--color: {color.lightBlue}"></button>
-        <button id="slide" style="--color: {color.lightBlue}"></button>
+        <Slides/>
+        <Slides/>
+        <Slides/>
     </div>
     <div id="row">
-        <button id="slide" style="--color: {color.lightBlue}"></button>
-        <button id="slide" style="--color: {color.lightBlue}"></button>
-        <button id="slide" style="--color: {color.lightBlue}"></button>
+        <Slides/>
+        <Slides/>
+        <Slides/>
     </div>
 </div>
 
@@ -24,22 +27,12 @@
     #column {
         display: flex;
         flex-direction: column;
-        padding: 1% 0 1% 0;
+        padding: 10% 0 0 0;
     }
 
     #row {
         display: flex;
         flex-direction: row;
-        padding: auto;
-    }
-
-    #slide {
-        background-color: var(--color);
-        height: 16vh;
-        width: 10vw;
-        border: 3px solid black;
-        border-radius: 3%;
-        padding: auto;
-        margin:auto;
+        padding: 3% 0 3% 0;
     }
 </style>
