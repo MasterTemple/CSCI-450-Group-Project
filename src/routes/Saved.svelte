@@ -10,23 +10,19 @@
         savedSongsIsOpen.set(!$savedSongsIsOpen)        
     }
 
+    function addSong(songToAdd) {
+        
+    }
+
     function searchSongs() {
         let input = document.getElementById('searchBar').value
         input = input.toLowerCase();
         console.log("Input: " + input)
-        let x = document.getElementsByClassName(SavedSong);
-        for (var k in x) {
-            console.log("i: " + k)
-        }
 
-        for (var i = 0; i < x.length; i++) {
-            if (!x[i].innerHTML.toLowerCase().includes(input)) {
-                x[i].style.display = "none";
-            }
-            else {
-                x[i].style.display = "list-item";
-            }
-        }
+        var songElements = document.getElementsByTagName(SavedSong);
+        console.log(songElements.length)
+
+        
         
     }
 </script>
@@ -41,11 +37,12 @@
 <div id = "songs">
     <input type="text" placeholder="Search.." id="searchBar" on:keyup={searchSongs}>
     
-    <ul>
-        <SavedSong/>
-        <SavedSong/>
-        <SavedSong/>
-        <SavedSong/>
+    <ul id="songsList">
+        <SavedSong songName= "All Glory be to Christ" songDate="March 7, 2024"/>
+        <SavedSong songName= "I Thank God" songDate="March 7, 2024"/>
+        <SavedSong songName= "O Come to the Altar" songDate="March 7, 2024"/>
+        <SavedSong songName= "Nothing but the Blood" songDate="March 7, 2024"/>
+
     </ul>
     
 
@@ -90,5 +87,16 @@
     gap: 10px;
    
 }
+
+#songsList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+
 
 </style>

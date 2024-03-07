@@ -1,14 +1,18 @@
 <script>
     import { color } from "./stores";
+
+    export let songName;
+    export let songDate;
 </script>
 
-<!--button id="savedSongButton">
+<button id="savedSongButton">
     <button id="image" style="--color: {color.lightPurple}"> </button>
-    <p id="songTitle">Song Title</p>
-    <p id="dateCreated">Date Created</p>
-</button-->
-
-<button><p>Sample</p></button>
+    <div id="subText">
+        <p id="songTitle">{songName}</p>
+        <p id="dateCreated">{songDate}</p>
+    </div>
+    
+</button>
 
 <style>
 
@@ -19,7 +23,7 @@
 
 #image {
     background-color: var(--color);
-    width: 90%;
+    width: 200px;
     height: 120px;
     position: relative;
     top: 20px;
@@ -36,7 +40,13 @@
 #dateCreated {
     font-size: smaller;
     position: relative;
-    top: 0px;
+    top: -10px;
+}
+
+#subText {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
 }
 
 </style>
