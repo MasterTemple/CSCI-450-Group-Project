@@ -1,3 +1,5 @@
+export const EXAMPLE_SAVED_SONGS = []
+
 export const EXAMPLE_CONTENTS_1 = `
 Verse 1
 Should nothing of our efforts stand, No legacy survive,

@@ -2,6 +2,7 @@
     import SavedSong from "./SavedSong.svelte";
     import { savedSongsIsOpen } from "./stores";
     import { color } from "./stores";
+    import { savedSongs } from "./stores";
 
     let icons = [">", "<"]
     var icon = 1;
@@ -14,15 +15,25 @@
         
     }
 
+    function displaySongs() {
+        
+        const ul = document.getElementById("songsList");
+        console.log("ul before:\n" + ul.outerHTML);
+        //const newSong = document.createElement("SavedSong");
+        const element = document.getElementById("testSong");
+        const addElement = "<p>G<\p>"
+        ul.outerHTML += addElement
+        console.log("ul after:\n" + ul.outerHTML)
+
+    }
+
     function searchSongs() {
+        displaySongs();
         let input = document.getElementById('searchBar').value
         input = input.toLowerCase();
         console.log("Input: " + input)
 
-        var songElements = document.getElementsByTagName(SavedSong);
-        console.log(songElements.length)
-
-        
+        console.log(savedSongs.length)  
         
     }
 </script>
@@ -42,6 +53,8 @@
         <SavedSong songName= "I Thank God" songDate="March 7, 2024"/>
         <SavedSong songName= "O Come to the Altar" songDate="March 7, 2024"/>
         <SavedSong songName= "Nothing but the Blood" songDate="March 7, 2024"/>
+        <SavedSong songName="TEST" songDate="TEST"></SavedSong>
+        <SavedSong id="testSong"/>
 
     </ul>
     

@@ -51,6 +51,9 @@ export const currentSong = derived(
 	}
 );
 
+
+export const savedSongs = [currentSong, currentSong]
+
 // textColor: String
 // backgroundColor: String
 // numberOfColumns: Integer
