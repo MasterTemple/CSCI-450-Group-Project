@@ -12,18 +12,58 @@
     }
 
 
+    // Function to define the element
+    function DefineSavedSong() {
+            
+        } 
+
     function displaySongs() {
-        
 
     }
 
+    let tempSongs = ["All Glory be to Christ", "I Thank God", "O Come to the Altar", "Nothing but the Blood"]
+
     function searchSongs() {
+        class SavedSongElement extends HTMLElement {
+                constructor() {
+                    super();
+                    this.attachShadow({ mode: 'open' });
+                    this.shadowRoot.innerHTML = `
+                    <button id="savedSongButton">
+    <button id="image" style="--color: {color.lightPurple}"> </button>
+    <div id="subText">
+        <p id="songTitle">{songName}</p>
+        <p id="dateCreated">{songDate}</p>
+    </div>
+    
+</button>
+            `;
+                }
+            }
+ 
+            // Use the define() method to define
+            // a new element
+            window.customElements.define(
+                'saved-song-element', SavedSongElement);
+
+
+        
         displaySongs();
         let input = document.getElementById('searchBar').value
         input = input.toLowerCase();
         console.log("Input: " + input)
 
-        console.log(savedSongs.length)  
+        var temp = ""
+        for (const item of tempSongs) {
+            if (item.toLowerCase().includes(input)) {
+                temp += item + ", "
+            }
+        }
+
+        const ss = new SavedSongElement;
+        document.getElementById('songsList').appendChild(ss)
+
+        console.log("The ones included in the search for " + input + ": " + temp);
         
     }
 
@@ -45,8 +85,6 @@
         <SavedSong songName= "I Thank God" songDate="March 7, 2024"/>
         <SavedSong songName= "O Come to the Altar" songDate="March 7, 2024"/>
         <SavedSong songName= "Nothing but the Blood" songDate="March 7, 2024"/>
-        <SavedSong songName="TEST" songDate="TEST"></SavedSong>
-        <SavedSong id="testSong"/>
 
     </ul>
     
