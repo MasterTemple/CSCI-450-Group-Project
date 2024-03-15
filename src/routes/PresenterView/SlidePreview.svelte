@@ -1,22 +1,41 @@
 <script>
-    import { color } from '../stores.js';
+    import { onMount } from 'svelte';
+    import { writable } from 'svelte/store';
+    import { lyricsBySlide,
+             currentSlideIndex } from '../stores.js';
+    import Slides from './Slides.svelte';
+
+    //Need to fix slide preview
+
+    const lyrics = writable([]);
+
+    currentSlideIndex.subscribe((newIndex) => {
+		if ($currentSlideIndex < 0) return;
+		if (!$lyricsBySlide[newIndex]) return;
+		lyrics.set($lyricsBySlide[newIndex]);
+	});
+
+    onMount(() => {
+        currentSlideIndex.set(-1);
+		currentSlideIndex.set(0);
+    });
 </script>
 
 <div id = "column">
     <div id="row">
-        <button id="slide" style="--color: {color.lightBlue}"></button>
-        <button id="slide" style="--color: {color.lightBlue}"></button>
-        <button id="slide" style="--color: {color.lightBlue}"></button>
+        <Slides lyrics={lyrics}/>
+        <Slides />
+        <Slides />
     </div>
     <div id="row">
-        <button id="slide" style="--color: {color.lightBlue}"></button>
-        <button id="slide" style="--color: {color.lightBlue}"></button>
-        <button id="slide" style="--color: {color.lightBlue}"></button>
+        <Slides />
+        <Slides />
+        <Slides />
     </div>
     <div id="row">
-        <button id="slide" style="--color: {color.lightBlue}"></button>
-        <button id="slide" style="--color: {color.lightBlue}"></button>
-        <button id="slide" style="--color: {color.lightBlue}"></button>
+        <Slides/>
+        <Slides/>
+        <Slides/>
     </div>
 </div>
 
@@ -24,22 +43,12 @@
     #column {
         display: flex;
         flex-direction: column;
-        padding: 1% 0 1% 0;
+        padding: 10% 0 0 0;
     }
 
     #row {
         display: flex;
         flex-direction: row;
-        padding: auto;
-    }
-
-    #slide {
-        background-color: var(--color);
-        height: 16vh;
-        width: 10vw;
-        border: 3px solid black;
-        border-radius: 3%;
-        padding: auto;
-        margin:auto;
+        padding: 3% 0 3% 0;
     }
 </style>
