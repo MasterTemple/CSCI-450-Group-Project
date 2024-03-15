@@ -1,11 +1,32 @@
 <script>
+    import { onMount } from 'svelte';
+    import { writable } from 'svelte/store';
     import SlidePreview from "./SlidePreview.svelte";
-    import { backgroundColor } from "../stores";
+    import { backgroundColor,
+             lyricsBySlide,
+             currentSlideIndex } from "../stores";
+    import Slides from "./Slides.svelte";
+
+    const lyrics = writable([]);
+    let nextSlideIndex = writable(0);
+
+    currentSlideIndex.subscribe((newIndex) => {
+		if ($currentSlideIndex < 0) return;
+		if (!$lyricsBySlide[newIndex]) return;
+        nextSlideIndex = newIndex + 1;
+        lyrics.set($lyricsBySlide[nextSlideIndex]);
+	});
+
+    onMount(() => {
+		
+    });
+
+
 </script>
 
 <div id="previewStack">
     <div id="nextSlidePreview" style="background-color: {$backgroundColor}">
-
+        <Slides lyrics = {lyrics}/>
     </div>
     <div id="allSlides">
         <SlidePreview/>
@@ -25,6 +46,6 @@
         height: 30vh;
         width: 30vw;
         background-color: lightblue;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        text-align: center;
     }
 </style>

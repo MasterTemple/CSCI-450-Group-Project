@@ -1,38 +1,30 @@
 <script>
     import { onMount } from 'svelte';
+    import { writable } from 'svelte/store';
+	import { max, min } from "../functions";
     import { color, 
              lyricsBySlide, 
-             titleSlide,
              textColor,
              backgroundColor,
              fontSize,
-             fontFamily 
+             fontFamily,
+             currentSlideIndex,
+             rawClipboardContents,
+             lines,
+             breakIndexes,
+             dividerList
             } from '../stores.js';
+    import Slides from './Slides.svelte';
 
-    function displaySlide(){
-        var lyrics = document.createElement('p');
-        
-        for(let i = 0; i < lyricsBySlide.size(); i++){
-            for(let j = 0; j < lyricsBySlide[i].size(); j++){
-                var lyricsByLine = document.createTextNode(lyricsBySlide[i][j]);
-                lyrics.appendChild(lyricsByLine);
-                document.LeftColumn.appendChild(lyrics);
-            }
-        }
-        console.log(lyrics);
-    }
-
-    function formatTime(minutes, seconds){
-        let formattedMinutes = String(minutes).padStart(2, '0');
-        let formattedSeconds = String(seconds).padStart(2, '0');
-        let formattedTime = "${formattedMinutes}:${formattedSeconds}";
-        return formattedTime;
-    }
+    const bc = new BroadcastChannel("lyric_of_lyrics");
+    const lyrics = writable([]);
+	let slideCounter = writable(0);
     
     function getElapsedTime(){
         var startTime = new Date();
 
-        var updateDisplay = setInterval(function () {
+        //setInterval calls this function every second to update timer
+        var updateTimer = setInterval(function () {
             var currentTime = new Date();
 
             var timeDifference = currentTime - startTime;
@@ -42,25 +34,101 @@
             var minutes = Math.floor(totalSeconds / 60);
             var seconds = Math.floor(totalSeconds % 60);
 
+            //Format time to display as "MM:SS"
+            let formattedMinutes = String(minutes).padStart(2, '0');
+            let formattedSeconds = String(seconds).padStart(2, '0');
+
             var elapsedTimeElement = document.getElementById("elapsedTime");
-            elapsedTimeElement.textContent = "" + formatTime(minutes, seconds) + " Elapsed";
-            console.log("" + formatTime(minutes, seconds) + " Elapsed")
+            elapsedTimeElement.textContent = "" + formattedMinutes + ":" + formattedSeconds + " Elapsed";
         }, 1000)
 
-        return updateDisplay;
+        return updateTimer;
     }
 
+	currentSlideIndex.subscribe((newIndex) => {
+		if ($currentSlideIndex < 0) return;
+		if (!$lyricsBySlide[newIndex]) return;
+		lyrics.set($lyricsBySlide[newIndex]);
+		console.log({ lyrics: $lyricsBySlide[newIndex], newIndex });
+		bc.postMessage({
+			msg: "setLyrics",
+			lyrics: $lyricsBySlide[newIndex],
+		});
+	});
 
+    bc.onmessage = (event) => {
+		if (event.data.msg == "setLyrics") {
+			console.log({ data: event.data });
+			lyrics.set([...event.data.lyrics]);
+		}
+	};
+
+	function onKey(key) {
+		// right arrow: advance slide
+		if (key == "ArrowRight") {
+			// currentSlideIndex.update((i) => i + 1);
+			currentSlideIndex.set(
+				min(lyricsBySlide.length, $currentSlideIndex + 1),
+			);
+		}
+		// left arrow: retreat slide
+		else if (key == "ArrowLeft") {
+			// currentSlideIndex.update((i) => i - 1);
+			currentSlideIndex.set(max(0, $currentSlideIndex - 1));
+		}
+	}
+
+	function slideRight(){
+		currentSlideIndex.set(
+			min($lyricsBySlide.length, $currentSlideIndex + 1)
+		);
+	}
+
+	function slideLeft(){
+		currentSlideIndex.set(max(0, $currentSlideIndex - 1));
+	}
+    
+	const RESERVED_KEYS = ["ArrowRight", "ArrowLeft", "Escape"];
 
     onMount(() => {
+		slideCounter = 0;
+		slideCounter = $lyricsBySlide.length;
+
         //Send user back to editor page when ESC key is pressed 
         window.addEventListener("keyup", function(e){ if(e.key=== 'Escape' || e.keyCode == 27) this.window.location.assign("../");}, false);
+		document.addEventListener("keydown", (event) => {
+			if (RESERVED_KEYS.includes(event.key)) {
+				event.preventDefault();
+				// bc.postMessage({ msg: "sendKey", key: event.key });
+				onKey(event.key);
+			}
+		});
+
+		const rightBtn = document.getElementById("slideRight");
+		rightBtn.addEventListener("click", slideRight);
+		const leftBtn = document.getElementById("slideLeft");
+		leftBtn.addEventListener("click", slideLeft);		
+		
+        //Start timer
         var updateDisplay = getElapsedTime();
+
+        // load data
+		const savedCurrentSong = JSON.parse(
+			localStorage.getItem("currentSong"),
+		);
+
+		if (savedCurrentSong) {
+			rawClipboardContents.set(savedCurrentSong["rawClipboardContents"]);
+			lines.set(savedCurrentSong["lines"]);
+			breakIndexes.set(savedCurrentSong["breakIndexes"]);
+			dividerList.set(savedCurrentSong["dividerList"]);
+			lyricsBySlide.set(savedCurrentSong["lyricsBySlide"]);
+		}
+		// setTimeout(() => currentSlideIndex.set(0), 500);
+		// currentSlideIndex.set(0);
     });
-    setTimeout(() => {
-        
-    }, 10000);
-    
+
+	
 </script>
 
 <div id="button-stack">
@@ -68,7 +136,7 @@
         <button id="backButton" style="--color: {color.darkBlue}">Back</button>
     </a>
 
-    <div id="elapsedTime"/>
+    <div id="elapsedTime" style="--color: {color.black}"/>
 </div>
 <button id="switchSong" style="--color: {color.darkBlue}">Switch Song</button>
 
@@ -83,9 +151,19 @@
 	</div>
 
 
-    <div id="currentSlide" onload="displaySlide()" style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize} ">
-        
+    <div id="currentSlide" style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize} ">
+        <Slides lyrics = {lyrics}/>
     </div>
+
+	<div id="slideControlStack">
+		<button id = "slideLeft">Left</button>
+
+		<div id="slideCounter" style="--color: {color.black}">
+			<p>{$currentSlideIndex+1}/{slideCounter}</p>
+		</div>
+
+		<button id = "slideRight">Right</button>
+	</div>
 </div>
 
 <style>
@@ -97,7 +175,6 @@
         text-align: center;
     }
     #backButton {
-        
         margin: 5px;
         border-radius: 10px;
         height: 50px;
@@ -108,7 +185,7 @@
     }
 
     #elapsedTime {
-        color: black;
+        color: var(--color);
         margin-top: 5px;
     }
 
@@ -172,8 +249,28 @@
         height: 30vw;
         width: 50vw;
         padding: 10px;
-        margin: auto;
         background-color: lightblue;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		overflow: hidden;
         }
+
+	#slideControlStack{
+		display: flex;
+		flex-direction: row;
+		margin: auto;
+		padding: 10px;
+	}
+
+	#slideLeft {
+		padding: 10px;
+		cursor: pointer;
+	}
+
+	#slideRight {
+		padding: 10px;
+		cursor: pointer;
+	}
+
+	#slideCounter {
+		font-size:larger;
+	}
 </style>

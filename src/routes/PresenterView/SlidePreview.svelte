@@ -1,20 +1,34 @@
 <script>
-    import { color,
-             lyricsBySlide,
-             backgroundColor } from '../stores.js';
+    import { onMount } from 'svelte';
+    import { writable } from 'svelte/store';
+    import { lyricsBySlide,
+             currentSlideIndex } from '../stores.js';
     import Slides from './Slides.svelte';
+
+    const lyrics = writable([]);
+
+    currentSlideIndex.subscribe((newIndex) => {
+		if ($currentSlideIndex < 0) return;
+		if (!$lyricsBySlide[newIndex]) return;
+		lyrics.set($lyricsBySlide[newIndex]);
+	});
+
+    onMount(() => {
+        currentSlideIndex.set(-1);
+		currentSlideIndex.set(0);
+    });
 </script>
 
 <div id = "column">
     <div id="row">
-        <Slides/>
-        <Slides/>
-        <Slides/>
+        <Slides lyrics={lyrics}/>
+        <Slides />
+        <Slides />
     </div>
     <div id="row">
-        <Slides/>
-        <Slides/>
-        <Slides/>
+        <Slides />
+        <Slides />
+        <Slides />
     </div>
     <div id="row">
         <Slides/>
