@@ -1,7 +1,11 @@
 <script>
 	import { onMount } from "svelte";
-	import { getLyricData, max, min, setWindowFullscreen } from "../functions";
-	import { currentSlideIndex, lyricsBySlide } from "../stores";
+	import { max, min, setWindowFullscreen } from "../functions";
+	import {
+		currentSlideIndex,
+		lyricsBySlide,
+		setCurrrentSong,
+	} from "../stores";
 	import LeftColumn from "/home/dgmastertemple/Documents/GitHub/CSCI-450-Group-Project/src/routes/PresenterView/LeftColumn.svelte";
 	import RightColumn from "/home/dgmastertemple/Documents/GitHub/CSCI-450-Group-Project/src/routes/PresenterView/RightColumn.svelte";
 	const bc = new BroadcastChannel("lyric_of_lyrics");
@@ -19,7 +23,7 @@
 
 	currentSlideIndex.subscribe((newIndex) => {
 		if ($currentSlideIndex < 0) return;
-		if (!$lyricsBySlide[newIndex]) return;
+		if (!$lyricsBySlide?.[newIndex]) return;
 		console.log({ lyrics: $lyricsBySlide[newIndex], newIndex });
 		bc.postMessage({
 			msg: "setLyrics",
@@ -43,7 +47,23 @@
 	}
 
 	onMount(() => {
-		lyricsBySlide.set(getLyricData());
+		// load data
+		const allLocalSongs = JSON.parse(localStorage.getItem("allSongs"));
+		const currentSongId = JSON.parse(localStorage.getItem("currentSongId"));
+		let savedCurrentSong = allLocalSongs.find(
+			(s) => s.songId == currentSongId,
+		);
+
+		if (savedCurrentSong) {
+			setCurrrentSong(savedCurrentSong);
+			currentSlideIndex.set(-1);
+			currentSlideIndex.set(0);
+		}
+
+		// lyricsBySlide.set(
+		// 	// JSON.parse(localStorage.getItem("currentSong")).slides,
+		// 	JSON.parse(localStorage.getItem("lyricsBySlide")),
+		// );
 
 		document.addEventListener("keydown", (event) => onKey(event.key));
 	});

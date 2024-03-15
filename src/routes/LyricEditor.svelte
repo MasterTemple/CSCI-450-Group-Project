@@ -2,6 +2,7 @@
 	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
 	import { EXAMPLE_CONTENTS_2 } from "./constants.js";
+	import { req } from "./db.js";
 	import {
 		convertLyricLinesToSlides,
 		insertAtIndex,
@@ -9,80 +10,123 @@
 		splitLine,
 	} from "./functions.js";
 	import {
+		allSongs,
+		authToken,
 		author,
 		backgroundColor,
 		breakIndexes,
 		color,
 		currentSong,
-		dividerList,
+		currentSongId,
 		fontFamily,
 		fontSize,
 		lines,
 		lyricsBySlide,
 		numberOfColumns,
 		rawClipboardContents,
+		setCurrrentSong,
 		songId,
 		textColor,
 		title,
+		workIsUnsaved,
 	} from "./stores.js";
 
-	let workIsUnsaved = false;
+	// let workIsUnsaved = false;
 
-	onMount(() => {
-		// load value if exists
-		const savedCurrentSong = JSON.parse(
-			localStorage.getItem("currentSong"),
-		);
+	function createNewSong() {
+		// new id
+		songId.set(new Date().getTime().toString());
+		currentSongId.set($songId);
+		// clear everything
+		title.set("");
+		author.set("");
+		setLyricDataFromClipboard("");
+	}
+
+	// export function setCurrrentSong(loadedSong) {
+	// 	songId.set(loadedSong["songId"] || new Date().getTime().toString());
+	// 	title.set(loadedSong["title"]);
+	// 	author.set(loadedSong["author"]);
+	// 	rawClipboardContents.set(loadedSong["rawClipboardContents"]);
+	// 	lines.set(loadedSong["lines"]);
+	// 	lyricsBySlide.set(loadedSong["lyricsBySlide"]);
+	// 	breakIndexes.set(loadedSong["breakIndexes"]);
+	// 	dividerList.set(loadedSong["dividerList"]);
+	// }
+
+	onMount(async () => {
+		// load cloud storage and sync with local storage
+		currentSongId.set(localStorage.getItem("currentSongId"));
+		currentSongId.subscribe((v) => {
+			localStorage.setItem("currentSongId", v);
+		});
+		const allCloudSongs = await req("load", {}, $authToken);
+		if (allCloudSongs.length > 0) {
+			allCloudSongs.sort((a, b) => b.songId - a.songId);
+			localStorage.setItem("allSongs", JSON.stringify(allCloudSongs));
+			let thisSong = allCloudSongs.find(
+				(s) => s.songId == $currentSongId,
+			);
+			if (!thisSong) thisSong = allCloudSongs[0];
+			localStorage.setItem("currentSong", JSON.stringify(thisSong));
+		}
+		// load local storage
+		let savedCurrentSong = JSON.parse(localStorage.getItem("currentSong"));
+		allSongs.set(JSON.parse(localStorage.getItem("allSongs")) || []);
+		console.log({ $allSongs });
 
 		if (savedCurrentSong) {
-			console.log({ savedCurrentSong });
-			songId.set(savedCurrentSong["songId"]);
-			title.set(savedCurrentSong["title"]);
-			author.set(savedCurrentSong["author"]);
-			rawClipboardContents.set(savedCurrentSong["rawClipboardContents"]);
-			lines.set(savedCurrentSong["lines"]);
-			lyricsBySlide.set(savedCurrentSong["lyricsBySlide"]);
-			breakIndexes.set(savedCurrentSong["breakIndexes"]);
-			dividerList.set(savedCurrentSong["dividerList"]);
+			setCurrrentSong(savedCurrentSong);
 		} else {
 			rawClipboardContents.set(EXAMPLE_CONTENTS_2);
 			setLyricDataFromClipboard($rawClipboardContents);
 		}
 
 		// keep track if work needs to be saved
-		currentSong.subscribe((v) => (workIsUnsaved = true));
+		currentSong.subscribe((v) => workIsUnsaved.set(true));
 
 		// save work if edited every n seconds
 		const N = 1;
 		setInterval(async () => {
-			if (workIsUnsaved) {
-				console.log("Saving work");
-				workIsUnsaved = false;
-				console.log({ $currentSong });
+			if ($workIsUnsaved) {
+				workIsUnsaved.set(false);
 				const data = JSON.stringify($currentSong);
+				if ($lines?.length == 0) return;
 
+				// update current local storage
 				localStorage.setItem("currentSong", data);
 
-				const server = "http://127.0.0.1:5000";
-				const res = await fetch(server + "/test", {
-					method: "POST",
-					body: data,
-					headers: {
-						"Access-Control-Allow-Origin": server,
-						"content-type": "application/json",
-					},
-				});
-				const json = await res.json();
+				// update all songs locally (memory and storage)
+				// allSongs.update((songs) => {
+				// 	const index = songs.findIndex(
+				// 		(s) => s.songId == $currentSongId,
+				// 	);
+				// 	songs[index] = data;
+				// 	localStorage.setItem("allSongs", JSON.stringify(songs));
+				// 	return songs;
+				// });
+
+				// save to server
+				const json = await req("save", $currentSong, $authToken);
 				console.log({ json });
 
-				workIsUnsaved = false;
+				workIsUnsaved.set(false);
 			}
 		}, N * 1000);
+
+		setInterval(async () => {
+			const allCloudSongs = await req("load", {}, $authToken);
+			if (allCloudSongs.length > 0) {
+				allCloudSongs.sort((a, b) => b.songId - a.songId);
+				localStorage.setItem("allSongs", JSON.stringify(allCloudSongs));
+				allSongs.set(allCloudSongs);
+			}
+		}, 1000);
 
 		// YOU MUST WAIT UNTIL IT IS SET
 		lines.subscribe((value) => {
 			lyricsBySlide.set(convertLyricLinesToSlides(value));
-			setTimeout(() => console.log($lyricsBySlide), 100);
+			// setTimeout(() => console.log($lyricsBySlide), 100);
 		});
 	});
 
@@ -312,6 +356,7 @@
 			),
 		)}>Right</button
 	>
+	<button on:click={createNewSong}>Create New Song</button>
 </div>
 
 <style>
@@ -388,6 +433,7 @@
 	.lyric-input {
 		all: unset;
 		height: fit-content;
+		width: 30rem;
 	}
 
 	#column-nagivation {

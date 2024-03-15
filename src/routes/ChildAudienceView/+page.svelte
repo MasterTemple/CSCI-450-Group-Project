@@ -2,13 +2,7 @@
 	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
 	import { setWindowFullscreen } from "../functions";
-	import {
-		breakIndexes,
-		dividerList,
-		lines,
-		lyricsBySlide,
-		rawClipboardContents,
-	} from "../stores.js";
+	import { setCurrrentSong } from "../stores.js";
 
 	const bc = new BroadcastChannel("lyric_of_lyrics");
 	const isReady = writable(false);
@@ -41,16 +35,14 @@
 		});
 
 		// load data
-		const savedCurrentSong = JSON.parse(
-			localStorage.getItem("currentSong"),
+		const allLocalSongs = JSON.parse(localStorage.getItem("allSongs"));
+		const currentSongId = JSON.parse(localStorage.getItem("currentSongId"));
+		let savedCurrentSong = allLocalSongs.find(
+			(s) => s.songId == currentSongId,
 		);
 
 		if (savedCurrentSong) {
-			rawClipboardContents.set(savedCurrentSong["rawClipboardContents"]);
-			lines.set(savedCurrentSong["lines"]);
-			lyricsBySlide.set(savedCurrentSong["lyricsBySlide"]);
-			breakIndexes.set(savedCurrentSong["breakIndexes"]);
-			dividerList.set(savedCurrentSong["dividerList"]);
+			setCurrrentSong(savedCurrentSong);
 		}
 	});
 </script>

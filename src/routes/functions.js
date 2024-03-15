@@ -2,13 +2,13 @@ const MAX_LINE_LENGTH = 20;
 
 const DIVIDING_CHARACTERS = [..." ,;."];
 
-export function saveLyricData(lyricsBySlide) {
-	localStorage.setItem("lyricsBySlide", JSON.stringify(lyricsBySlide));
-}
+// export function saveLyricData(lyricsBySlide) {
+// 	localStorage.setItem("lyricsBySlide", JSON.stringify(lyricsBySlide));
+// }
 
-export function getLyricData() {
-	return JSON.parse(localStorage.getItem("lyricsBySlide"));
-}
+// export function getLyricData() {
+// 	return JSON.parse(localStorage.getItem("lyricsBySlide"));
+// }
 
 export function setWindowFullscreen(document) {
 	var element = document.documentElement;
