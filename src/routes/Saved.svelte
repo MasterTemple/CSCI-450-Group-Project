@@ -11,19 +11,9 @@
         savedSongsIsOpen.set(!$savedSongsIsOpen)        
     }
 
-    function addSong(songToAdd) {
-        
-    }
 
     function displaySongs() {
         
-        const ul = document.getElementById("songsList");
-        console.log("ul before:\n" + ul.outerHTML);
-        //const newSong = document.createElement("SavedSong");
-        const element = document.getElementById("testSong");
-        const addElement = "<p>G<\p>"
-        ul.outerHTML += addElement
-        console.log("ul after:\n" + ul.outerHTML)
 
     }
 
@@ -36,6 +26,8 @@
         console.log(savedSongs.length)  
         
     }
+
+    
 </script>
 
 
