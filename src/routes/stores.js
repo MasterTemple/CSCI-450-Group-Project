@@ -79,4 +79,3 @@ export const currentSettings = derived(
 		includeTitleSlide: $includeTitleSlide,
 	})
 )
-
