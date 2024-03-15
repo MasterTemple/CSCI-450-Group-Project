@@ -1,7 +1,18 @@
 <script>
-    import { lyricsBySlide } from "./stores";
-    import { lines } from "./stores";
-    import { dividerList } from "./stores";
+    import {
+		backgroundColor,
+		breakIndexes,
+		color,
+		currentSong,
+		dividerList,
+		fontFamily,
+		fontSize,
+		lines,
+		lyricsBySlide,
+		numberOfColumns,
+		rawClipboardContents,
+		textColor,
+	} from "./stores.js";
 
     
     let divideEveryNLinesCount = 4
@@ -15,17 +26,25 @@
                 return
             }
 
-            var counter = -1
+            var counter = 0
             $lyricsBySlide = [[]]
 
             for (var i = 0; i < $lines.length; i++) {
-                if (i % divideEveryNLinesCount == 0) {
+                $lines[i].divider=false
+            }
+            for (var i = 0; i < $lines.length; i++) {
+                //console.log("HERE" + $lines[i].divider)
+                console.log("i: " + i + ", divideEveryN: " + divideEveryNLinesCount+ "is it 0? " + ((i+1) % divideEveryNLinesCount));
+                if (((i+1) % divideEveryNLinesCount == 0) && i+1 >= divideEveryNLinesCount) {
                     counter ++
+                    $lines[i].divider = true
                     $lyricsBySlide[counter] = []
-                }
+                } else {
+                    $lines[i].divider=false
+               }
                 $lyricsBySlide[counter].push($lines[i].text)
             }
-            console.log($lyricsBySlide)
+            
         }
 
         else if (document.getElementById('autodetectCheck').checked) {
@@ -41,7 +60,7 @@
                     $lyricsBySlide[counter].push($lines[i].text)
                 }
             }
-            console.log($lyricsBySlide)
+            console.log($currentSong.PresentationSettings.lyricsBySlide)
         }
 
         else if(document.getElementById('divideAtMatchCheck').checked) {
