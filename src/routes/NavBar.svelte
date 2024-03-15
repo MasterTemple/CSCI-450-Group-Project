@@ -1,5 +1,5 @@
 <script>
-	import { saveLyricData, setWindowFullscreen } from "./functions";
+	import { setWindowFullscreen } from "./functions";
 	import { color, lyricsBySlide } from "./stores";
 	import { onMount } from 'svelte';
 
@@ -53,7 +53,10 @@
 			// window.open("PresenterView");
 			// window.location.href += "PresenterView";
 			// document.getElementById("presenterViewLink").click();
-			saveLyricData($lyricsBySlide);
+			localStorage.setItem(
+				"lyricsBySlide",
+				JSON.stringify($lyricsBySlide),
+			);
 			window.location.href = "/PresenterView";
 		}
 	}

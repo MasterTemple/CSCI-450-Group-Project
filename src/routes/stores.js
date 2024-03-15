@@ -6,6 +6,10 @@ export const dividerList = writable([]);
 export const lyricsBySlide = writable([]);
 export const currentSlideIndex = writable(0);
 
+export const songId = writable((new Date()).getTime().toString());
+export const title = writable("");
+export const author = writable("");
+
 export const numberOfColumnsToDisplay = writable(3);
 
 export const savedSongsIsOpen = writable(true);
@@ -37,19 +41,19 @@ export const color = {
 };
 
 
-export const currentSong = derived(
-	[rawClipboardContents, lines, lyricsBySlide, breakIndexes, dividerList],
-	([$rawClipboardContents, $lines, $lyricsBySlide, $breakIndexes, $dividerList]) => ({
-		rawClipboardContents: $rawClipboardContents,
-		lines: $lines,
-		dividerList: $dividerList,
-		lyricsBySlide: $lyricsBySlide,
-		breakIndexes: $breakIndexes,
-	}),
-	{
+// export const currentSong = derived(
+// 	[rawClipboardContents, lines, lyricsBySlide, breakIndexes, dividerList],
+// 	([$rawClipboardContents, $lines, $lyricsBySlide, $breakIndexes, $dividerList]) => ({
+// 		rawClipboardContents: $rawClipboardContents,
+// 		lines: $lines,
+// 		dividerList: $dividerList,
+// 		lyricsBySlide: $lyricsBySlide,
+// 		breakIndexes: $breakIndexes,
+// 	}),
+// 	{
 
-	}
-);
+// 	}
+// );
 
 // textColor: String
 // backgroundColor: String
@@ -75,4 +79,62 @@ export const currentSettings = derived(
 		fontFamily: $fontFamily,
 		includeTitleSlide: $includeTitleSlide,
 	})
-)
+);
+
+
+// export const currentSong = derived(
+// 	[rawClipboardContents, lines, lyricsBySlide, breakIndexes, currentSettings, title, author],
+// 	([$rawClipboardContents, $lines, $lyricsBySlide, $breakIndexes, $currentSettings, $title, $author]) => ({
+// 		raw_lines: $rawClipboardContents,
+// 		title: $title,
+// 		author: $author,
+// 		break_indexes: $breakIndexes,
+// 		lines: $lines,
+// 		slides: $lyricsBySlide,
+// 		settings: $currentSettings
+// 	}),
+// 	{
+// 	}
+// );
+
+export const emailAddress = writable("blake.scampone@biola.edu");
+export const authToken = writable("1de016b1-51ce-42e5-8ce2-934dec2105e4");
+
+export const currentSong = derived(
+	[rawClipboardContents, lines, lyricsBySlide, breakIndexes, currentSettings, title, author, songId, emailAddress, dividerList],
+	([$rawClipboardContents, $lines, $lyricsBySlide, $breakIndexes, $currentSettings, $title, $author, $songId, $emailAddress, $dividerList]) => ({
+		songId: $songId,
+		emailAddress: $emailAddress,
+		rawClipboardContents: $rawClipboardContents,
+		title: $title,
+		author: $author,
+		breakIndexes: $breakIndexes,
+		lines: $lines,
+		slides: $lyricsBySlide,
+		settings: $currentSettings,
+		dividerList: $dividerList,
+	}),
+	{
+	}
+);
+
+export const allSongs = writable([]);
+export const workIsUnsaved = writable(false);
+
+export function setCurrrentSong(loadedSong) {
+	songId.set(loadedSong["songId"] || new Date().getTime().toString());
+	emailAddress.set(loadedSong["emailAddress"]);
+	rawClipboardContents.set(loadedSong["rawClipboardContents"]);
+	title.set(loadedSong["title"]);
+	author.set(loadedSong["author"]);
+	breakIndexes.set(loadedSong["breakIndexes"]);
+	lines.set(loadedSong["lines"]);
+	lyricsBySlide.set(loadedSong["slides"]);
+	dividerList.set(loadedSong["dividerList"]);
+}
+
+export const currentSongId = writable("");
+
+export function deleteSongFromLocalList(songId) {
+	allSongs.update((songs) => songs.filter((s) => s.songId !== songId));
+}
