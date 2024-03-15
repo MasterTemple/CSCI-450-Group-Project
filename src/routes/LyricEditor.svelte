@@ -9,6 +9,7 @@
 		splitLine,
 	} from "./functions.js";
 	import {
+		author,
 		backgroundColor,
 		breakIndexes,
 		color,
@@ -20,7 +21,9 @@
 		lyricsBySlide,
 		numberOfColumns,
 		rawClipboardContents,
+		songId,
 		textColor,
+		title,
 	} from "./stores.js";
 
 	let workIsUnsaved = false;
@@ -33,6 +36,9 @@
 
 		if (savedCurrentSong) {
 			console.log({ savedCurrentSong });
+			songId.set(savedCurrentSong["songId"]);
+			title.set(savedCurrentSong["title"]);
+			author.set(savedCurrentSong["author"]);
 			rawClipboardContents.set(savedCurrentSong["rawClipboardContents"]);
 			lines.set(savedCurrentSong["lines"]);
 			lyricsBySlide.set(savedCurrentSong["lyricsBySlide"]);
@@ -48,14 +54,27 @@
 
 		// save work if edited every n seconds
 		const N = 1;
-		setInterval(() => {
+		setInterval(async () => {
 			if (workIsUnsaved) {
 				console.log("Saving work");
+				workIsUnsaved = false;
 				console.log({ $currentSong });
-				localStorage.setItem(
-					"currentSong",
-					JSON.stringify($currentSong),
-				);
+				const data = JSON.stringify($currentSong);
+
+				localStorage.setItem("currentSong", data);
+
+				const server = "http://127.0.0.1:5000";
+				const res = await fetch(server + "/test", {
+					method: "POST",
+					body: data,
+					headers: {
+						"Access-Control-Allow-Origin": server,
+						"content-type": "application/json",
+					},
+				});
+				const json = await res.json();
+				console.log({ json });
+
 				workIsUnsaved = false;
 			}
 		}, N * 1000);
@@ -220,12 +239,14 @@
 		placeholder="Song Title"
 		id="songTitle"
 		style="--color: {color.darkBlue}"
+		bind:value={$title}
 	/>
 	<input
 		type="text"
 		placeholder="Artist"
 		id="songArtist"
 		style="--color: {color.darkBlue}"
+		bind:value={$author}
 	/>
 </div>
 <div id="lyric-region" style="--color: {$backgroundColor}">
@@ -237,8 +258,10 @@
 				$leftMostDisplayColumn + $numberOfColumns <= i}
 		>
 			{#each $lines.slice(i * NUMBER_OF_LINES_PER_COLUMN, min((i + 1) * NUMBER_OF_LINES_PER_COLUMN), $lines.length) as line, j}
-				<p class="lyric-text" style="font-size: {$fontSize}px; font-family: {$fontFamily}; --textColor: {$textColor}">
-
+				<p
+					class="lyric-text"
+					style="font-size: {$fontSize}px; font-family: {$fontFamily}; --color: {$textColor}"
+				>
 					<!-- {line} -->
 					<textarea
 						type="text"
@@ -298,7 +321,7 @@
 		color: white;
 		width: 100%;
 		height: 40rem;
-		background-color: var(--color);
+		background-color: black;
 		justify-content: center;
 		align-items: center;
 		flex-wrap: nowrap;
@@ -360,7 +383,6 @@
 	.lyric-text {
 		margin: 0;
 		padding: 0;
-		color: var(--textColor);
 	}
 
 	.lyric-input {
@@ -399,6 +421,6 @@
 	}
 
 	::placeholder {
-		color: white;
+		color: grey;
 	}
 </style>
