@@ -22,7 +22,7 @@
 
         if (document.getElementById('divideEveryCheck').checked) {
             if (divideEveryNLinesCount > $lines.length || divideEveryNLinesCount < 1) {
-                console.log("ERROR") // TODO: Implement error message
+                // TODO: Implement error message
                 return
             }
 
@@ -30,11 +30,6 @@
             $lyricsBySlide = [[]]
 
             for (var i = 0; i < $lines.length; i++) {
-                $lines[i].divider=false
-            }
-            for (var i = 0; i < $lines.length; i++) {
-                //console.log("HERE" + $lines[i].divider)
-                console.log("i: " + i + ", divideEveryN: " + divideEveryNLinesCount+ "is it 0? " + ((i+1) % divideEveryNLinesCount));
                 if (((i+1) % divideEveryNLinesCount == 0) && i+1 >= divideEveryNLinesCount) {
                     counter ++
                     $lines[i].divider = true
@@ -44,13 +39,12 @@
                }
                 $lyricsBySlide[counter].push($lines[i].text)
             }
-            
         }
 
         else if (document.getElementById('autodetectCheck').checked) {
-            console.log("autodetect")
             var counter = 0;
             $lyricsBySlide = [[]]
+            // WHAT DOES THIS EVEN DO??
             for (i = 0; i < $lines.length; i++) {
                 if ($lines[i].divider) {
                     counter ++
@@ -60,12 +54,23 @@
                     $lyricsBySlide[counter].push($lines[i].text)
                 }
             }
-            console.log($currentSong.PresentationSettings.lyricsBySlide)
         }
 
         else if(document.getElementById('divideAtMatchCheck').checked) {
-            console.log("divide at match " + divideAtMatchWord)
-            // TODO: Implement this
+            counter = 0
+            if (divideAtMatchWord == "") {
+                return; //TODO: Implement error
+            }
+            for (var i = 0; i < $lines.length; i++) {
+                if ($lines[i].text.toLowerCase().includes(divideAtMatchWord.toLowerCase())) {
+                    counter ++
+                    $lines[i].divider = true
+                    $lyricsBySlide[counter] = []
+                } else {
+                    $lines[i].divider=false
+               }
+                $lyricsBySlide[counter].push($lines[i].text)
+            }
 
         }
     }
