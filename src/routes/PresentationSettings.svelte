@@ -1,7 +1,18 @@
 <script>
-    import { lyricsBySlide } from "./stores";
-    import { lines } from "./stores";
-    import { dividerList } from "./stores";
+    import {
+		backgroundColor,
+		breakIndexes,
+		color,
+		currentSong,
+		dividerList,
+		fontFamily,
+		fontSize,
+		lines,
+		lyricsBySlide,
+		numberOfColumns,
+		rawClipboardContents,
+		textColor,
+	} from "./stores.js";
 
     
     let divideEveryNLinesCount = 4
@@ -11,27 +22,29 @@
 
         if (document.getElementById('divideEveryCheck').checked) {
             if (divideEveryNLinesCount > $lines.length || divideEveryNLinesCount < 1) {
-                console.log("ERROR") // TODO: Implement error message
+                // TODO: Implement error message
                 return
             }
 
-            var counter = -1
+            var counter = 0
             $lyricsBySlide = [[]]
 
             for (var i = 0; i < $lines.length; i++) {
-                if (i % divideEveryNLinesCount == 0) {
+                if (((i+1) % divideEveryNLinesCount == 0) && i+1 >= divideEveryNLinesCount) {
                     counter ++
+                    $lines[i].divider = true
                     $lyricsBySlide[counter] = []
-                }
+                } else {
+                    $lines[i].divider=false
+               }
                 $lyricsBySlide[counter].push($lines[i].text)
             }
-            console.log($lyricsBySlide)
         }
 
         else if (document.getElementById('autodetectCheck').checked) {
-            console.log("autodetect")
             var counter = 0;
             $lyricsBySlide = [[]]
+            // WHAT DOES THIS EVEN DO??
             for (i = 0; i < $lines.length; i++) {
                 if ($lines[i].divider) {
                     counter ++
@@ -41,12 +54,23 @@
                     $lyricsBySlide[counter].push($lines[i].text)
                 }
             }
-            console.log($lyricsBySlide)
         }
 
         else if(document.getElementById('divideAtMatchCheck').checked) {
-            console.log("divide at match " + divideAtMatchWord)
-            // TODO: Implement this
+            counter = 0
+            if (divideAtMatchWord == "") {
+                return; //TODO: Implement error
+            }
+            for (var i = 0; i < $lines.length; i++) {
+                if ($lines[i].text.toLowerCase().includes(divideAtMatchWord.toLowerCase())) {
+                    counter ++
+                    $lines[i].divider = true
+                    $lyricsBySlide[counter] = []
+                } else {
+                    $lines[i].divider=false
+               }
+                $lyricsBySlide[counter].push($lines[i].text)
+            }
 
         }
     }
