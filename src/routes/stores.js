@@ -6,6 +6,10 @@ export const dividerList = writable([]);
 export const lyricsBySlide = writable([]);
 export const currentSlideIndex = writable(0);
 
+export const songId = writable((new Date()).getTime().toString());
+export const title = writable("");
+export const author = writable("");
+
 export const numberOfColumnsToDisplay = writable(3);
 
 export const savedSongsIsOpen = writable(true);
@@ -37,19 +41,19 @@ export const color = {
 };
 
 
-export const currentSong = derived(
-	[rawClipboardContents, lines, lyricsBySlide, breakIndexes, dividerList],
-	([$rawClipboardContents, $lines, $lyricsBySlide, $breakIndexes, $dividerList]) => ({
-		rawClipboardContents: $rawClipboardContents,
-		lines: $lines,
-		dividerList: $dividerList,
-		lyricsBySlide: $lyricsBySlide,
-		breakIndexes: $breakIndexes,
-	}),
-	{
+// export const currentSong = derived(
+// 	[rawClipboardContents, lines, lyricsBySlide, breakIndexes, dividerList],
+// 	([$rawClipboardContents, $lines, $lyricsBySlide, $breakIndexes, $dividerList]) => ({
+// 		rawClipboardContents: $rawClipboardContents,
+// 		lines: $lines,
+// 		dividerList: $dividerList,
+// 		lyricsBySlide: $lyricsBySlide,
+// 		breakIndexes: $breakIndexes,
+// 	}),
+// 	{
 
-	}
-);
+// 	}
+// );
 
 // textColor: String
 // backgroundColor: String
@@ -75,4 +79,37 @@ export const currentSettings = derived(
 		fontFamily: $fontFamily,
 		includeTitleSlide: $includeTitleSlide,
 	})
-)
+);
+
+
+// export const currentSong = derived(
+// 	[rawClipboardContents, lines, lyricsBySlide, breakIndexes, currentSettings, title, author],
+// 	([$rawClipboardContents, $lines, $lyricsBySlide, $breakIndexes, $currentSettings, $title, $author]) => ({
+// 		raw_lines: $rawClipboardContents,
+// 		title: $title,
+// 		author: $author,
+// 		break_indexes: $breakIndexes,
+// 		lines: $lines,
+// 		slides: $lyricsBySlide,
+// 		settings: $currentSettings
+// 	}),
+// 	{
+// 	}
+// );
+
+export const currentSong = derived(
+	[rawClipboardContents, lines, lyricsBySlide, breakIndexes, currentSettings, title, author, songId],
+	([$rawClipboardContents, $lines, $lyricsBySlide, $breakIndexes, $currentSettings, $title, $author, $songId]) => ({
+		songId: $songId,
+		userId: "test@email.com",
+		rawClipboardContents: $rawClipboardContents,
+		title: $title,
+		author: $author,
+		breakIndexes: $breakIndexes,
+		lines: $lines,
+		slides: $lyricsBySlide,
+		settings: $currentSettings
+	}),
+	{
+	}
+);
