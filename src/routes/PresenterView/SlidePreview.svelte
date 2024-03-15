@@ -5,6 +5,8 @@
              currentSlideIndex } from '../stores.js';
     import Slides from './Slides.svelte';
 
+    //Need to fix slide preview
+
     const lyrics = writable([]);
 
     currentSlideIndex.subscribe((newIndex) => {

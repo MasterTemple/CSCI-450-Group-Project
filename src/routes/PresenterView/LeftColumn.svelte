@@ -18,7 +18,9 @@
 
     const bc = new BroadcastChannel("lyric_of_lyrics");
     const lyrics = writable([]);
-	let slideCounter = writable(0);
+
+	//Need to fix bug. Works when you change this value after page loads
+	let slideCounter = 0;
     
     function getElapsedTime(){
         var startTime = new Date();
@@ -63,6 +65,7 @@
 		}
 	};
 
+	//Also need to fix interaction with arrow keys
 	function onKey(key) {
 		// right arrow: advance slide
 		if (key == "ArrowRight") {
