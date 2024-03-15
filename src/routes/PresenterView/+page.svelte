@@ -6,8 +6,10 @@
 		lyricsBySlide,
 		setCurrrentSong,
 	} from "../stores";
-	import LeftColumn from "/home/dgmastertemple/Documents/GitHub/CSCI-450-Group-Project/src/routes/PresenterView/LeftColumn.svelte";
-	import RightColumn from "/home/dgmastertemple/Documents/GitHub/CSCI-450-Group-Project/src/routes/PresenterView/RightColumn.svelte";
+
+	import LeftColumn from "./LeftColumn.svelte";
+	import RightColumn from "./RightColumn.svelte";
+
 	const bc = new BroadcastChannel("lyric_of_lyrics");
 
 	bc.onmessage = (event) => {
@@ -65,8 +67,8 @@
 		// 	JSON.parse(localStorage.getItem("lyricsBySlide")),
 		// );
 
-		document.addEventListener("keydown", (event) => onKey(event.key));
 	});
+
 </script>
 
 <div id="row">
