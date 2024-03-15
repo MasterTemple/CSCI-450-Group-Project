@@ -101,8 +101,8 @@ export const emailAddress = writable("blake.scampone@biola.edu");
 export const authToken = writable("1de016b1-51ce-42e5-8ce2-934dec2105e4");
 
 export const currentSong = derived(
-	[rawClipboardContents, lines, lyricsBySlide, breakIndexes, currentSettings, title, author, songId, emailAddress],
-	([$rawClipboardContents, $lines, $lyricsBySlide, $breakIndexes, $currentSettings, $title, $author, $songId, $emailAddress]) => ({
+	[rawClipboardContents, lines, lyricsBySlide, breakIndexes, currentSettings, title, author, songId, emailAddress, dividerList],
+	([$rawClipboardContents, $lines, $lyricsBySlide, $breakIndexes, $currentSettings, $title, $author, $songId, $emailAddress, $dividerList]) => ({
 		songId: $songId,
 		emailAddress: $emailAddress,
 		rawClipboardContents: $rawClipboardContents,
@@ -111,7 +111,8 @@ export const currentSong = derived(
 		breakIndexes: $breakIndexes,
 		lines: $lines,
 		slides: $lyricsBySlide,
-		settings: $currentSettings
+		settings: $currentSettings,
+		dividerList: $dividerList,
 	}),
 	{
 	}
@@ -122,12 +123,13 @@ export const workIsUnsaved = writable(false);
 
 export function setCurrrentSong(loadedSong) {
 	songId.set(loadedSong["songId"] || new Date().getTime().toString());
+	emailAddress.set(loadedSong["emailAddress"]);
+	rawClipboardContents.set(loadedSong["rawClipboardContents"]);
 	title.set(loadedSong["title"]);
 	author.set(loadedSong["author"]);
-	rawClipboardContents.set(loadedSong["rawClipboardContents"]);
+	breakIndexes.set(loadedSong["breakIndexes"]);
 	lines.set(loadedSong["lines"]);
 	lyricsBySlide.set(loadedSong["slides"]);
-	breakIndexes.set(loadedSong["breakIndexes"]);
 	dividerList.set(loadedSong["dividerList"]);
 }
 
