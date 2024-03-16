@@ -1,10 +1,25 @@
 # CSCI-450-Group-Project
 
-## Installation
+Front-end server for https://github.com/MasterTemple/CSCI-450-Group-Project-Backend
+
+# Setup
+
+## Install Node.js
+
+Download [here](https://nodejs.org/en/download).
+
+## Install NPM Packages
+
+```sh
+npm install
+```
+
+## Setup Back-end Server
+
+Follow the [setup](https://github.com/MasterTemple/CSCI-450-Group-Project-Backend?tab=readme-ov-file#setup) instructions for the [Back-end server](https://github.com/MasterTemple/CSCI-450-Group-Project-Backend).
+
+## Run Server and Open in a Browser
 
 ```bash
-# install dependencies (only need to do this once)
-npm install
-# run the application and open a browser
 npm run dev -- --open
 ```
