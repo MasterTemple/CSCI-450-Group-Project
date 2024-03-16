@@ -293,7 +293,7 @@
 </div>
 <div id="lyric-region" style="--color: {$backgroundColor}">
 	{#each { length: NUMBER_OF_LINES_PER_COLUMN } as _, i}
-		{#if $leftMostDisplayColumn <= i && i <= $leftMostDisplayColumn + $numberOfColumns - 1}
+		{#if $leftMostDisplayColumn <= i && i <= $leftMostDisplayColumn + $numberOfColumns - 1 && $lines.length >= i * NUMBER_OF_LINES_PER_COLUMN}
 			<div id="column-{i}" class="lyric-column">
 				<!-- class:hide={i < $leftMostDisplayColumn || $leftMostDisplayColumn + $numberOfColumns <= i} -->
 				{#each $lines.slice(i * NUMBER_OF_LINES_PER_COLUMN, min((i + 1) * NUMBER_OF_LINES_PER_COLUMN), $lines.length) as line, j}
@@ -395,9 +395,13 @@
 		flex-wrap: nowrap;
 		/* flex: 0 0 auto; */
 		align-items: center;
-		width: 40ch;
+		max-width: 40ch;
+		min-width: 20ch;
+		width: fit-content;
 		background-color: var(--color);
-		margin: 0 auto;
+		/* margin: 0 auto; */
+		margin: 0;
+		padding: 0;
 		border-radius: 10px;
 	}
 
