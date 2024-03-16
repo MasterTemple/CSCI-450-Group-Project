@@ -134,12 +134,21 @@
 	// 	// setTimeout(() => currentSlideIndex.set(0), 500);
 	// 	// currentSlideIndex.set(0);
 	// });
+	function exit() {
+		document.exitFullscreen();
+		window.location.href = "/";
+		bc.postMessage({
+			msg: "close",
+		});
+	}
 </script>
 
 <div id="button-stack">
-	<a href=".././">
-		<button id="backButton" style="--color: {color.darkBlue}">Back</button>
-	</a>
+	<!-- <a href="/"> -->
+	<button id="backButton" on:click={exit} style="--color: {color.darkBlue}"
+		>Back</button
+	>
+	<!-- </a> -->
 
 	<div id="elapsedTime" style="--color: {color.black}" />
 </div>

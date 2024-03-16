@@ -9,12 +9,14 @@
 	import LeftColumn from "./LeftColumn.svelte";
 	import RightColumn from "./RightColumn.svelte";
 
-	const bc = new BroadcastChannel("lyric_of_lyrics");
+	let shouldBeFullscreen = false;
 
+	const bc = new BroadcastChannel("lyric_of_lyrics");
 	bc.onmessage = (event) => {
 		console.log(event);
 		if (event.data.msg == "goFullscreen") {
 			setWindowFullscreen(document);
+			shouldBeFullscreen = true;
 			currentSlideIndex.set(-1);
 			currentSlideIndex.set(0);
 		} else if (event.data.msg == "sendKey") {
@@ -46,6 +48,7 @@
 			currentSlideIndex.set(max(0, $currentSlideIndex - 1));
 		} else if (key == "Escape") {
 			window.location.href = "/";
+			document.exitFullscreen();
 			bc.postMessage({
 				msg: "close",
 			});
@@ -84,6 +87,11 @@
 				// bc.postMessage({ msg: "sendKey", key: event.key });
 				onKey(event.key);
 			}
+		});
+		document.addEventListener("mousedown", (event) => {
+			// event.target
+			// if (shouldBeFullscreen)
+			setWindowFullscreen(document);
 		});
 	});
 </script>

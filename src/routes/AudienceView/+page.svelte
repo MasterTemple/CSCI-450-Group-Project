@@ -3,9 +3,13 @@
 	import { writable } from "svelte/store";
 	import { max, min, setWindowFullscreen } from "../functions";
 	import {
+		backgroundColor,
 		currentSlideIndex,
+		fontFamily,
+		fontSize,
 		lyricsBySlide,
 		setCurrrentSong,
+		textColor,
 	} from "../stores.js";
 
 	const bc = new BroadcastChannel("lyric_of_lyrics");
@@ -86,7 +90,10 @@
 	});
 </script>
 
-<div id="body">
+<div
+	id="body"
+	style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize}px;"
+>
 	<div id="lyrics">
 		{#each $lyrics as line}
 			<p>{line}</p>

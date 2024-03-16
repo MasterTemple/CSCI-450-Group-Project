@@ -2,7 +2,13 @@
 	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
 	import { setWindowFullscreen } from "../functions";
-	import { setCurrrentSong } from "../stores.js";
+	import {
+		backgroundColor,
+		fontFamily,
+		fontSize,
+		setCurrrentSong,
+		textColor,
+	} from "../stores.js";
 
 	const bc = new BroadcastChannel("lyric_of_lyrics");
 	const isReady = writable(false);
@@ -52,7 +58,10 @@
 	});
 </script>
 
-<div id="body">
+<div
+	id="body"
+	style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize}px;"
+>
 	{#if !$isReady}
 		<h1>audience view!</h1>
 		<button on:click={goFullscreen}
