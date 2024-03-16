@@ -81,11 +81,6 @@
 			console.log({ lbs });
 		});
 
-		// lyricsBySlide.set(
-		// 	// JSON.parse(localStorage.getItem("currentSong")).slides,
-		// 	JSON.parse(localStorage.getItem("lyricsBySlide")),
-		// );
-
 		document.addEventListener("keydown", (event) => {
 			if (RESERVED_KEYS.includes(event.key)) {
 				event.preventDefault();
@@ -95,8 +90,8 @@
 		});
 		document.addEventListener("mousedown", (event) => {
 			// event.target
-			// if (shouldBeFullscreen)
-			setWindowFullscreen(document);
+			console.log(event.target.id);
+			if (event.target.id != "backButton") setWindowFullscreen(document);
 		});
 	});
 </script>

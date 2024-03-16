@@ -7,8 +7,9 @@
 		allSongs,
 		authToken,
 		color,
+		displayPresenterView,
+		displaySingleAudienceView,
 		emailAddress,
-		lyricsBySlide,
 	} from "./stores";
 
 	// let btn = document.getElementById("profileButton");
@@ -101,29 +102,21 @@
 		if (!window.screen.isExtended) {
 			// window.open("./AudienceView");
 			setWindowFullscreen(document);
-			window.location.href = "./AudienceView";
+			displaySingleAudienceView.set(true);
+			// window.location.href = "./AudienceView";
 		}
 		// otherwise make the current screen the presenter view & the child window is the audience view
 		else {
 			// open a new window
-
 			const child = window.open(
 				"ChildAudienceView",
 				"",
 				"width=720,height=480",
 			);
 			child.focus();
-
 			// set current window
-			// window.open("PresenterView");
-			// window.location.href += "PresenterView";
-			// document.getElementById("presenterViewLink").click();
-			localStorage.setItem(
-				"lyricsBySlide",
-				JSON.stringify($lyricsBySlide),
-			);
-			window.location.href = "/PresenterView";
 			setWindowFullscreen(document);
+			displayPresenterView.set(true);
 		}
 	}
 

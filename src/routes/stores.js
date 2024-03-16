@@ -140,3 +140,5 @@ export const currentSongId = writable("");
 export function deleteSongFromLocalList(songId) {
 	allSongs.update((songs) => songs.filter((s) => s.songId !== songId));
 }
+export const displaySingleAudienceView = writable(false);
+export const displayPresenterView = writable(false);

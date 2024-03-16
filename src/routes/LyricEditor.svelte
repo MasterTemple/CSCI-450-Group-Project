@@ -45,17 +45,6 @@
 		setLyricDataFromClipboard("");
 	}
 
-	// export function setCurrrentSong(loadedSong) {
-	// 	songId.set(loadedSong["songId"] || new Date().getTime().toString());
-	// 	title.set(loadedSong["title"]);
-	// 	author.set(loadedSong["author"]);
-	// 	rawClipboardContents.set(loadedSong["rawClipboardContents"]);
-	// 	lines.set(loadedSong["lines"]);
-	// 	lyricsBySlide.set(loadedSong["lyricsBySlide"]);
-	// 	breakIndexes.set(loadedSong["breakIndexes"]);
-	// 	dividerList.set(loadedSong["dividerList"]);
-	// }
-
 	onMount(async () => {
 		document.addEventListener("paste", (event) => {
 			if (event.target.tagName == "TEXTAREA") readClipboard();
