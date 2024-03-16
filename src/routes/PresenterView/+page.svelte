@@ -12,7 +12,7 @@
 	const bc = new BroadcastChannel("lyric_of_lyrics");
 
 	bc.onmessage = (event) => {
-		// console.log(event);
+		console.log(event);
 		if (event.data.msg == "goFullscreen") {
 			setWindowFullscreen(document);
 			currentSlideIndex.set(-1);
@@ -44,6 +44,11 @@
 		else if (key == "ArrowLeft") {
 			// currentSlideIndex.update((i) => i - 1);
 			currentSlideIndex.set(max(0, $currentSlideIndex - 1));
+		} else if (key == "Escape") {
+			window.location.href = "/";
+			bc.postMessage({
+				msg: "close",
+			});
 		}
 	}
 

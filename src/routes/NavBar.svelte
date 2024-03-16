@@ -1,11 +1,11 @@
 <script>
+	import { onMount } from "svelte";
 	import { setWindowFullscreen } from "./functions";
 	import { color, lyricsBySlide } from "./stores";
-	import { onMount } from 'svelte';
 
 	// let btn = document.getElementById("profileButton");
 	// btn.onclick = function() {
-  	// 	modal.style.display = "block";
+	// 	modal.style.display = "block";
 	// }
 
 	// onMount(() => {
@@ -17,21 +17,17 @@
 	// });
 	let popup;
 	onMount(() => {
-    	// const headingElement = document.querySelector('h1');
+		// const headingElement = document.querySelector('h1');
 		popup = document.getElementById("loginPopUp");
-
-
-  	});
-	function openModal(){
-		console.log("hello")
+	});
+	function openModal() {
+		console.log("hello");
 
 		popup.style.display = "block";
 	}
 	function close() {
-  		popup.style.display = "none";
+		popup.style.display = "none";
 	}
-
-
 
 	function present() {
 		// if user has 1 screen, make the audience view their current screen
@@ -43,12 +39,14 @@
 		// otherwise make the current screen the presenter view & the child window is the audience view
 		else {
 			// open a new window
+
 			const child = window.open(
 				"ChildAudienceView",
 				"",
 				"width=720,height=480",
 			);
 			child.focus();
+
 			// set current window
 			// window.open("PresenterView");
 			// window.location.href += "PresenterView";
@@ -58,14 +56,14 @@
 				JSON.stringify($lyricsBySlide),
 			);
 			window.location.href = "/PresenterView";
+			setWindowFullscreen(document);
 		}
 	}
 
-
 	// window.onclick = function(event) {
-  	// 	if (event.target == modal) {
-    // 		modal.style.display = "none";
-  	// 	}
+	// 	if (event.target == modal) {
+	// 		modal.style.display = "none";
+	// 	}
 	// }
 </script>
 
@@ -111,15 +109,19 @@
 </div>
 
 <div id="profileContainer">
-	<button id="profileButton" on:click={openModal} style="--color: {color.darkBlue}">
+	<button
+		id="profileButton"
+		on:click={openModal}
+		style="--color: {color.darkBlue}"
+	>
 		<h1 id="profileText" style="--color: {color.white}">E</h1>
 	</button>
 </div>
-<div id="loginPopUp"  class="modal">
-	  <div class="modal-content">
+<div id="loginPopUp" class="modal">
+	<div class="modal-content">
 		<button on:click={close} class="close">&times;</button>
 		<p>Some text in the Modal..</p>
-	  </div>
+	</div>
 </div>
 
 <style>
@@ -132,8 +134,8 @@
 		width: 100%; /* Full width */
 		height: 100%; /* Full height */
 		overflow: auto; /* Enable scroll if needed */
-		background-color: rgb(0,0,0); /* Fallback color */
-		background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+		background-color: rgb(0, 0, 0); /* Fallback color */
+		background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 	}
 	.modal-content {
 		background-color: #fefefe;

@@ -21,16 +21,21 @@
 		if (event.data.msg == "setLyrics") {
 			console.log({ data: event.data });
 			lyrics.set([...event.data.lyrics]);
+		} else if (event.data.msg == "close") {
+			window.close();
 		}
 	};
 
-	const RESERVED_KEYS = ["ArrowRight", "ArrowLeft"];
+	const RESERVED_KEYS = ["ArrowRight", "ArrowLeft", "Escape"];
 	// send keys to presenter view
 	onMount(() => {
 		document.addEventListener("keydown", (event) => {
 			if (RESERVED_KEYS.includes(event.key)) {
-				event.preventDefault();
+				// event.preventDefault();
 				bc.postMessage({ msg: "sendKey", key: event.key });
+			}
+			if (event.key == "Escape") {
+				window.close();
 			}
 		});
 
