@@ -1,4 +1,4 @@
-const MAX_LINE_LENGTH = 20;
+const MAX_LINE_LENGTH = 40;
 
 const DIVIDING_CHARACTERS = [..." ,;."];
 

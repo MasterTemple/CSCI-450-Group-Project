@@ -47,7 +47,7 @@
 
 	onMount(async () => {
 		document.addEventListener("paste", (event) => {
-			if (event.target.tagName == "TEXTAREA") readClipboard();
+			if (event.target.tagName != "INPUT") readClipboard();
 		});
 
 		// load cloud storage and sync with local storage
@@ -366,6 +366,7 @@
 		flex-direction: row;
 		color: white;
 		width: 100%;
+		max-width: 70vw;
 		height: 40rem;
 		background-color: black;
 		justify-content: center;
@@ -381,7 +382,7 @@
 		flex-wrap: nowrap;
 		/* flex: 0 0 auto; */
 		align-items: center;
-		width: 14vw;
+		width: 40ch;
 		background-color: var(--color);
 		margin: 0 auto;
 		border-radius: 10px;
