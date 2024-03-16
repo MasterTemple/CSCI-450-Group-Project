@@ -366,7 +366,7 @@
 		flex-direction: row;
 		color: white;
 		width: 100%;
-		max-width: 70vw;
+		max-width: 72vw;
 		height: 40rem;
 		background-color: black;
 		justify-content: center;

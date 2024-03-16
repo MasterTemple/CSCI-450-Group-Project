@@ -19,33 +19,41 @@
 {:else if $displayPresenterView}
 	<PresenterView />
 {:else}
-	<nav id="navbar">
-		<NavBar />
-	</nav>
-	<div id="content">
-		<div
-			id="saved"
-			style="--loc: {$savedSongsIsOpen
-				? 0
-				: -14.5}vw; --color: {color.brown}"
-		>
-			<Saved />
-		</div>
-		<div id="editor">
-			<LyricEditor />
-		</div>
-		<div
-			id="settings"
-			style="--loc: {$settingsIsOpen
-				? 0
-				: -14.5}vw; --color: {color.brown}"
-		>
-			<Settings />
+	<div id="everything">
+		<nav id="navbar">
+			<NavBar />
+		</nav>
+		<div id="content">
+			<div
+				id="saved"
+				style="--loc: {$savedSongsIsOpen
+					? 0
+					: -14.5}vw; --color: {color.brown}"
+			>
+				<Saved />
+			</div>
+			<div id="editor">
+				<LyricEditor />
+			</div>
+			<div
+				id="settings"
+				style="--loc: {$settingsIsOpen
+					? 0
+					: -14.5}vw; --color: {color.brown}"
+			>
+				<Settings />
+			</div>
 		</div>
 	</div>
 {/if}
 
 <style>
+	#everything {
+		max-width: 100wh;
+		max-height: 100vh;
+		overflow-x: hidden;
+		overflow-y: hidden;
+	}
 	/* :root {
     display: flex;
     flex-direction: row;
