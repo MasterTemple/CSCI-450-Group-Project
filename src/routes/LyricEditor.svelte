@@ -322,8 +322,8 @@
                         {/if}
                     {/each} -->
 					</p>
-					<button
-						class="divider"
+					<div
+						class="outer-divider"
 						on:click={() =>
 							($lines[
 								i * NUMBER_OF_LINES_PER_COLUMN + j
@@ -333,7 +333,20 @@
 						class:selected={$lines[
 							i * NUMBER_OF_LINES_PER_COLUMN + j
 						].divider}
-					/>
+					>
+						<button
+							class="divider"
+							on:click={() =>
+								($lines[
+									i * NUMBER_OF_LINES_PER_COLUMN + j
+								].divider =
+									!$lines[i * NUMBER_OF_LINES_PER_COLUMN + j]
+										.divider)}
+							class:selected={$lines[
+								i * NUMBER_OF_LINES_PER_COLUMN + j
+							].divider}
+						/>
+					</div>
 				{/each}
 			</div>
 		{/if}
@@ -392,20 +405,34 @@
 		text-align: center;
 	}
 
+	.outer-divider {
+		padding: 0;
+		margin: 0;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		opacity: 0.4;
+	}
+	.outer-divider:hover {
+		opacity: 0.8;
+	}
+
 	.divider {
+		margin: 0.3rem;
 		background-color: red;
 		border: none;
 		height: 0.5rem;
 		width: 70%;
-		opacity: 0.4;
+		/* opacity: 0.4; */
 		border-radius: 4px;
 	}
 
-	.divider:hover {
+	/* .divider:hover {
 		opacity: 0.8;
-	}
+	} */
 
-	.divider.selected {
+	.divider.selected,
+	.outer-divider.selected {
 		opacity: 1;
 	}
 
