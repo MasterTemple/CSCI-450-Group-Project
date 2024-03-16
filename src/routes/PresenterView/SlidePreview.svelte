@@ -34,8 +34,15 @@
 	{#each { length: 3 } as _, i}
 		<div class="row">
 			{#each { length: 3 } as _, j}
-				<p>{baseIndex + 3 * i + j}</p>
-				<Slides lyrics={$lyricsBySlide?.[baseIndex + 3 * i + j]} />
+				<div
+					class="slide-outline"
+					class:current-slide={3 * i + j ==
+						$currentSlideIndex - baseIndex}
+					class:next-slide={3 * i + j ==
+						$currentSlideIndex - baseIndex + 1}
+				>
+					<Slides lyrics={$lyricsBySlide?.[baseIndex + 3 * i + j]} />
+				</div>
 			{/each}
 		</div>
 	{/each}
@@ -52,5 +59,15 @@
 		display: flex;
 		flex-direction: row;
 		padding: 3% 0 3% 0;
+	}
+	.slide-outline {
+		border: 4px solid black;
+		border-radius: 8%;
+	}
+	.current-slide {
+		border-color: green;
+	}
+	.next-slide {
+		border-color: orange;
 	}
 </style>
