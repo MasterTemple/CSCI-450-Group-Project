@@ -300,47 +300,50 @@
 </div>
 <div id="lyric-region" style="--color: {$backgroundColor}">
 	{#each { length: NUMBER_OF_LINES_PER_COLUMN } as _, i}
-		<div
-			id="column-{i}"
-			class="lyric-column"
-			class:hide={i < $leftMostDisplayColumn ||
-				$leftMostDisplayColumn + $numberOfColumns <= i}
-		>
-			{#each $lines.slice(i * NUMBER_OF_LINES_PER_COLUMN, min((i + 1) * NUMBER_OF_LINES_PER_COLUMN), $lines.length) as line, j}
-				<p
-					class="lyric-text"
-					style="font-size: {$fontSize}px; font-family: {$fontFamily}; --color: {$textColor}"
-				>
-					<!-- {line} -->
-					<textarea
-						type="text"
-						class="lyric-input"
-						id="lyric-input-{i * NUMBER_OF_LINES_PER_COLUMN + j}"
-						data-lyric-line-number={i * NUMBER_OF_LINES_PER_COLUMN +
-							j}
-						on:keydown={checkForEnter}
-						value={line.text}
-						rows="1"
-					/>
-					<!-- <textarea name="" id="" rows="1" class="lyric-input" value="{line.text}"/> -->
-					<!-- {#each [...line.text.match(/\S+/g)] as word, i}
+		{#if $leftMostDisplayColumn <= i && i <= $leftMostDisplayColumn + $numberOfColumns - 1}
+			<div id="column-{i}" class="lyric-column">
+				<!-- class:hide={i < $leftMostDisplayColumn || $leftMostDisplayColumn + $numberOfColumns <= i} -->
+				{#each $lines.slice(i * NUMBER_OF_LINES_PER_COLUMN, min((i + 1) * NUMBER_OF_LINES_PER_COLUMN), $lines.length) as line, j}
+					<p
+						class="lyric-text"
+						style="font-size: {$fontSize}px; font-family: {$fontFamily}; --color: {$textColor}"
+					>
+						<!-- {line} -->
+						<textarea
+							type="text"
+							class="lyric-input"
+							id="lyric-input-{i * NUMBER_OF_LINES_PER_COLUMN +
+								j}"
+							data-lyric-line-number={i *
+								NUMBER_OF_LINES_PER_COLUMN +
+								j}
+							on:keydown={checkForEnter}
+							value={line.text}
+							rows="1"
+						/>
+						<!-- <textarea name="" id="" rows="1" class="lyric-input" value="{line.text}"/> -->
+						<!-- {#each [...line.text.match(/\S+/g)] as word, i}
                         {word}
                         {#if i != [...line.text.match(/\S+/g)].length - 1}
                             <button class="vertical-separator"/>
                         {/if}
                     {/each} -->
-				</p>
-				<button
-					class="divider"
-					on:click={() =>
-						($lines[i * NUMBER_OF_LINES_PER_COLUMN + j].divider =
-							!$lines[i * NUMBER_OF_LINES_PER_COLUMN + j]
-								.divider)}
-					class:selected={$lines[i * NUMBER_OF_LINES_PER_COLUMN + j]
-						.divider}
-				/>
-			{/each}
-		</div>
+					</p>
+					<button
+						class="divider"
+						on:click={() =>
+							($lines[
+								i * NUMBER_OF_LINES_PER_COLUMN + j
+							].divider =
+								!$lines[i * NUMBER_OF_LINES_PER_COLUMN + j]
+									.divider)}
+						class:selected={$lines[
+							i * NUMBER_OF_LINES_PER_COLUMN + j
+						].divider}
+					/>
+				{/each}
+			</div>
+		{/if}
 	{/each}
 </div>
 
