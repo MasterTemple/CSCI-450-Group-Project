@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
+	import { min } from "../functions.js";
 	import { currentSlideIndex, lyricsBySlide } from "../stores.js";
 	import Slides from "./Slides.svelte";
 
@@ -30,18 +31,29 @@
 	});
 </script>
 
-<div id="column">
+<div class="column">
 	{#each { length: 3 } as _, i}
 		<div class="row">
 			{#each { length: 3 } as _, j}
-				<div
-					class="slide-outline"
-					class:current-slide={3 * i + j ==
-						$currentSlideIndex - baseIndex}
-					class:next-slide={3 * i + j ==
-						$currentSlideIndex - baseIndex + 1}
-				>
-					<Slides lyrics={$lyricsBySlide?.[baseIndex + 3 * i + j]} />
+				<div class="slides-and-index">
+					<button
+						class="slide-outline"
+						class:current-slide={3 * i + j ==
+							$currentSlideIndex - baseIndex}
+						class:next-slide={3 * i + j ==
+							$currentSlideIndex - baseIndex + 1}
+						on:click={currentSlideIndex.set(
+							min(
+								baseIndex + 3 * i + j,
+								$lyricsBySlide.length - 1,
+							),
+						)}
+					>
+						<Slides
+							lyrics={$lyricsBySlide?.[baseIndex + 3 * i + j]}
+						/>
+					</button>
+					<p>{baseIndex + 3 * i + j + 1}</p>
 				</div>
 			{/each}
 		</div>
@@ -49,7 +61,19 @@
 </div>
 
 <style>
-	#column {
+	.slides-and-index {
+		display: flex;
+		flex-direction: column;
+		margin: 0;
+		padding: 0;
+	}
+	.slides-and-index > p {
+		text-align: center;
+		margin: 0;
+		padding: 0;
+		padding-top: 4%;
+	}
+	.column {
 		display: flex;
 		flex-direction: column;
 		padding: 10% 0 0 0;
@@ -59,11 +83,13 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-		padding: 3% 0 3% 0;
+		padding: 1% 0 1% 0;
 	}
 	.slide-outline {
 		border: 4px solid black;
 		border-radius: 8%;
+		margin: 0;
+		padding: 0;
 		align-items: center;
 		justify-content: center;
 		text-align: center;
