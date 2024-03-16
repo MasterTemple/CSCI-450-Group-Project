@@ -256,6 +256,9 @@
 		padding: 10px;
 		background-color: lightblue;
 		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	#slideControlStack {

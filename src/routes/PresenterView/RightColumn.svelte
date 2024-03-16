@@ -41,5 +41,8 @@
 		width: 30vw;
 		background-color: lightblue;
 		text-align: center;
+		align-items: center;
+		justify-content: center;
+		display: flex;
 	}
 </style>

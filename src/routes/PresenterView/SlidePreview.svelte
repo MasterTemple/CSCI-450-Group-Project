@@ -63,6 +63,11 @@
 	.slide-outline {
 		border: 4px solid black;
 		border-radius: 8%;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		display: flex;
+		font-size: x-small !important;
 	}
 	.current-slide {
 		border-color: green;
