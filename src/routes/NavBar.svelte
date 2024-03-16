@@ -1,7 +1,15 @@
 <script>
 	import { onMount } from "svelte";
+	import { writable } from "svelte/store";
+	import { req } from "./db";
 	import { setWindowFullscreen } from "./functions";
-	import { color, lyricsBySlide } from "./stores";
+	import {
+		allSongs,
+		authToken,
+		color,
+		emailAddress,
+		lyricsBySlide,
+	} from "./stores";
 
 	// let btn = document.getElementById("profileButton");
 	// btn.onclick = function() {
@@ -15,18 +23,77 @@
 	// 			present();
 	// 		});
 	// });
-	let popup;
+
+	const loginCode = writable("");
+	loginCode.subscribe((v) => {
+		let str = $loginCode.toString();
+		if (str.length > 6) {
+			loginCode.set(parseInt(str.slice(0, 6)));
+		}
+	});
+
+	async function sendEmail() {
+		const res = await req(
+			"send_verification_code",
+			{ emailAddress: $emailAddress },
+			$authToken,
+		);
+		console.log({ res });
+		localStorage.setItem("emailAddress", $emailAddress);
+		document.getElementById("email-submit-button").disabled = true;
+		closeEmailModal();
+		openVerificationModal();
+	}
+
+	async function verifyLogin() {
+		const res = await req(
+			"verify_login",
+			{ loginCode: $loginCode, emailAddress: $emailAddress },
+			$authToken,
+		);
+		console.log({ res });
+		authToken.set(res["authToken"]);
+		localStorage.setItem("authToken", $authToken);
+		// reload
+		window.location.href = "/";
+	}
+
+	let enter_email_popup;
+	let verification_input_popup;
+	let account_info_popup;
 	onMount(() => {
 		// const headingElement = document.querySelector('h1');
-		popup = document.getElementById("loginPopUp");
+		enter_email_popup = document.getElementById("enter-email-popup");
+		verification_input_popup = document.getElementById(
+			"enter-verification-code-popup",
+		);
+		account_info_popup = document.getElementById("acount-info-popup");
 	});
-	function openModal() {
-		console.log("hello");
 
-		popup.style.display = "block";
+	function openEmailModal() {
+		enter_email_popup.style.display = "block";
 	}
-	function close() {
-		popup.style.display = "none";
+	function closeEmailModal() {
+		enter_email_popup.style.display = "none";
+	}
+
+	function openVerificationModal() {
+		verification_input_popup.style.display = "block";
+	}
+	function closeVerificationModal() {
+		verification_input_popup.style.display = "none";
+	}
+
+	function logout() {
+		localStorage.clear();
+		window.location.href = "/";
+	}
+
+	function openAccountInfoModal() {
+		account_info_popup.style.display = "block";
+	}
+	function closeAccountInfoModal() {
+		account_info_popup.style.display = "none";
 	}
 
 	function present() {
@@ -111,20 +178,76 @@
 <div id="profileContainer">
 	<button
 		id="profileButton"
-		on:click={openModal}
+		on:click={$authToken.length ? openAccountInfoModal : openEmailModal}
 		style="--color: {color.darkBlue}"
 	>
 		<h1 id="profileText" style="--color: {color.white}">E</h1>
 	</button>
 </div>
-<div id="loginPopUp" class="modal">
+
+<div id="enter-email-popup" class="modal">
 	<div class="modal-content">
-		<button on:click={close} class="close">&times;</button>
-		<p>Some text in the Modal..</p>
+		<button on:click={closeEmailModal} class="close">&times;</button>
+		<div class="column">
+			<h1>Login/Signup</h1>
+			<label for="">
+				<p>Enter email address:</p>
+				<input
+					type="email"
+					name=""
+					id="email-address"
+					bind:value={$emailAddress}
+				/>
+			</label>
+			<button id="email-submit-button" on:click={sendEmail}
+				>Continue</button
+			>
+		</div>
+	</div>
+</div>
+
+<div id="enter-verification-code-popup" class="modal">
+	<div class="modal-content">
+		<button on:click={closeVerificationModal} class="close">&times;</button>
+		<div class="column">
+			<h1>Login/Signup</h1>
+			<label for="">
+				<p>Enter verification code:</p>
+				<input
+					type="number"
+					name=""
+					maxlength="6"
+					id="verification-code"
+					bind:value={$loginCode}
+				/>
+			</label>
+			<button
+				on:click={verifyLogin}
+				disabled={$loginCode.toString().length != 6}>Continue</button
+			>
+		</div>
+	</div>
+</div>
+
+<div id="acount-info-popup" class="modal">
+	<div class="modal-content">
+		<button on:click={closeAccountInfoModal} class="close">&times;</button>
+		<div class="column">
+			<h1>Personal Information</h1>
+			<label for="">
+				<p>Email Address: {$emailAddress}</p>
+				<p>Songs Created: {$allSongs.length}</p>
+			</label>
+			<button on:click={logout}>Log Out</button>
+		</div>
 	</div>
 </div>
 
 <style>
+	.column {
+		/* display: flex;
+		flex-direction: column; */
+	}
 	.modal {
 		display: none; /* Hidden by default */
 		position: fixed; /* Stay in place */
@@ -138,6 +261,7 @@
 		background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 	}
 	.modal-content {
+		text-align: center;
 		background-color: #fefefe;
 		margin: 15% auto; /* 15% from the top and centered */
 		padding: 20px;
@@ -232,4 +356,25 @@
 	#profileText {
 		color: var(--color);
 	}
+	#email-address {
+		width: 30ch;
+	}
+
+	/* https://stackoverflow.com/questions/41698357/how-to-partition-input-field-to-appear-as-separate-input-fields-on-screen */
+	/* #verification-code {
+		padding-left: 15px;
+		letter-spacing: 42px;
+		border: 0;
+		background-image: linear-gradient(
+			to left,
+			black 70%,
+			rgba(255, 255, 255, 0) 0%
+		);
+		background-position: bottom;
+		background-size: 50px 1px;
+		background-repeat: repeat-x;
+		background-position-x: 35px;
+		width: 220px;
+		outline: none;
+	} */
 </style>

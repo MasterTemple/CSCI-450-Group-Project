@@ -18,6 +18,7 @@
 		color,
 		currentSong,
 		currentSongId,
+		emailAddress,
 		fontFamily,
 		fontSize,
 		lines,
@@ -56,6 +57,8 @@
 
 	onMount(async () => {
 		// load cloud storage and sync with local storage
+		emailAddress.set(localStorage.getItem("emailAddress") || "");
+		authToken.set(localStorage.getItem("authToken") || "");
 		currentSongId.set(localStorage.getItem("currentSongId"));
 		currentSongId.subscribe((v) => {
 			localStorage.setItem("currentSongId", v);

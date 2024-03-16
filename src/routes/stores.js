@@ -97,8 +97,10 @@ export const currentSettings = derived(
 // 	}
 // );
 
-export const emailAddress = writable("blake.scampone@biola.edu");
-export const authToken = writable("1de016b1-51ce-42e5-8ce2-934dec2105e4");
+// export const emailAddress = writable("blake.scampone@biola.edu");
+// export const authToken = writable("1de016b1-51ce-42e5-8ce2-934dec2105e4");
+export const emailAddress = writable("");
+export const authToken = writable("");
 
 export const currentSong = derived(
 	[rawClipboardContents, lines, lyricsBySlide, breakIndexes, currentSettings, title, author, songId, emailAddress, dividerList],
