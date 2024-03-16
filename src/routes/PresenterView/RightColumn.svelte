@@ -20,7 +20,10 @@
 
 <div id="previewStack">
 	<div id="nextSlidePreview" style="background-color: {$backgroundColor}">
-		<Slides lyrics={$lyricsBySlide?.[$currentSlideIndex + 1]} />
+		<Slides
+			lyrics={$lyricsBySlide?.[$currentSlideIndex + 1]}
+			fontSizeOverride={24}
+		/>
 	</div>
 	<div id="allSlides">
 		<SlidePreview />

@@ -20,7 +20,6 @@
 		currentSongId,
 		emailAddress,
 		fontFamily,
-		fontSize,
 		lines,
 		lyricsBySlide,
 		numberOfColumns,
@@ -299,7 +298,7 @@
 				{#each $lines.slice(i * NUMBER_OF_LINES_PER_COLUMN, min((i + 1) * NUMBER_OF_LINES_PER_COLUMN), $lines.length) as line, j}
 					<p
 						class="lyric-text"
-						style="font-size: {$fontSize}px; font-family: {$fontFamily}; --color: {$textColor}"
+						style="font-size: 14px; font-family: {$fontFamily}; --color: {$textColor}"
 					>
 						<!-- {line} -->
 						<textarea

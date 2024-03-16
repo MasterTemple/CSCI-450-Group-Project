@@ -65,7 +65,7 @@ export const color = {
 export const textColor = writable("#ffffff");
 export const backgroundColor = writable("#000000");
 export const numberOfColumns = writable(5);
-export const fontSize = writable(14);
+export const fontSize = writable(36);
 export const fontFamily = writable("Arial");
 export const includeTitleSlide = writable(true);
 
@@ -133,6 +133,14 @@ export function setCurrrentSong(loadedSong) {
 	lines.set(loadedSong["lines"]);
 	lyricsBySlide.set(loadedSong["slides"]);
 	dividerList.set(loadedSong["dividerList"]);
+
+	textColor.set(loadedSong["settings"]["textColor"]);
+	backgroundColor.set(loadedSong["settings"]["backgroundColor"]);
+	numberOfColumns.set(loadedSong["settings"]["numberOfColumns"]);
+	fontSize.set(loadedSong["settings"]["fontSize"]);
+	fontFamily.set(loadedSong["settings"]["fontFamily"]);
+	includeTitleSlide.set(loadedSong["settings"]["includeTitleSlide"]);
+
 }
 
 export const currentSongId = writable("");

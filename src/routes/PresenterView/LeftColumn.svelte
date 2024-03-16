@@ -75,7 +75,7 @@
 		id="currentSlide"
 		style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize} "
 	>
-		<Slides {lyrics} />
+		<Slides {lyrics} fontSizeOverride={32} />
 	</div>
 
 	<div id="slideControlStack">

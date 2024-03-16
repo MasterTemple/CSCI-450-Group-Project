@@ -8,6 +8,7 @@
 
 	// export let lyrics = writable([]);
 	export let lyrics = undefined;
+	export let fontSizeOverride;
 	const EMPTY_SLIDE_CONTENTS = ["[EMPTY SLIDE]"];
 	// onMount(() => {
 	// 	if (lyrics == undefined) lyrics = EMPTY_SLIDE_CONTENTS;
@@ -21,7 +22,13 @@
 >
 	<div id="lyrics">
 		{#each safeLyrics as line}
-			<p>{line}</p>
+			<p
+				style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size: {fontSizeOverride
+					? fontSizeOverride
+					: $fontSize * 2}px;"
+			>
+				{line}
+			</p>
 		{/each}
 	</div>
 </div>

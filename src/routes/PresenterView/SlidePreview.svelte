@@ -49,9 +49,12 @@
 							),
 						)}
 					>
-						<Slides
-							lyrics={$lyricsBySlide?.[baseIndex + 3 * i + j]}
-						/>
+						<div class="slide-zoom">
+							<Slides
+								lyrics={$lyricsBySlide?.[baseIndex + 3 * i + j]}
+								fontSizeOverride={10}
+							/>
+						</div>
 					</button>
 					<p>{baseIndex + 3 * i + j + 1}</p>
 				</div>

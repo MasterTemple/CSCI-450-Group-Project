@@ -70,7 +70,8 @@
 
 <div
 	id="body"
-	style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize}px;"
+	style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize *
+		2}px;"
 >
 	{#if !$isReady}
 		<h1>audience view!</h1>
@@ -80,7 +81,12 @@
 	{:else}
 		<div id="lyrics">
 			{#each $lyrics as line}
-				<p>{line}</p>
+				<p
+					style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize *
+						2}px;"
+				>
+					{line}
+				</p>
 			{/each}
 		</div>
 	{/if}
@@ -103,6 +109,6 @@
 	}
 	p {
 		text-align: center;
-		font-size: 4rem;
+		/* font-size: 4rem; */
 	}
 </style>
