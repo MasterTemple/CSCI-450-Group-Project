@@ -57,6 +57,10 @@
 	// }
 
 	onMount(async () => {
+		document.addEventListener("paste", (event) => {
+			if (event.target.tagName == "TEXTAREA") readClipboard();
+		});
+
 		// load cloud storage and sync with local storage
 		emailAddress.set(localStorage.getItem("emailAddress") || "");
 		authToken.set(localStorage.getItem("authToken") || "");
