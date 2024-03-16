@@ -6,10 +6,14 @@
 	import {
 		allSongs,
 		authToken,
+		author,
 		color,
+		currentSong,
 		displayPresenterView,
 		displaySingleAudienceView,
 		emailAddress,
+		lyricsBySlide,
+		title,
 	} from "./stores";
 
 	// let btn = document.getElementById("profileButton");
@@ -32,6 +36,24 @@
 			loginCode.set(parseInt(str.slice(0, 6)));
 		}
 	});
+
+	async function exportPowerpoint() {
+		const res = await req("export", $currentSong, $authToken, true);
+		const blob = await res.blob();
+		const url = window.URL.createObjectURL(blob);
+		const a = document.createElement("a");
+		a.href = url;
+		let filename = "";
+		if ($title.length > 0) filename = $title;
+		else filename = $lyricsBySlide[0][0];
+		if ($author.length > 0) filename = `${filename} - ${$author}`;
+
+		console.log({ $title, $author, filename });
+		a.download = filename + ".pptx";
+		document.body.appendChild(a);
+		a.click();
+		a.remove();
+	}
 
 	async function sendEmail() {
 		closeEmailModal();
@@ -158,7 +180,11 @@
 </div>
 
 <div id="exportButtonContainer">
-	<button id="exportButton" style="--color: {color.darkPurple}">
+	<button
+		id="exportButton"
+		style="--color: {color.darkPurple}"
+		on:click={exportPowerpoint}
+	>
 		<span
 			class="material-symbols-rounded"
 			style="font-variation-settings: 'FILL' 1; font-size: 30px"

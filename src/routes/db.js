@@ -1,5 +1,5 @@
 
-export async function req(endpoint, data, authToken) {
+export async function req(endpoint, data, authToken, returnRawResponse = false) {
 	// body["authToken"] = authToken;
 	const body = {
 		"authToken": authToken,
@@ -15,6 +15,8 @@ export async function req(endpoint, data, authToken) {
 			"Content-Type": "application/json",
 		},
 	});
+	if (returnRawResponse)
+		return res;
 	const json = await res.json();
 	return json;
 }
