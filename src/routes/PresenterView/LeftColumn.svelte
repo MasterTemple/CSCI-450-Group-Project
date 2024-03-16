@@ -1,11 +1,13 @@
 <script>
 	import {
+		author,
 		backgroundColor,
 		color,
 		currentSlideIndex,
 		fontFamily,
 		fontSize,
 		textColor,
+		title,
 	} from "../stores.js";
 	import Slides from "./Slides.svelte";
 
@@ -146,10 +148,10 @@
 <div id="songSlideStack">
 	<div id="songInfo">
 		<div id="songTitle" style="--color: {color.darkBlue}">
-			<p>Song Title</p>
+			<p>{$title}</p>
 		</div>
 		<div id="songArtist" style="--color: {color.darkBlue}">
-			<p>Song Artist</p>
+			<p>{$author || "No Author"}</p>
 		</div>
 	</div>
 
