@@ -6,7 +6,6 @@
 		lyricsBySlide,
 		setCurrrentSong,
 	} from "../stores";
-
 	import LeftColumn from "./LeftColumn.svelte";
 	import RightColumn from "./RightColumn.svelte";
 
@@ -38,7 +37,7 @@
 		if (key == "ArrowRight") {
 			// currentSlideIndex.update((i) => i + 1);
 			currentSlideIndex.set(
-				min($lyricsBySlide.length, $currentSlideIndex + 1),
+				min($lyricsBySlide.length - 1, $currentSlideIndex + 1),
 			);
 		}
 		// left arrow: retreat slide
@@ -48,8 +47,11 @@
 		}
 	}
 
+	const RESERVED_KEYS = ["ArrowRight", "ArrowLeft", "Escape"];
 	onMount(() => {
 		// load data
+		lyricsBySlide.set([]);
+		console.log({ $lyricsBySlide });
 		const allLocalSongs = JSON.parse(localStorage.getItem("allSongs"));
 		const currentSongId = JSON.parse(localStorage.getItem("currentSongId"));
 		let savedCurrentSong = allLocalSongs.find(
@@ -57,25 +59,37 @@
 		);
 
 		if (savedCurrentSong) {
+			console.log(savedCurrentSong);
 			setCurrrentSong(savedCurrentSong);
 			currentSlideIndex.set(-1);
 			currentSlideIndex.set(0);
 		}
+		lyricsBySlide.subscribe((lbs) => {
+			console.log({ lbs });
+		});
 
 		// lyricsBySlide.set(
 		// 	// JSON.parse(localStorage.getItem("currentSong")).slides,
 		// 	JSON.parse(localStorage.getItem("lyricsBySlide")),
 		// );
 
+		document.addEventListener("keydown", (event) => {
+			if (RESERVED_KEYS.includes(event.key)) {
+				event.preventDefault();
+				// bc.postMessage({ msg: "sendKey", key: event.key });
+				onKey(event.key);
+			}
+		});
 	});
-
 </script>
 
 <div id="row">
 	<div id="LeftColumn">
-		<LeftColumn />
+		<LeftColumn lyrics={$lyricsBySlide?.[$currentSlideIndex] || []} />
+		<!-- <LeftColumn lyrics={["asdf", "fdas"]} /> -->
 	</div>
 	<div id="RightColumn">
+		<!-- <RightColumn lyrics={$lyricsBySlide?.[$currentSlideIndex] || []} /> -->
 		<RightColumn />
 	</div>
 </div>
