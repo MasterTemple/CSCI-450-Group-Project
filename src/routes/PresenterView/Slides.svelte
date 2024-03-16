@@ -27,6 +27,10 @@
 </div>
 
 <style>
+	p {
+		text-align: center;
+		min-width: max-content;
+	}
 	#slide {
 		background-color: lightblue;
 		height: 13vh;
