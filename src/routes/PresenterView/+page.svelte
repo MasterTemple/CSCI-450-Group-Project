@@ -35,15 +35,15 @@
 	});
 
 	function onKey(key) {
+		console.log({ key });
 		// right arrow: advance slide
-		if (key == "ArrowRight") {
-			// currentSlideIndex.update((i) => i + 1);
+		if (["ArrowRight", " ", "l"].includes(key)) {
 			currentSlideIndex.set(
 				min($lyricsBySlide.length - 1, $currentSlideIndex + 1),
 			);
 		}
 		// left arrow: retreat slide
-		else if (key == "ArrowLeft") {
+		else if (["ArrowLeft", "h"].includes(key)) {
 			// currentSlideIndex.update((i) => i - 1);
 			currentSlideIndex.set(max(0, $currentSlideIndex - 1));
 		} else if (key == "Escape") {
@@ -55,7 +55,7 @@
 		}
 	}
 
-	const RESERVED_KEYS = ["ArrowRight", "ArrowLeft", "Escape"];
+	const RESERVED_KEYS = ["ArrowRight", "ArrowLeft", "Escape", " ", "h", "l"];
 	onMount(() => {
 		// load data
 		lyricsBySlide.set([]);

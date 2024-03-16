@@ -34,14 +34,13 @@
 
 	function onKey(key) {
 		// right arrow: advance slide
-		if (key == "ArrowRight") {
-			// currentSlideIndex.update((i) => i + 1);
+		if (["ArrowRight", " ", "l"].includes(key)) {
 			currentSlideIndex.set(
-				min($lyricsBySlide.length, $currentSlideIndex + 1),
+				min($lyricsBySlide.length - 1, $currentSlideIndex + 1),
 			);
 		}
 		// left arrow: retreat slide
-		else if (key == "ArrowLeft") {
+		else if (["ArrowLeft", "h"].includes(key)) {
 			// currentSlideIndex.update((i) => i - 1);
 			currentSlideIndex.set(max(0, $currentSlideIndex - 1));
 		}
@@ -60,7 +59,7 @@
 
 	// const unsubscribe = lyricsBySlide.subscribe(() => currentSlideIndex.set(0));
 
-	const RESERVED_KEYS = ["ArrowRight", "ArrowLeft", "Escape"];
+	const RESERVED_KEYS = ["ArrowRight", "ArrowLeft", "Escape", " ", "h", "l"];
 	// send keys to presenter view
 	onMount(() => {
 		// setWindowFullscreen(window);
