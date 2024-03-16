@@ -74,13 +74,19 @@
 		});
 
 		// load data
-		const allLocalSongs = JSON.parse(localStorage.getItem("allSongs"));
+		const allLocalSongs = JSON.parse(
+			localStorage.getItem("allSongs") || "[]",
+		);
 		const currentSongId = JSON.parse(localStorage.getItem("currentSongId"));
 		let savedCurrentSong = allLocalSongs.find(
 			(s) => s.songId == currentSongId,
 		);
 
+		console.log({ savedCurrentSong });
 		if (savedCurrentSong) {
+			setCurrrentSong(savedCurrentSong);
+		} else {
+			savedCurrentSong = JSON.parse(localStorage.getItem("currentSong"));
 			setCurrrentSong(savedCurrentSong);
 		}
 		// setTimeout(() => currentSlideIndex.set(0), 500);

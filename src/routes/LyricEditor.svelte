@@ -79,6 +79,7 @@
 		allSongs.set(JSON.parse(localStorage.getItem("allSongs")) || []);
 		console.log({ $allSongs });
 
+		console.log({ savedCurrentSong });
 		if (savedCurrentSong) {
 			setCurrrentSong(savedCurrentSong);
 		} else {

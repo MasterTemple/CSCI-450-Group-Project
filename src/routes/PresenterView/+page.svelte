@@ -60,18 +60,23 @@
 		// load data
 		lyricsBySlide.set([]);
 		console.log({ $lyricsBySlide });
-		const allLocalSongs = JSON.parse(localStorage.getItem("allSongs"));
+		const allLocalSongs = JSON.parse(
+			localStorage.getItem("allSongs") || "[]",
+		);
 		const currentSongId = JSON.parse(localStorage.getItem("currentSongId"));
 		let savedCurrentSong = allLocalSongs.find(
 			(s) => s.songId == currentSongId,
 		);
 
+		console.log({ savedCurrentSong });
 		if (savedCurrentSong) {
-			console.log(savedCurrentSong);
 			setCurrrentSong(savedCurrentSong);
-			currentSlideIndex.set(-1);
-			currentSlideIndex.set(0);
+		} else {
+			savedCurrentSong = JSON.parse(localStorage.getItem("currentSong"));
+			setCurrrentSong(savedCurrentSong);
 		}
+		currentSlideIndex.set(-1);
+		currentSlideIndex.set(0);
 		lyricsBySlide.subscribe((lbs) => {
 			console.log({ lbs });
 		});
