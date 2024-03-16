@@ -10,7 +10,7 @@ Download [here](https://nodejs.org/en/download).
 
 ## Install NPM Packages
 
-```sh
+```bash
 npm install
 ```
 

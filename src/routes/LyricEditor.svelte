@@ -36,8 +36,9 @@
 
 	function createNewSong() {
 		// new id
-		songId.set(new Date().getTime().toString());
-		currentSongId.set($songId);
+		const newId = new Date().getTime().toString();
+		songId.set(newId);
+		currentSongId.set(newId);
 		// clear everything
 		title.set("");
 		author.set("");
@@ -117,14 +118,14 @@
 			}
 		}, N * 1000);
 
-		setInterval(async () => {
-			const allCloudSongs = await req("load", {}, $authToken);
-			if (allCloudSongs.length > 0) {
-				allCloudSongs.sort((a, b) => b.songId - a.songId);
-				localStorage.setItem("allSongs", JSON.stringify(allCloudSongs));
-				allSongs.set(allCloudSongs);
-			}
-		}, 1000);
+		// setInterval(async () => {
+		// 	const allCloudSongs = await req("load", {}, $authToken);
+		// 	if (allCloudSongs.length > 0) {
+		// 		allCloudSongs.sort((a, b) => b.songId - a.songId);
+		// 		localStorage.setItem("allSongs", JSON.stringify(allCloudSongs));
+		// 		allSongs.set(allCloudSongs);
+		// 	}
+		// }, 1000);
 
 		// YOU MUST WAIT UNTIL IT IS SET
 		lines.subscribe((value) => {

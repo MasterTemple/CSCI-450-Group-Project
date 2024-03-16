@@ -33,6 +33,8 @@
 	});
 
 	async function sendEmail() {
+		closeEmailModal();
+		openVerificationModal();
 		const res = await req(
 			"send_verification_code",
 			{ emailAddress: $emailAddress },
@@ -41,8 +43,6 @@
 		console.log({ res });
 		localStorage.setItem("emailAddress", $emailAddress);
 		document.getElementById("email-submit-button").disabled = true;
-		closeEmailModal();
-		openVerificationModal();
 	}
 
 	async function verifyLogin() {
