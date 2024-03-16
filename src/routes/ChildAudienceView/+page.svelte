@@ -35,6 +35,10 @@
 	const RESERVED_KEYS = ["ArrowRight", "ArrowLeft", "Escape"];
 	// send keys to presenter view
 	onMount(() => {
+		document.addEventListener("mousedown", (event) => {
+			if ($isReady == false) goFullscreen();
+			// else bc.postMessage({ msg: "sendKey", key: "ArrowRight" });
+		});
 		document.addEventListener("keydown", (event) => {
 			if (RESERVED_KEYS.includes(event.key)) {
 				// event.preventDefault();
