@@ -1,4 +1,5 @@
 <script>
+	import { max, min } from "../functions.js";
 	import {
 		author,
 		backgroundColor,
@@ -18,15 +19,25 @@
 
 	const startTime = new Date();
 	setInterval(() => {
-		let currentTime = new Date();
-		let totalSeconds = (currentTime - startTime) / 1000;
-		let minutes = Math.floor(totalSeconds / 60);
-		let seconds = Math.floor(totalSeconds % 60);
+		const currentTime = new Date();
+		const totalSeconds = (currentTime - startTime) / 1000;
+		const minutes = Math.floor(totalSeconds / 60);
+		const seconds = Math.floor(totalSeconds % 60);
 		//Format time to display as "MM:SS"
-		let formattedMinutes = String(minutes).padStart(2, "0");
-		let formattedSeconds = String(seconds).padStart(2, "0");
+		const formattedMinutes = String(minutes).padStart(2, "0");
+		const formattedSeconds = String(seconds).padStart(2, "0");
 		elapsedTime = `${formattedMinutes}:${formattedSeconds}`;
 	}, 1000);
+
+	function advanceSlides() {
+		currentSlideIndex.set(
+			min($lyricsBySlide.length - 1, $currentSlideIndex + 1),
+		);
+	}
+
+	function retreatSlides() {
+		currentSlideIndex.set(max(0, $currentSlideIndex - 1));
+	}
 
 	function exit() {
 		document.exitFullscreen();
@@ -68,13 +79,21 @@
 	</div>
 
 	<div id="slideControlStack">
-		<button id="slideLeft">Left</button>
+		<button
+			id="slideLeft"
+			disabled={$currentSlideIndex == 0}
+			on:click={retreatSlides}>Left</button
+		>
 
 		<div id="slideCounter" style="--color: {color.black}">
 			<p>{$currentSlideIndex + 1}/{$lyricsBySlide.length}</p>
 		</div>
 
-		<button id="slideRight">Right</button>
+		<button
+			id="slideRight"
+			disabled={$currentSlideIndex == $lyricsBySlide.length - 1}
+			on:click={advanceSlides}>Right</button
+		>
 	</div>
 </div>
 
