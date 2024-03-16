@@ -58,6 +58,7 @@
 	.row {
 		display: flex;
 		flex-direction: row;
+		justify-content: space-between;
 		padding: 3% 0 3% 0;
 	}
 	.slide-outline {
