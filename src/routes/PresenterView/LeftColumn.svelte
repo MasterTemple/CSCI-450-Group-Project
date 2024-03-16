@@ -6,134 +6,28 @@
 		currentSlideIndex,
 		fontFamily,
 		fontSize,
+		lyricsBySlide,
 		textColor,
 		title,
 	} from "../stores.js";
 	import Slides from "./Slides.svelte";
 
-	// const bc = new BroadcastChannel("lyric_of_lyrics");
-	// const lyrics = writable([]);
 	export let lyrics;
 
-	//Need to fix bug. Works when you change this value after page loads
-	let slideCounter = 0;
+	$: elapsedTime = "00:00";
 
-	function getElapsedTime() {
-		var startTime = new Date();
+	const startTime = new Date();
+	setInterval(() => {
+		let currentTime = new Date();
+		let totalSeconds = (currentTime - startTime) / 1000;
+		let minutes = Math.floor(totalSeconds / 60);
+		let seconds = Math.floor(totalSeconds % 60);
+		//Format time to display as "MM:SS"
+		let formattedMinutes = String(minutes).padStart(2, "0");
+		let formattedSeconds = String(seconds).padStart(2, "0");
+		elapsedTime = `${formattedMinutes}:${formattedSeconds}`;
+	}, 1000);
 
-		//setInterval calls this function every second to update timer
-		var updateTimer = setInterval(function () {
-			var currentTime = new Date();
-
-			var timeDifference = currentTime - startTime;
-
-			var totalSeconds = Math.floor(timeDifference / 1000);
-
-			var minutes = Math.floor(totalSeconds / 60);
-			var seconds = Math.floor(totalSeconds % 60);
-
-			//Format time to display as "MM:SS"
-			let formattedMinutes = String(minutes).padStart(2, "0");
-			let formattedSeconds = String(seconds).padStart(2, "0");
-
-			var elapsedTimeElement = document.getElementById("elapsedTime");
-			elapsedTimeElement.textContent =
-				"" + formattedMinutes + ":" + formattedSeconds + " Elapsed";
-		}, 1000);
-
-		return updateTimer;
-	}
-
-	// currentSlideIndex.subscribe((newIndex) => {
-	// 	if ($currentSlideIndex < 0) return;
-	// 	if (!$lyricsBySlide[newIndex]) return;
-	// 	lyrics.set($lyricsBySlide[newIndex]);
-	// 	console.log({ lyrics: $lyricsBySlide[newIndex], newIndex });
-	// 	bc.postMessage({
-	// 		msg: "setLyrics",
-	// 		lyrics: $lyricsBySlide[newIndex],
-	// 	});
-	// });
-
-	// bc.onmessage = (event) => {
-	// 	if (event.data.msg == "setLyrics") {
-	// 		console.log({ data: event.data });
-	// 		lyrics.set([...event.data.lyrics]);
-	// 	}
-	// };
-
-	// //Also need to fix interaction with arrow keys
-	// function onKey(key) {
-	// 	// right arrow: advance slide
-	// 	if (key == "ArrowRight") {
-	// 		// currentSlideIndex.update((i) => i + 1);
-	// 		currentSlideIndex.set(
-	// 			min(lyricsBySlide.length, $currentSlideIndex + 1),
-	// 		);
-	// 	}
-	// 	// left arrow: retreat slide
-	// 	else if (key == "ArrowLeft") {
-	// 		// currentSlideIndex.update((i) => i - 1);
-	// 		currentSlideIndex.set(max(0, $currentSlideIndex - 1));
-	// 	}
-	// }
-
-	// function slideRight() {
-	// 	currentSlideIndex.set(
-	// 		min($lyricsBySlide.length, $currentSlideIndex + 1),
-	// 	);
-	// }
-
-	// function slideLeft() {
-	// 	currentSlideIndex.set(max(0, $currentSlideIndex - 1));
-	// }
-
-	// const RESERVED_KEYS = ["ArrowRight", "ArrowLeft", "Escape"];
-
-	// onMount(() => {
-	// 	slideCounter = 0;
-	// 	slideCounter = $lyricsBySlide.length;
-
-	// 	//Send user back to editor page when ESC key is pressed
-	// 	window.addEventListener(
-	// 		"keyup",
-	// 		function (e) {
-	// 			if (e.key === "Escape" || e.keyCode == 27)
-	// 				this.window.location.assign("../");
-	// 		},
-	// 		false,
-	// 	);
-	// 	document.addEventListener("keydown", (event) => {
-	// 		if (RESERVED_KEYS.includes(event.key)) {
-	// 			event.preventDefault();
-	// 			// bc.postMessage({ msg: "sendKey", key: event.key });
-	// 			onKey(event.key);
-	// 		}
-	// 	});
-
-	// 	const rightBtn = document.getElementById("slideRight");
-	// 	rightBtn.addEventListener("click", slideRight);
-	// 	const leftBtn = document.getElementById("slideLeft");
-	// 	leftBtn.addEventListener("click", slideLeft);
-
-	// 	//Start timer
-	// 	var updateDisplay = getElapsedTime();
-
-	// 	// load data
-	// 	const savedCurrentSong = JSON.parse(
-	// 		localStorage.getItem("currentSong"),
-	// 	);
-
-	// 	if (savedCurrentSong) {
-	// 		rawClipboardContents.set(savedCurrentSong["rawClipboardContents"]);
-	// 		lines.set(savedCurrentSong["lines"]);
-	// 		breakIndexes.set(savedCurrentSong["breakIndexes"]);
-	// 		dividerList.set(savedCurrentSong["dividerList"]);
-	// 		lyricsBySlide.set(savedCurrentSong["lyricsBySlide"]);
-	// 	}
-	// 	// setTimeout(() => currentSlideIndex.set(0), 500);
-	// 	// currentSlideIndex.set(0);
-	// });
 	function exit() {
 		document.exitFullscreen();
 		window.location.href = "/";
@@ -150,7 +44,9 @@
 	>
 	<!-- </a> -->
 
-	<div id="elapsedTime" style="--color: {color.black}" />
+	<div id="elapsedTime" style="--color: {color.black}">
+		<p>{elapsedTime} Elapsed</p>
+	</div>
 </div>
 <button id="switchSong" style="--color: {color.darkBlue}">Switch Song</button>
 
@@ -175,7 +71,7 @@
 		<button id="slideLeft">Left</button>
 
 		<div id="slideCounter" style="--color: {color.black}">
-			<p>{$currentSlideIndex + 1}/{slideCounter}</p>
+			<p>{$currentSlideIndex + 1}/{$lyricsBySlide.length}</p>
 		</div>
 
 		<button id="slideRight">Right</button>
