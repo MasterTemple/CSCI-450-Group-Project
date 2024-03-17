@@ -38,8 +38,9 @@
 				max="36"
 				id="fontSize"
 				bind:value={$fontSize}
-			/></label
-		>
+			/>
+			<p class="info-hint">* This only affects your presentation</p>
+		</label>
 	</div>
 	<div class="editor-settings-items">
 		<!-- <label>hello</label> -->
@@ -97,8 +98,10 @@
 		>
 	</div>
 
-	<p>Changes are automatically applied to the current slide</p>
 	<button on:click={applySettingsToAll}>Apply to All</button>
+	<p class="info-hint">
+		* Changes are automatically applied to the current slide
+	</p>
 </div>
 
 <style>
@@ -121,9 +124,15 @@
 	}
 
 	.editor-settings-items {
-		padding-bottom: 15px;
-		padding-top: 15px;
+		padding-bottom: 0.25rem;
+		padding-top: 0.25rem;
 		margin-left: 30px;
 		font-size: 20px;
+	}
+	.info-hint {
+		font-size: 12px;
+		padding: 0;
+		padding-top: 0.25rem;
+		margin: 0;
 	}
 </style>
