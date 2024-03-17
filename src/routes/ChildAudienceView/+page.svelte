@@ -36,7 +36,9 @@
 	// send keys to presenter view
 	onMount(() => {
 		document.addEventListener("mousedown", (event) => {
-			if ($isReady == false) goFullscreen();
+			// if ($isReady == false) goFullscreen();
+			// if(window.innerWidth == screen.width && window.innerHeight == screen.height) // this works to check if in full screen
+			goFullscreen();
 			// else bc.postMessage({ msg: "sendKey", key: "ArrowRight" });
 		});
 		document.addEventListener("keydown", (event) => {
@@ -70,14 +72,11 @@
 
 <div
 	id="body"
-	style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize *
-		2}px;"
+	style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize}px;"
 >
 	{#if !$isReady}
-		<h1>audience view!</h1>
-		<button on:click={goFullscreen}
-			>click when ready to go fullscreen</button
-		>
+		<p>Drag window to desired output</p>
+		<p>Click anywhere to enter Fullscreen Mode</p>
 	{:else}
 		<div id="lyrics">
 			{#each $lyrics as line}
