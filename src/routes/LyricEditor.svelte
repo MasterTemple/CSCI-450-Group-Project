@@ -290,7 +290,7 @@
 		bind:value={$author}
 	/>
 </div>
-<div id="lyric-region" style="--color: {$backgroundColor}">
+<div id="lyric-region" style="background-color: {$backgroundColor};">
 	{#each { length: NUMBER_OF_LINES_PER_COLUMN } as _, i}
 		{#if $leftMostDisplayColumn <= i && i <= $leftMostDisplayColumn + $numberOfColumns - 1 && $lines.length >= i * NUMBER_OF_LINES_PER_COLUMN}
 			<div id="column-{i}" class="lyric-column">
@@ -298,7 +298,7 @@
 				{#each $lines.slice(i * NUMBER_OF_LINES_PER_COLUMN, min((i + 1) * NUMBER_OF_LINES_PER_COLUMN), $lines.length) as line, j}
 					<p
 						class="lyric-text"
-						style="font-size: 14px; font-family: {$fontFamily}; --color: {$textColor}"
+						style="font-size: 14px; font-family: {$fontFamily}; color: {$textColor}"
 					>
 						<!-- {line} -->
 						<textarea
