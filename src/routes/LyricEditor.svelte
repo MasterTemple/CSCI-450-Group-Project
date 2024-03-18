@@ -323,7 +323,7 @@
 					</p>
 					<div
 						class="outer-divider"
-						on:click={() =>
+						on:click|stopPropagation={() =>
 							($lines[
 								i * NUMBER_OF_LINES_PER_COLUMN + j
 							].divider =
@@ -335,7 +335,7 @@
 					>
 						<button
 							class="divider"
-							on:click={() =>
+							on:click|stopPropagation={() =>
 								($lines[
 									i * NUMBER_OF_LINES_PER_COLUMN + j
 								].divider =
