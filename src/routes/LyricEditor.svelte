@@ -94,14 +94,14 @@
 				localStorage.setItem("currentSong", data);
 
 				// update all songs locally (memory and storage)
-				// allSongs.update((songs) => {
-				// 	const index = songs.findIndex(
-				// 		(s) => s.songId == $currentSongId,
-				// 	);
-				// 	songs[index] = data;
-				// 	localStorage.setItem("allSongs", JSON.stringify(songs));
-				// 	return songs;
-				// });
+				allSongs.update((songs) => {
+					const index = songs.findIndex(
+						(s) => s.songId == $currentSongId,
+					);
+					songs[index] = $currentSong;
+					localStorage.setItem("allSongs", JSON.stringify(songs));
+					return songs;
+				});
 
 				// save to server
 				const json = await req("save", $currentSong, $authToken);

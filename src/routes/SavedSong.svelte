@@ -13,9 +13,9 @@
 	export let songTitle;
 	export let songId;
 	export let dateCreated;
-	const thisSong = $allSongs.find((s) => s.songId == songId);
-	let title = thisSong.title;
-	let date = new Date(parseInt(thisSong["songId"])).toDateString();
+	// const thisSong = $allSongs.find((s) => s.songId == songId);
+	// let title = thisSong.title;
+	// let date = new Date(parseInt(thisSong["songId"])).toDateString();
 
 	async function deleteSong() {
 		// delete locally for update and so we dont save it again on server
@@ -31,6 +31,17 @@
 		console.log({ newSong });
 		// save current song
 		if ($workIsUnsaved) {
+			// save locally
+			localStorage.setItem("currentSong", JSON.stringify($currentSong));
+			allSongs.update((songs) => {
+				const index = songs.findIndex(
+					(s) => s.songId == $currentSongId,
+				);
+				songs[index] = $currentSong;
+				localStorage.setItem("allSongs", JSON.stringify(songs));
+				return songs;
+			});
+			// save to server
 			req("save", $currentSong, $authToken);
 			// const json = await req("save", $currentSong, $authToken);
 			// console.log({ json });
@@ -49,8 +60,8 @@
 		on:click={loadSongFromId}
 	>
 	</button>
-	<p id="songTitle">{title}</p>
-	<p id="dateCreated">{date}</p>
+	<p id="songTitle">{songTitle}</p>
+	<p id="dateCreated">{dateCreated.toDateString()}</p>
 	<button on:click={deleteSong}>Delete</button>
 </div>
 

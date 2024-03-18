@@ -9,6 +9,7 @@
 		author,
 		color,
 		currentSong,
+		currentSongId,
 		displayPresenterView,
 		displaySingleAudienceView,
 		emailAddress,
@@ -120,6 +121,15 @@
 	}
 
 	function present() {
+		// save changes before presenting
+		localStorage.setItem("currentSong", JSON.stringify($currentSong));
+		allSongs.update((songs) => {
+			const index = songs.findIndex((s) => s.songId == $currentSongId);
+			songs[index] = $currentSong;
+			localStorage.setItem("allSongs", JSON.stringify(songs));
+			return songs;
+		});
+
 		// if user has 1 screen, make the audience view their current screen
 		if (!window.screen.isExtended) {
 			// window.open("./AudienceView");
