@@ -17,19 +17,6 @@
 		title,
 	} from "./stores";
 
-	// let btn = document.getElementById("profileButton");
-	// btn.onclick = function() {
-	// 	modal.style.display = "block";
-	// }
-
-	// onMount(() => {
-	// 	document
-	// 		.getElementById("presentButton")
-	// 		.addEventListener("click", (e) => {
-	// 			present();
-	// 		});
-	// });
-
 	const loginCode = writable("");
 	loginCode.subscribe((v) => {
 		let str = $loginCode.toString();
@@ -210,7 +197,7 @@
 		on:click={$authToken.length ? openAccountInfoModal : openEmailModal}
 		style="--color: {color.darkBlue}"
 	>
-		<h1 id="profileText" style="--color: {color.white}">E</h1>
+		<h1 id="profileText" style="--color: {color.white}">{$emailAddress.length ? $emailAddress[0].toUpperCase(): "?"}</h1>
 	</button>
 </div>
 
@@ -348,7 +335,9 @@
 		top: 20%;
 		left: 56%;
 		display: flex;
+		flex-direction: row;
 		align-content: center;
+		justify-content: center;
 	}
 
 	#exportButton {
@@ -362,6 +351,9 @@
 		box-shadow:
 			0 4px 8px 0 rgba(0, 0, 0, 0.2),
 			0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		flex-direction: row;
+		align-content: center;
+		justify-content: center;
 	}
 
 	#profileContainer {
@@ -380,6 +372,9 @@
 			0 6px 20px 0 rgba(0, 0, 0, 0.19);
 		background-color: var(--color);
 		border: none;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 
 	#profileText {
