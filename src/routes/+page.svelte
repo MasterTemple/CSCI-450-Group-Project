@@ -1,17 +1,109 @@
 <script>
+	import { onMount } from "svelte";
 	import AudienceView from "./AudienceView/+page.svelte";
 	import LyricEditor from "./LyricEditor.svelte";
 	import NavBar from "./NavBar.svelte";
 	import PresenterView from "./PresenterView/+page.svelte";
 	import Saved from "./Saved.svelte";
 	import Settings from "./Settings.svelte";
+	import { req } from "./db";
+	import { convertLyricLinesToSlides } from "./functions";
 	import {
+		allSongs,
+		authToken,
 		color,
+		currentSong,
+		currentSongId,
 		displayPresenterView,
 		displaySingleAudienceView,
+		emailAddress,
+		lines,
+		lyricsBySlide,
+		rawClipboardContents,
 		savedSongsIsOpen,
+		setCurrrentSong,
 		settingsIsOpen,
+		workIsUnsaved,
 	} from "./stores";
+
+	onMount(async () => {
+		// load cloud storage and sync with local storage
+		emailAddress.set(localStorage.getItem("emailAddress") || "");
+		authToken.set(localStorage.getItem("authToken") || "");
+		currentSongId.set(localStorage.getItem("currentSongId"));
+		currentSongId.subscribe((v) => {
+			localStorage.setItem("currentSongId", v);
+		});
+		const allCloudSongs = await req("load", {}, $authToken);
+		if (allCloudSongs.length > 0) {
+			allCloudSongs.sort((a, b) => b.songId - a.songId);
+			localStorage.setItem("allSongs", JSON.stringify(allCloudSongs));
+			let thisSong = allCloudSongs.find(
+				(s) => s.songId == $currentSongId,
+			);
+			if (!thisSong) thisSong = allCloudSongs[0];
+			localStorage.setItem("currentSong", JSON.stringify(thisSong));
+		}
+		// load local storage
+		let savedCurrentSong = JSON.parse(localStorage.getItem("currentSong"));
+		allSongs.set(JSON.parse(localStorage.getItem("allSongs")) || []);
+		console.log({ $allSongs });
+
+		console.log({ savedCurrentSong });
+		if (savedCurrentSong) {
+			setCurrrentSong(savedCurrentSong);
+		} else {
+			rawClipboardContents.set(EXAMPLE_CONTENTS_2);
+			setLyricDataFromClipboard($rawClipboardContents);
+		}
+
+		// keep track if work needs to be saved
+		currentSong.subscribe((v) => workIsUnsaved.set(true));
+
+		// save work if edited every n seconds
+		const N = 1;
+		setInterval(async () => {
+			if ($workIsUnsaved) {
+				workIsUnsaved.set(false);
+				const data = JSON.stringify($currentSong);
+				if ($lines?.length == 0) return;
+
+				// update current local storage
+				localStorage.setItem("currentSong", data);
+
+				// update all songs locally (memory and storage)
+				allSongs.update((songs) => {
+					const index = songs.findIndex(
+						(s) => s.songId == $currentSongId,
+					);
+					songs[index] = $currentSong;
+					localStorage.setItem("allSongs", JSON.stringify(songs));
+					return songs;
+				});
+
+				// save to server
+				const json = await req("save", $currentSong, $authToken);
+				console.log({ json });
+
+				workIsUnsaved.set(false);
+			}
+		}, N * 1000);
+
+		// setInterval(async () => {
+		// 	const allCloudSongs = await req("load", {}, $authToken);
+		// 	if (allCloudSongs.length > 0) {
+		// 		allCloudSongs.sort((a, b) => b.songId - a.songId);
+		// 		localStorage.setItem("allSongs", JSON.stringify(allCloudSongs));
+		// 		allSongs.set(allCloudSongs);
+		// 	}
+		// }, 1000);
+
+		// YOU MUST WAIT UNTIL IT IS SET
+		lines.subscribe((value) => {
+			lyricsBySlide.set(convertLyricLinesToSlides(value));
+			// setTimeout(() => console.log($lyricsBySlide), 100);
+		});
+	});
 </script>
 
 {#if $displaySingleAudienceView}
@@ -33,7 +125,9 @@
 				<Saved />
 			</div>
 			<div id="editor">
-				<LyricEditor />
+				{#key (displaySingleAudienceView, displayPresenterView)}
+					<LyricEditor />
+				{/key}
 			</div>
 			<div
 				id="settings"
