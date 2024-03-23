@@ -16,7 +16,6 @@
 		const author = (
 			song["author"] || UNKNOWN_SONG_AUTHOR_PLACEHOLDER
 		).toLowerCase();
-		// const terms = $searchValue.split(/ +/);
 		const terms = query.split(/ +/);
 		if (terms.length == 0) return true;
 		return terms.every(
@@ -33,14 +32,13 @@
 	>
 </div>
 
+<input
+	type="text"
+	placeholder="Search.."
+	id="searchBar"
+	bind:value={$searchValue}
+/>
 <div id="songs">
-	<input
-		type="text"
-		placeholder="Search.."
-		id="searchBar"
-		bind:value={$searchValue}
-	/>
-
 	{#each $allSongs as song}
 		{#if isSearchMatch($searchValue, song)}
 			<SavedSong
@@ -81,6 +79,7 @@
 		left: 20px;
 		position: relative;
 		top: 10px;
+		margin-bottom: 1rem;
 	}
 
 	#songs {
