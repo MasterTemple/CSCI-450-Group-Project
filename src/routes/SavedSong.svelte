@@ -12,6 +12,7 @@
 	} from "./stores";
 	export let songTitle;
 	export let songId;
+	export let songAuthor;
 	export let dateCreated;
 	// const thisSong = $allSongs.find((s) => s.songId == songId);
 	// let title = thisSong.title;
@@ -61,7 +62,7 @@
 	>
 	</button>
 	<p id="songTitle">{songTitle}</p>
-	<p id="dateCreated">{dateCreated.toDateString()}</p>
+	<p id="dateCreated">{songAuthor} - {dateCreated.toLocaleDateString()}</p>
 	<button on:click={deleteSong}>Delete</button>
 </div>
 
