@@ -1,0 +1,16 @@
+:root {
+	--white: #ffffff;
+	--primary: #008cff;
+	--secondary: #0051ff;
+	--accent: #ff5e00;
+	--warning: #ff0000;
+
+	--black: #000000;
+	--dark0: #111111;
+	--dark1: #1e2124;
+	--dark2: #282b30;
+	--dark3: #36393e;
+	--dark4: #424549;
+
+	--border-radius: 5px;
+}

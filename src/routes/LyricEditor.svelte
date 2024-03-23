@@ -265,7 +265,6 @@
 		type="text"
 		placeholder="Song Title"
 		id="songTitle"
-		style="--color: {color.darkBlue}"
 		bind:value={$title}
 	/>
 	<input
@@ -469,19 +468,20 @@
 	#songTitle {
 		text-align: center;
 		border: none;
-		background-color: var(--color);
-		color: white;
+		background-color: var(--dark0);
+		color: var(--white);
 		border-radius: 5px;
-		font-size: larger;
+		font-size: x-large;
+		width: 20ch;
 	}
 
 	#songArtist {
 		text-align: center;
 		border: none;
-		background-color: var(--color);
-		color: white;
+		background-color: var(--dark0);
+		color: var(--white);
 		border-radius: 5px;
-		font-size: small;
+		font-size: medium;
 	}
 
 	::placeholder {

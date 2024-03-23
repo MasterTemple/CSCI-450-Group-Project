@@ -5,7 +5,7 @@ Unless the Lord does raise the house, In vain its builders strive.
 To you who boast tomorrow’s gain, Tell me, what is your life?
 A mist, it vanishes at dawn, All glory be to Christ.
 
-Chorus 
+Chorus
 All glory be to Christ our King,
 All glory be to Christ.
 His rule and reign we’ll ever sing,
@@ -17,7 +17,7 @@ Who is Himself our daily bread, Praise Him the Lord of love.
 Let living waters satisfy the thirsty without price.
 Come eat of Him, our Living Bread, all glory be to Christ.
 
-Chorus 
+Chorus
 All glory be to Christ our King,
 All glory be to Christ.
 His rule and reign we’ll ever sing,
@@ -29,7 +29,7 @@ The Lamb who was for sinner’s slain, Is making all things new.
 Behold our God shall live with us, And be our Steadfast Light,
 And we shall e’er His people be, All glory be to Christ.
 
-Chorus 
+Chorus
 All glory be to Christ our King,
 All glory be to Christ.
 His rule and reign we’ll ever sing,
@@ -39,7 +39,7 @@ All glory be to Christ our King,
 All glory be to Christ.
 His rule and reign we’ll ever sing,
 All glory be to Christ.
-        `
+        `;
 export const EXAMPLE_CONTENTS_2 = `
 Should nothing of our efforts stand
 No legacy survive
@@ -87,4 +87,4 @@ His rule and reign will ever sing,
 All glory be to Christ!
 
 
-        `
+        `;

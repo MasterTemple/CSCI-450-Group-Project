@@ -24,35 +24,40 @@
 	}
 </script>
 
-<div id="drawerDiv">
-	<button
-		id="drawerButton"
-		style="--color: {color.brown}"
-		on:click={toggleDrawer}>{icons[$savedSongsIsOpen ? 1 : 0]}</button
-	>
-</div>
-
-<input
-	type="text"
-	placeholder="Search.."
-	id="searchBar"
-	bind:value={$searchValue}
-/>
-<div id="songs">
-	{#each $allSongs as song}
-		{#if isSearchMatch($searchValue, song)}
-			<SavedSong
-				songTitle={song["title"]}
-				songId={song["songId"]}
-				songAuthor={song["author"] || UNKNOWN_SONG_AUTHOR_PLACEHOLDER}
-				firstSlideLyrics={song["slides"][0]}
-				dateCreated={new Date(parseInt(song["songId"]))}
-			/>
-		{/if}
-	{/each}
+<div id="saved-song-list">
+	<div id="drawerDiv">
+		<button
+			id="drawerButton"
+			style="--color: {color.brown}"
+			on:click={toggleDrawer}>{icons[$savedSongsIsOpen ? 1 : 0]}</button
+		>
+	</div>
+	<input
+		type="text"
+		placeholder="Search.."
+		id="searchBar"
+		bind:value={$searchValue}
+	/>
+	<div id="songs">
+		{#each $allSongs as song}
+			{#if isSearchMatch($searchValue, song)}
+				<SavedSong
+					songTitle={song["title"]}
+					songId={song["songId"]}
+					songAuthor={song["author"] ||
+						UNKNOWN_SONG_AUTHOR_PLACEHOLDER}
+					firstSlideLyrics={song["slides"][0]}
+					dateCreated={new Date(parseInt(song["songId"]))}
+				/>
+			{/if}
+		{/each}
+	</div>
 </div>
 
 <style>
+	#saved-song-list {
+		border-radius: var(--border-radius);
+	}
 	#drawerDiv {
 		position: absolute;
 		bottom: 50%;

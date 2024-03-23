@@ -78,6 +78,8 @@
 <style>
 	.song-info {
 		margin-top: 1rem;
+		background-color: var(--dark1);
+		border-radius: var(--border-radius);
 	}
 	.delete-icon {
 		/* height: 4ch; */
