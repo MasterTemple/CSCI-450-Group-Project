@@ -45,6 +45,7 @@
 				songTitle={song["title"]}
 				songId={song["songId"]}
 				songAuthor={song["author"] || UNKNOWN_SONG_AUTHOR_PLACEHOLDER}
+				firstSlideLyrics={song["slides"][0]}
 				dateCreated={new Date(parseInt(song["songId"]))}
 			/>
 		{/if}

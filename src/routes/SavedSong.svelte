@@ -1,9 +1,9 @@
 <script>
+	import Slide from "./PresenterView/Slides.svelte";
 	import { req } from "./db.js";
 	import {
 		allSongs,
 		authToken,
-		color,
 		currentSong,
 		currentSongId,
 		deleteSongFromLocalList,
@@ -14,6 +14,7 @@
 	export let songId;
 	export let songAuthor;
 	export let dateCreated;
+	export let firstSlideLyrics;
 	// const thisSong = $allSongs.find((s) => s.songId == songId);
 	// let title = thisSong.title;
 	// let date = new Date(parseInt(thisSong["songId"])).toDateString();
@@ -55,11 +56,8 @@
 </script>
 
 <div>
-	<button
-		id="image"
-		style="--color: {color.lightPurple}"
-		on:click={loadSongFromId}
-	>
+	<button id="image" on:click={loadSongFromId}>
+		<Slide lyrics={firstSlideLyrics} fontSizeOverride={12} />
 	</button>
 	<p id="songTitle">{songTitle}</p>
 	<p id="dateCreated">{songAuthor} - {dateCreated.toLocaleDateString()}</p>
@@ -68,9 +66,9 @@
 
 <style>
 	#image {
-		background-color: var(--color);
+		background-color: var(--background-color);
 		width: 90%;
-		height: 120px;
+		/* height: 120px; */
 		position: relative;
 		left: 3%;
 		top: 20px;

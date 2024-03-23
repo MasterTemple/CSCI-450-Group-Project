@@ -11,18 +11,22 @@
 	import {
 		allSongs,
 		authToken,
+		backgroundColor,
 		color,
 		currentSong,
 		currentSongId,
 		displayPresenterView,
 		displaySingleAudienceView,
 		emailAddress,
+		fontFamily,
+		fontSize,
 		lines,
 		lyricsBySlide,
 		rawClipboardContents,
 		savedSongsIsOpen,
 		setCurrrentSong,
 		settingsIsOpen,
+		textColor,
 		workIsUnsaved,
 	} from "./stores";
 
@@ -106,40 +110,45 @@
 	});
 </script>
 
-{#if $displaySingleAudienceView}
-	<AudienceView />
-{:else if $displayPresenterView}
-	<PresenterView />
-{:else}
-	<div id="everything">
-		<nav id="navbar">
-			<NavBar />
-		</nav>
-		<div id="content">
-			<div
-				id="saved"
-				style="--loc: {$savedSongsIsOpen
-					? 0
-					: -14.5}vw; --color: {color.brown}"
-			>
-				<SavedSongList />
-			</div>
-			<div id="editor">
-				{#key (displaySingleAudienceView, displayPresenterView)}
-					<LyricEditor />
-				{/key}
-			</div>
-			<div
-				id="settings"
-				style="--loc: {$settingsIsOpen
-					? 0
-					: -14.5}vw; --color: {color.brown}"
-			>
-				<Settings />
+<div
+	id="root-style"
+	style="--background-color: {$backgroundColor};--text-color:{$textColor};--font-family:{$fontFamily};--font-size:{$fontSize}"
+>
+	{#if $displaySingleAudienceView}
+		<AudienceView />
+	{:else if $displayPresenterView}
+		<PresenterView />
+	{:else}
+		<div id="everything">
+			<nav id="navbar">
+				<NavBar />
+			</nav>
+			<div id="content">
+				<div
+					id="saved"
+					style="--loc: {$savedSongsIsOpen
+						? 0
+						: -14.5}vw; --color: {color.brown}"
+				>
+					<SavedSongList />
+				</div>
+				<div id="editor">
+					{#key (displaySingleAudienceView, displayPresenterView)}
+						<LyricEditor />
+					{/key}
+				</div>
+				<div
+					id="settings"
+					style="--loc: {$settingsIsOpen
+						? 0
+						: -14.5}vw; --color: {color.brown}"
+				>
+					<Settings />
+				</div>
 			</div>
 		</div>
-	</div>
-{/if}
+	{/if}
+</div>
 
 <style>
 	#everything {
