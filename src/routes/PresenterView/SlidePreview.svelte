@@ -60,7 +60,7 @@
 							</div>
 						</div>
 					</button>
-					<p>{baseIndex + 3 * i + j + 1}</p>
+					<p class="song-index">{baseIndex + 3 * i + j + 1}</p>
 				</div>
 			{/each}
 		</div>
@@ -68,6 +68,12 @@
 </div>
 
 <style>
+	* {
+		font-family: var(--font-family);
+	}
+	.song-index {
+		color: var(--text-color);
+	}
 	.slide-preview {
 		/* height: 4rem; */
 	}

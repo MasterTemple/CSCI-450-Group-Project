@@ -312,7 +312,7 @@
 	}
 
 	#presentButton {
-		background-color: var(--secondary);
+		background-color: var(--action);
 		border: none;
 		display: flex;
 		width: fit-content;
@@ -343,7 +343,7 @@
 	}
 
 	#exportButton {
-		background-color: var(--secondary);
+		background-color: var(--action);
 		border: none;
 		display: flex;
 		width: fit-content;
