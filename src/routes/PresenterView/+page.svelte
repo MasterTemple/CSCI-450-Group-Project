@@ -112,7 +112,7 @@
 		background-color: whitesmoke;
 		display: flex;
 		flex-direction: row;
-		height: 100%;
+		height: 100vh;
 	}
 
 	#LeftColumn {
