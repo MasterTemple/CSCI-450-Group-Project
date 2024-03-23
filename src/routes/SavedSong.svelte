@@ -55,7 +55,7 @@
 	}
 </script>
 
-<div>
+<div class="saved-song">
 	<button id="image" on:click={loadSongFromId}>
 		<Slide lyrics={firstSlideLyrics} fontSizeOverride={12} />
 	</button>
@@ -65,6 +65,9 @@
 </div>
 
 <style>
+	.saved-song {
+		font-family: var(--font-family);
+	}
 	#image {
 		background-color: var(--background-color);
 		width: 90%;
