@@ -50,10 +50,14 @@
 						)}
 					>
 						<div class="slide-zoom">
-							<Slides
-								lyrics={$lyricsBySlide?.[baseIndex + 3 * i + j]}
-								fontSizeOverride={10}
-							/>
+							<div class="slide-preview">
+								<Slides
+									lyrics={$lyricsBySlide?.[
+										baseIndex + 3 * i + j
+									]}
+									fontSizeOverride={10}
+								/>
+							</div>
 						</div>
 					</button>
 					<p>{baseIndex + 3 * i + j + 1}</p>
@@ -64,11 +68,15 @@
 </div>
 
 <style>
+	.slide-preview {
+		/* height: 4rem; */
+	}
 	.slides-and-index {
 		display: flex;
 		flex-direction: column;
-		margin: 0;
+		margin: 0.25rem;
 		padding: 0;
+		flex: 1;
 	}
 	.slides-and-index > p {
 		text-align: center;
@@ -89,6 +97,8 @@
 		padding: 1% 0 1% 0;
 	}
 	.slide-outline {
+		background-color: var(--background-color);
+		color: var(--text-color);
 		border: 4px solid black;
 		border-radius: 8%;
 		margin: 0;
@@ -98,6 +108,10 @@
 		text-align: center;
 		display: flex;
 		font-size: x-small !important;
+		width: 30ch;
+		height: 8rem;
+		/* height: 13ch; */
+		overflow: hidden;
 	}
 	.current-slide {
 		border-color: green;

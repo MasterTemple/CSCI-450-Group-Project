@@ -16,10 +16,8 @@
 	$: safeLyrics = lyrics || EMPTY_SLIDE_CONTENTS;
 </script>
 
-<div
-	id="slide"
-	style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size:{$fontSize}"
->
+<!-- style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size:{$fontSize}" -->
+<div id="slide">
 	<div id="lyrics">
 		{#each safeLyrics as line}
 			<p
@@ -39,9 +37,13 @@
 		min-width: max-content;
 	}
 	#slide {
-		background-color: lightblue;
-		height: 13vh;
-		width: 8vw;
+		background-color: var(--background-color);
+		color: var(--text-color);
+		font-size: var(--font-size);
+		font-family: var(--font-family);
+		/* height: 13vh; */
+		/* width: 8vw; */
+		/* width: 40ch; */
 		border: 3px solid black;
 		border-radius: 5%;
 		margin: auto;
@@ -52,5 +54,10 @@
 		align-items: center;
 		justify-content: center;
 		display: flex;
+		overflow: hidden;
+	}
+	#lyrics,
+	p {
+		overflow: visible;
 	}
 </style>
