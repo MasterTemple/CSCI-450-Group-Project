@@ -4,7 +4,7 @@
 	import LyricEditor from "./LyricEditor.svelte";
 	import NavBar from "./NavBar.svelte";
 	import PresenterView from "./PresenterView/+page.svelte";
-	import Saved from "./Saved.svelte";
+	import SavedSongList from "./SavedSongList.svelte";
 	import Settings from "./Settings.svelte";
 	import { req } from "./db";
 	import { convertLyricLinesToSlides } from "./functions";
@@ -122,7 +122,7 @@
 					? 0
 					: -14.5}vw; --color: {color.brown}"
 			>
-				<Saved />
+				<SavedSongList />
 			</div>
 			<div id="editor">
 				{#key (displaySingleAudienceView, displayPresenterView)}
