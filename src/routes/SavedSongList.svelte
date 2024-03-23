@@ -74,13 +74,13 @@
 	}
 
 	#searchBar {
-		border-radius: 10px;
+		border-radius: 8px;
+		width: 90%;
 		border: none;
-		width: 150px;
-		left: 20px;
+		margin: 0.75rem;
 		position: relative;
-		top: 10px;
-		margin-bottom: 1rem;
+		padding: 0.25rem;
+		font-size: medium;
 	}
 
 	#songs {

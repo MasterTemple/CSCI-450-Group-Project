@@ -68,7 +68,6 @@
 	#image {
 		background-color: var(--background-color);
 		width: 90%;
-		/* height: 120px; */
 		position: relative;
 		left: 3%;
 		top: 20px;
