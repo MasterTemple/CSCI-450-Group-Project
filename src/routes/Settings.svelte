@@ -9,7 +9,6 @@
 	} from "./stores";
 
 	let icons = ["<", ">"];
-	var icon = 1;
 
 	let selectedColor = color.darkPurple;
 	let nonSelectedColor = color.lightPurple;
