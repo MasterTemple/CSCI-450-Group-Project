@@ -1,4 +1,5 @@
 <script>
+	import { writable } from "svelte/store";
 	import EditorSettings from "./EditorSettings.svelte";
 	import PresentationSettings from "./PresentationSettings.svelte";
 	import {
@@ -9,69 +10,42 @@
 	} from "./stores";
 
 	let icons = ["<", ">"];
-	var icon = 1;
-
-	let selectedColor = color.darkPurple;
-	let nonSelectedColor = color.lightPurple;
-
-	let editorColor = selectedColor;
-	let presentationColor = nonSelectedColor;
 
 	function toggleDrawer() {
 		settingsIsOpen.set(!$settingsIsOpen);
 	}
 
-	function editorToggled() {
-		settingsSelection.set(settingsToggleOption.editor);
-		editorColor = selectedColor;
-		presentationColor = nonSelectedColor;
-	}
-
-	function presentationToggled() {
-		settingsSelection.set(settingsToggleOption.presentation);
-		editorColor = nonSelectedColor;
-		presentationColor = selectedColor;
+	let isEditorSettings = writable(true);
+	function settingsToggle() {
+		isEditorSettings.set(!$isEditorSettings);
 	}
 </script>
 
 <div id="drawerDiv">
-	<button
-		id="drawerButton"
-		style="--color: {color.brown}"
-		on:click={toggleDrawer}>{icons[$settingsIsOpen ? 1 : 0]}</button
+	<button id="drawerButton" on:click={toggleDrawer}
+		>{icons[$settingsIsOpen ? 1 : 0]}</button
 	>
 </div>
 
-<div id="editorOrPresentationToggle">
+<div id="settings-section-select">
 	<button
 		id="editorToggle"
-		on:click={editorToggled}
-		style="--color: {editorColor}">Editor</button
+		on:click={() => isEditorSettings.set(true)}
+		class:selected={$isEditorSettings}>Editor</button
 	>
 	<button
 		id="presentationToggle"
-		on:click={presentationToggled}
-		style="--color: {presentationColor}">Presentation</button
+		on:click={() => isEditorSettings.set(false)}
+		class:selected={!$isEditorSettings}>Presentation</button
 	>
 </div>
 
-<div
-	id="editorSettings"
-	style="--visibility: {$settingsSelection == settingsToggleOption.editor
-		? 'visible'
-		: 'hidden'}"
->
-	<EditorSettings />
-</div>
-
-<div
-	id="presentationSettingsDiv"
-	style="--visibility: {$settingsSelection ==
-	settingsToggleOption.presentation
-		? 'visible'
-		: 'hidden'}"
->
-	<PresentationSettings />
+<div id="settings-content">
+	{#if $isEditorSettings}
+		<EditorSettings />
+	{:else}
+		<PresentationSettings />
+	{/if}
 </div>
 
 <style>
@@ -97,38 +71,27 @@
 		box-shadow: 2px 1px 15px var(--black);
 	}
 
-	#editorOrPresentationToggle {
+	#settings-section-select {
 		display: flex;
 	}
 
-	#editorToggle {
+	#settings-section-select > button {
+		background-color: var(--dark2);
 		flex: 1;
 		width: 50%;
 		position: relative;
-		background-color: var(--color);
+		color: var(--white);
 		border: none;
-		height: 50px;
-		border-top-left-radius: 19px;
+		height: 3rem;
+		font-size: medium;
+		border-top-left-radius: calc(2 * var(--border-radius));
+		border-top-right-radius: calc(2 * var(--border-radius));
+	}
+	#settings-section-select > button.selected {
+		background-color: var(--dark4);
 	}
 
-	#presentationToggle {
-		flex: 1;
-		position: relative;
-		width: 50%;
-		background-color: var(--color);
-		border: none;
-		height: 50px;
-	}
-
-	#editorSettings {
-		visibility: var(--visibility);
-		position: absolute;
-		left: 0;
-		top: 100;
-	}
-
-	#presentationSettingsDiv {
-		visibility: var(--visibility);
+	#settings-content {
 		position: absolute;
 		left: 0;
 		top: 100;

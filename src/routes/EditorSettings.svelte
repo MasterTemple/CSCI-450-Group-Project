@@ -1,138 +1,199 @@
 <script>
-	// let textColor;
-	// let backgroundColor;
-	// let fontSize = 12;
-	// let fontFamily = "Arial";
-	// let titleSlide = false;
-	// let numberOfColumns = 1;
 	import {
-		allSongs,
 		backgroundColor,
+		breakIndexes,
+		color,
 		currentSong,
+		dividerList,
 		fontFamily,
 		fontSize,
-		includeTitleSlide,
+		lines,
+		lyricsBySlide,
 		numberOfColumns,
+		rawClipboardContents,
 		textColor,
-	} from "./stores";
+	} from "./stores.js";
 
-	function applySettingsToAll() {
-		allSongs.update((songs) => {
-			songs.map((s) => {
-				s.settings = $currentSong.settings;
-				return s;
+	let divideEveryNLinesCount = 4;
+	let divideAtMatchWord = "";
+	let selectedAction;
+
+	function applySettings(event) {
+		// const selectedAction = event.document;
+		console.log({ selectedAction });
+
+		if ("divideEveryCheck" == selectedAction) {
+			if (
+				divideEveryNLinesCount > $lines.length ||
+				divideEveryNLinesCount < 1
+			) {
+				// TODO: Implement error message
+				return;
+			}
+
+			var counter = 0;
+			$lyricsBySlide = [[]];
+
+			for (var i = 0; i < $lines.length; i++) {
+				if (
+					(i + 1) % divideEveryNLinesCount == 0 &&
+					i + 1 >= divideEveryNLinesCount
+				) {
+					counter++;
+					$lines[i].divider = true;
+					$lyricsBySlide[counter] = [];
+				} else {
+					$lines[i].divider = false;
+				}
+				$lyricsBySlide[counter].push($lines[i].text);
+			}
+		} else if ("autodetectCheck" == selectedAction) {
+			var counter = 0;
+			$lyricsBySlide = [[]];
+			// WHAT DOES THIS EVEN DO??
+			for (i = 0; i < $lines.length; i++) {
+				if ($lines[i].divider) {
+					counter++;
+					$lyricsBySlide[counter] = [];
+				} else {
+					$lyricsBySlide[counter].push($lines[i].text);
+				}
+			}
+		} else if ("divideAtMatchCheck" == selectedAction) {
+			counter = 0;
+			if (divideAtMatchWord == "") {
+				return; //TODO: Implement error
+			}
+			for (var i = 0; i < $lines.length; i++) {
+				if (
+					$lines[i].text.toLowerCase().includes(divideAtMatchWord.toLowerCase())
+				) {
+					counter++;
+					$lines[i].divider = true;
+					$lyricsBySlide[counter] = [];
+				} else {
+					$lines[i].divider = false;
+				}
+				$lyricsBySlide[counter].push($lines[i].text);
+			}
+		} else if ("removeDividers" == selectedAction) {
+			lines.update((linesCopy) => {
+				return linesCopy.map(({ text }) => {
+					return { text, divider: false };
+				});
 			});
-			localStorage.setItem("allSongs", JSON.stringify(songs));
-			return songs;
-		});
+		}
 	}
 </script>
 
-<div id="editor-settings-style">
-	<div class="editor-settings-items">
-		<label
-			>Font Size<input
-				name="editor-settings"
-				type="number"
-				min="12"
-				max="36"
-				id="fontSize"
-				bind:value={$fontSize}
-			/>
-			<p class="info-hint">* This only affects your presentation</p>
-		</label>
-	</div>
-	<div class="editor-settings-items">
-		<!-- <label>hello</label> -->
-		<label
-			>Text<input
-				name="editor-settings"
-				type="color"
-				id="textColor"
-				bind:value={$textColor}
-			/></label
-		>
-	</div>
+<h2>Actions</h2>
 
-	<div class="editor-settings-items">
-		<label
-			>Background<input
-				name="editor-settings"
-				type="color"
-				id="backgroundColor"
-				bind:value={$backgroundColor}
-			/></label
-		>
-	</div>
+<div>
+	<!-- Divide every n lines -->
+	<input
+		bind:group={selectedAction}
+		name="presentation-settings"
+		type="radio"
+		id="divideEveryCheck"
+		value="divideEveryCheck"
+	/><label
+		>Divide every <input
+			type="number"
+			id="divideEveryLines"
+			name="divideEveryLines"
+			placeholder="n"
+			bind:value={divideEveryNLinesCount}
+		/> lines</label
+	>
+	<br />
+	<!-- Autodetect from spacing -->
+	<label
+		><input
+			bind:group={selectedAction}
+			name="presentation-settings"
+			type="radio"
+			id="autodetectCheck"
+			value="autodetectCheck"
+		/>Autodetect from spacing</label
+	>
+	<br />
+	<!-- Divide at match: -->
+	<input
+		bind:group={selectedAction}
+		name="presentation-settings"
+		type="radio"
+		id="divideAtMatchCheck"
+		value="divideAtMatchCheck"
+	/><label
+		>Divide at match: <input
+			type="text"
+			id="divideAtMatch"
+			name="divideAtMatch"
+			placeholder="text"
+			bind:value={divideAtMatchWord}
+		/></label
+	>
+	<br />
+	<!-- Remove All Dividers -->
+	<label
+		><input
+			bind:group={selectedAction}
+			name="presentation-settings"
+			type="radio"
+			id="removeDividers"
+			value="removeDividers"
+		/>Remove All Dividers</label
+	>
+</div>
 
-	<div class="editor-settings-items">
-		<label for="Font Family">Font</label>
-		<select name="editor-settings" id="fontFamily" bind:value={$fontFamily}>
-			<option value="arial" selected>Arial</option>
-			<option value="timeNewRoman">Times New Roman</option>
-			<option value="helvetica">Helvetica</option>
-		</select>
-	</div>
+<button id="applyChangesButton" on:click={applySettings}>Apply Changes</button>
 
-	<div class="editor-settings-items">
-		<label
-			>Title Slide<input
-				name="editor-settings"
-				type="checkbox"
-				id="titleSlide"
-				bind:value={$includeTitleSlide}
-			/></label
-		>
-	</div>
+<h2>Settings</h2>
 
-	<div class="editor-settings-items">
-		<label
-			>Columns <input
-				name="editor-settings"
-				type="number"
-				min="1"
-				max="6"
-				id="numberOfColumns"
-				bind:value={$numberOfColumns}
-			/></label
-		>
-	</div>
-
-	<button on:click={applySettingsToAll}>Apply to All</button>
-	<p class="info-hint">
-		* Changes are automatically applied to the current slide
-	</p>
+<div class="editor-settings-items">
+	<label
+		>Columns <input
+			name="editor-settings"
+			type="number"
+			min="1"
+			max="6"
+			id="numberOfColumns"
+			bind:value={$numberOfColumns}
+		/></label
+	>
 </div>
 
 <style>
-	#editor-settings-style {
-		display: flex;
-		flex-direction: column;
-	}
-	#textColor {
-		margin-right: 5px;
-		float: right;
-	}
-	#backgroundColor {
-		margin-right: 5px;
-		float: right;
+	#applyChangesButton {
+		background-color: antiquewhite;
+		border: none;
+		border-radius: 10px;
+		height: 3vh;
+		width: 95%;
 	}
 
-	#fontSize {
-		margin-right: 15px;
-		float: right;
+	#divideEveryLines {
+		width: 15px;
+		text-align: center;
 	}
 
-	.editor-settings-items {
-		padding-bottom: 0.25rem;
-		padding-top: 0.25rem;
-		margin-left: 30px;
-		font-size: 20px;
+	#divideAtMatch {
+		position: relative;
+		width: 50%;
+		left: 25%;
 	}
-	.info-hint {
-		font-size: 12px;
-		padding: 0;
-		padding-top: 0.25rem;
+
+	/* https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp */
+
+	/* Chrome, Safari, Edge, Opera */
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
 		margin: 0;
+	}
+
+	/* Firefox */
+	input[type="number"] {
+		-moz-appearance: textfield;
 	}
 </style>
