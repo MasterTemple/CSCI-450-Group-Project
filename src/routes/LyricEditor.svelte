@@ -295,15 +295,21 @@
 										$lines.length - 1,
 									)
 								].divider)}
-						class:start={$lines[i * NUMBER_OF_LINES_PER_COLUMN + j]
-							.divider ||
+						class:start={$lines[
+							min(
+								max(i * NUMBER_OF_LINES_PER_COLUMN + j + -1, 0),
+								$lines.length - 1,
+							)
+						].divider ||
 							(i == 0 && j == 0)}
 						class:end={$lines[
 							min(
-								i * NUMBER_OF_LINES_PER_COLUMN + j + 1,
+								i * NUMBER_OF_LINES_PER_COLUMN + j + 0,
 								$lines.length - 1,
 							)
-						].divider}
+						].divider ||
+							i * NUMBER_OF_LINES_PER_COLUMN + j ==
+								$lines.length - 1}
 					>
 						<p
 							class="lyric-text"
@@ -390,9 +396,9 @@
 		background-color: var(--background-color);
 		padding: 0.5ch 2ch;
 		margin: 0;
-		max-width: 100% !important;
-		width: fit-content;
+		/* max-width: 100% !important; */
 		text-wrap: nowrap;
+		width: 40ch;
 	}
 	button.line-border,
 	button.line-border textarea {
@@ -444,14 +450,16 @@
 		display: flex;
 		flex-direction: column;
 		flex-wrap: nowrap;
+		flex-basis: content;
 		/* flex: 0 0 auto; */
 		align-items: center;
-		max-width: 40ch;
-		min-width: 20ch;
-		width: fit-content;
+		/* max-width: 40ch;
+		min-width: 20ch; */
+		width: 40ch;
+		/* width: fit-content; */
 		background-color: var(--color);
 		/* margin: 0 auto; */
-		margin: 0 2rem;
+		margin: 0 1rem;
 		padding: 0;
 		border-radius: 10px;
 	}
@@ -519,6 +527,9 @@
 		height: fit-content;
 		padding: 0;
 		margin: 0;
+		width: 40ch;
+		overflow: hidden;
+		/* text-overflow: ellipsis; */
 	}
 
 	#column-nagivation {
