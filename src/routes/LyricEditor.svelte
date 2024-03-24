@@ -18,6 +18,7 @@
 	} from "./stores.js";
 
 	// let workIsUnsaved = false;
+	let column_ch_width = writable(30);
 
 	function createNewSong() {
 		// new id
@@ -34,6 +35,17 @@
 		rawClipboardContents.subscribe((v) => setLyricDataFromClipboard(v));
 		document.addEventListener("paste", (event) => {
 			if (event.target.tagName != "INPUT") readClipboard();
+		});
+
+		lines.subscribe((newLines) => {
+			let longestLineWidth = 0;
+			for (let { text } of newLines) {
+				if (text.length > longestLineWidth)
+					longestLineWidth = text.length;
+			}
+			column_ch_width.set(longestLineWidth);
+			// column_ch_width.set(min(longestLineWidth, 30));
+			// console.log({ longestLineWidth, newLines });
 		});
 
 		// // load cloud storage and sync with local storage
@@ -199,7 +211,7 @@
 	}
 
 	/**
-	 * @param {String} str - Check if a line should be split in half
+	 * @param {String} contents - Check if a line should be split in half
 	 */
 	function setLyricDataFromClipboard(contents) {
 		// rawClipboardContents.set(EXAMPLE_CONTENTS_2)
@@ -261,7 +273,9 @@
 	let leftMostDisplayColumn = writable(0);
 </script>
 
-<div id="songInformation">
+<div id="songInformation"
+	style="--title-ch-width: {max($title.length, 20)}ch;--author-ch-width: {max($author.length, 20)}ch;"
+>
 	<input
 		type="text"
 		placeholder="Song Title"
@@ -272,11 +286,10 @@
 		type="text"
 		placeholder="Artist"
 		id="songArtist"
-		style="--color: {color.darkBlue}"
 		bind:value={$author}
 	/>
 </div>
-<div id="lyric-region">
+<div id="lyric-region" style="--column-ch-width: {$column_ch_width}ch;">
 	{#each { length: NUMBER_OF_LINES_PER_COLUMN } as _, i}
 		{#if $leftMostDisplayColumn <= i && i <= $leftMostDisplayColumn + $numberOfColumns - 1 && $lines.length >= i * NUMBER_OF_LINES_PER_COLUMN}
 			<div id="column-{i}" class="lyric-column">
@@ -393,7 +406,7 @@
 		margin: 0; */
 		/* max-width: 100% !important; */
 		text-wrap: nowrap;
-		width: 40ch;
+		width: var(--column-ch-width);
 	}
 	button.line-border {
 		/* button.line-border textarea { */
@@ -451,7 +464,7 @@
 		align-items: center;
 		/* max-width: 40ch;
 		min-width: 20ch; */
-		width: 40ch;
+		width: var(--column-ch-width);
 		/* width: fit-content; */
 		/* background-color: red; */
 		/* margin: 0 auto; */
@@ -515,7 +528,7 @@
 	}
 
 	.lyric-text {
-		width: 40ch;
+		width: var(--column-ch-width);
 		/* width: 100%; */
 		margin: 0;
 		padding: 1ch 0;
@@ -551,8 +564,9 @@
 		background-color: var(--dark0);
 		color: var(--white);
 		border-radius: 5px;
-		font-size: x-large;
-		width: 20ch;
+		font-size: xx-large;
+		width: var(--title-ch-width);
+		padding: 0.25rem 0;
 	}
 
 	#songArtist {
@@ -561,10 +575,13 @@
 		background-color: var(--dark0);
 		color: var(--white);
 		border-radius: 5px;
-		font-size: medium;
+		font-size: large;
+		padding: 0.25rem 0;
+		width: var(--author-ch-width);
 	}
 
 	::placeholder {
 		color: grey;
 	}
+
 </style>

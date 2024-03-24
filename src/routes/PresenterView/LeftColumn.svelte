@@ -57,7 +57,9 @@
 </div>
 <button id="switchSong" style="--color: {color.darkBlue}">Switch Song</button>
 
-<div id="songSlideStack">
+<div id="songSlideStack"
+	style="--title-ch-width: {max($title.length, 20)}ch;--author-ch-width: {max($author.length, 20)}ch;"
+>
 	<div id="songInfo">
 		<div id="songTitle">
 			<p>{$title}</p>
@@ -213,5 +215,27 @@
 	#slideCounter {
 		font-size: larger;
 		color: var(--white);
+	}
+
+	#songTitle {
+		text-align: center;
+		border: none;
+		background-color: var(--background-color);
+		color: var(--white);
+		border-radius: 5px;
+		font-size: xx-large;
+		width: var(--title-ch-width);
+		padding: 0.25rem 0.5rem;
+	}
+
+	#songArtist {
+		text-align: center;
+		border: none;
+		background-color: var(--background-color);
+		color: var(--white);
+		border-radius: 5px;
+		font-size: large;
+		padding: 0.25rem 0.5rem;
+		width: var(--author-ch-width);
 	}
 </style>
