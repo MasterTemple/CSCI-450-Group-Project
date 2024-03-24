@@ -6,6 +6,7 @@
 	import PresenterView from "./PresenterView/+page.svelte";
 	import SavedSongList from "./SavedSongList.svelte";
 	import Settings from "./Settings.svelte";
+	import { EMPTY_SONG_CONTENTS } from "./constants.js";
 	import { req } from "./db";
 	import { convertLyricLinesToSlides } from "./functions";
 	import {
@@ -56,8 +57,7 @@
 		if (savedCurrentSong) {
 			setCurrrentSong(savedCurrentSong);
 		} else {
-			rawClipboardContents.set(EXAMPLE_CONTENTS_2);
-			setLyricDataFromClipboard($rawClipboardContents);
+			rawClipboardContents.set(EMPTY_SONG_CONTENTS);
 		}
 
 		// keep track if work needs to be saved
@@ -69,7 +69,13 @@
 			if ($workIsUnsaved) {
 				workIsUnsaved.set(false);
 				const data = JSON.stringify($currentSong);
-				if ($lines?.length == 0) return;
+				console.log({ $rawClipboardContents, EMPTY_SONG_CONTENTS });
+				console.log($rawClipboardContents == EMPTY_SONG_CONTENTS);
+				if (
+					$lines?.length == 0 ||
+					$rawClipboardContents == EMPTY_SONG_CONTENTS
+				)
+					return;
 
 				// update current local storage
 				localStorage.setItem("currentSong", data);

@@ -88,3 +88,8 @@ All glory be to Christ!
 
 
         `;
+
+export const EMPTY_SONG_CONTENTS =
+	`Copy Lyrics to Your Clipboard
+Press CTRL + V to Paste
+Begin editing!`;

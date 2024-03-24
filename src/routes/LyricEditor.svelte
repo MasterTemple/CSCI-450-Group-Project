@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
+	import { EMPTY_SONG_CONTENTS } from "./constants.js";
 	import { insertAtIndex, removeAtIndex, splitLine } from "./functions.js";
 	import {
 		author,
@@ -26,10 +27,11 @@
 		// clear everything
 		title.set("");
 		author.set("");
-		setLyricDataFromClipboard("");
+		rawClipboardContents.set(EMPTY_SONG_CONTENTS);
 	}
 
 	onMount(async () => {
+		rawClipboardContents.subscribe((v) => setLyricDataFromClipboard(v));
 		document.addEventListener("paste", (event) => {
 			if (event.target.tagName != "INPUT") readClipboard();
 		});
@@ -431,7 +433,7 @@
 		width: 100%;
 		max-width: 72vw;
 		height: 40rem;
-		background-color: var(--dark2);
+		background-color: var(--dark1);
 		justify-content: space-between;
 		align-items: center;
 		flex-wrap: nowrap;
