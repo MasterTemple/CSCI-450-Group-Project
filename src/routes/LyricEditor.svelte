@@ -516,6 +516,7 @@
 		width: 40ch;
 		/* width: 100%; */
 		margin: 0;
+		padding: 1ch 0;
 		/* padding: 0; */
 	}
 
