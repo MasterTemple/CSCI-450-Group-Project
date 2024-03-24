@@ -40,8 +40,7 @@
 		lines.subscribe((newLines) => {
 			let longestLineWidth = 0;
 			for (let { text } of newLines) {
-				if (text.length > longestLineWidth)
-					longestLineWidth = text.length;
+				if (text.length > longestLineWidth) longestLineWidth = text.length;
 			}
 			column_ch_width.set(longestLineWidth);
 			// column_ch_width.set(min(longestLineWidth, 30));
@@ -273,8 +272,12 @@
 	let leftMostDisplayColumn = writable(0);
 </script>
 
-<div id="songInformation"
-	style="--title-ch-width: {max($title.length, 20)}ch;--author-ch-width: {max($author.length, 20)}ch;"
+<div
+	id="songInformation"
+	style="--title-ch-width: {max($title.length, 20)}ch;--author-ch-width: {max(
+		$author.length,
+		20,
+	)}ch;"
 >
 	<input
 		type="text"
@@ -298,11 +301,8 @@
 					<button
 						class="line-border"
 						on:click={() =>
-							($lines[
-								i * NUMBER_OF_LINES_PER_COLUMN + j
-							].divider =
-								!$lines[i * NUMBER_OF_LINES_PER_COLUMN + j]
-									.divider)}
+							($lines[i * NUMBER_OF_LINES_PER_COLUMN + j].divider =
+								!$lines[i * NUMBER_OF_LINES_PER_COLUMN + j].divider)}
 						class:start={$lines[
 							min(
 								max(i * NUMBER_OF_LINES_PER_COLUMN + j + -1, 0),
@@ -311,13 +311,9 @@
 						].divider ||
 							(i == 0 && j == 0)}
 						class:end={$lines[
-							min(
-								i * NUMBER_OF_LINES_PER_COLUMN + j + 0,
-								$lines.length - 1,
-							)
+							min(i * NUMBER_OF_LINES_PER_COLUMN + j + 0, $lines.length - 1)
 						].divider ||
-							i * NUMBER_OF_LINES_PER_COLUMN + j ==
-								$lines.length - 1}
+							i * NUMBER_OF_LINES_PER_COLUMN + j == $lines.length - 1}
 					>
 						<p
 							class="lyric-text"
@@ -326,12 +322,8 @@
 							<textarea
 								type="text"
 								class="lyric-input"
-								id="lyric-input-{i *
-									NUMBER_OF_LINES_PER_COLUMN +
-									j}"
-								data-lyric-line-number={i *
-									NUMBER_OF_LINES_PER_COLUMN +
-									j}
+								id="lyric-input-{i * NUMBER_OF_LINES_PER_COLUMN + j}"
+								data-lyric-line-number={i * NUMBER_OF_LINES_PER_COLUMN + j}
 								on:keydown={checkForEnter}
 								value={line.text}
 								rows="1"
@@ -583,5 +575,4 @@
 	::placeholder {
 		color: grey;
 	}
-
 </style>
