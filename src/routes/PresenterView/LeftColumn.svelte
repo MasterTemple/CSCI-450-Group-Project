@@ -214,4 +214,26 @@
 		font-size: larger;
 		color: var(--white);
 	}
+
+	#songTitle {
+		text-align: center;
+		border: none;
+		background-color: var(--background-color);
+		color: var(--white);
+		border-radius: 5px;
+		font-size: xx-large;
+		width: var(--title-ch-width);
+		padding: 0.25rem 0.5rem;
+	}
+
+	#songArtist {
+		text-align: center;
+		border: none;
+		background-color: var(--background-color);
+		color: var(--white);
+		border-radius: 5px;
+		font-size: large;
+		padding: 0.25rem 0.5rem;
+		width: var(--author-ch-width);
+	}
 </style>
