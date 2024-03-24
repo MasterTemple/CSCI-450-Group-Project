@@ -295,19 +295,19 @@
 										$lines.length - 1,
 									)
 								].divider)}
+						class:start={$lines[i * NUMBER_OF_LINES_PER_COLUMN + j]
+							.divider ||
+							(i == 0 && j == 0)}
+						class:end={$lines[
+							min(
+								i * NUMBER_OF_LINES_PER_COLUMN + j + 1,
+								$lines.length - 1,
+							)
+						].divider}
 					>
 						<p
 							class="lyric-text"
 							style="font-size: 14px; font-family: {$fontFamily}; color: {$textColor}"
-							class:start={$lines[
-								i * NUMBER_OF_LINES_PER_COLUMN + j
-							].divider}
-							class:end={$lines[
-								min(
-									i * NUMBER_OF_LINES_PER_COLUMN + j + 1,
-									$lines.length - 1,
-								)
-							].divider}
 						>
 							<textarea
 								type="text"
@@ -319,7 +319,6 @@
 									NUMBER_OF_LINES_PER_COLUMN +
 									j}
 								on:keydown={checkForEnter}
-								on:click|stopPropagation={() => {}}
 								value={line.text}
 								rows="1"
 							/>
@@ -387,13 +386,16 @@
 
 <style>
 	.line-border {
+		all: unset;
+		background-color: var(--background-color);
+		padding: 0.5ch 2ch;
 		margin: 0;
-		padding: 0rem;
-		border: 0px;
-		background: none;
+		max-width: 100% !important;
+		width: fit-content;
+		text-wrap: nowrap;
 	}
-	p.lyric-text,
-	p.lyric-text > textarea {
+	button.line-border,
+	button.line-border textarea {
 		background-color: var(--background-color);
 		padding: 0.5ch 2ch;
 		margin: 0;
@@ -402,22 +404,22 @@
 		text-wrap: nowrap;
 	}
 
-	p.lyric-text.start,
-	p.lyric-text:hover + p.lyric-text {
+	button.line-border.start,
+	button.line-border:hover + button.line-border {
 		border-top-left-radius: 0.5rem;
 		border-top-right-radius: 0.5rem;
 		margin-top: 0.25ch;
 		padding-top: 0.25ch;
 	}
-	p.lyric-text.end,
-	p.lyric-text:hover {
+	button.line-border.end,
+	button.line-border:hover {
 		border-bottom-left-radius: 0.5rem;
 		border-bottom-right-radius: 0.5rem;
 		margin-bottom: 0.25ch;
 		padding-bottom: 0.25ch;
 	}
-	p.lyric-text.end:hover,
-	p.lyric-text.end:hover + p.lyric-text.start {
+	button.line-border.end:hover,
+	button.line-border.end:hover + button.line-border.start {
 		padding: 0.5ch 2ch !important;
 		margin: 0 !important;
 		border-radius: 0rem !important;
