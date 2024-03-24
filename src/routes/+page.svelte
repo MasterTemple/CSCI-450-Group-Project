@@ -182,7 +182,7 @@
 	#saved {
 		height: 100%;
 		width: 20vw;
-		background-color: var(--dark2);
+		background-color: var(--dark0);
 		color: var(--white);
 		position: relative;
 		left: var(--loc);
@@ -205,7 +205,7 @@
 	}
 
 	#settings {
-		background-color: var(--dark2);
+		background-color: var(--dark0);
 		height: 100%;
 		width: 20vw;
 		position: relative;

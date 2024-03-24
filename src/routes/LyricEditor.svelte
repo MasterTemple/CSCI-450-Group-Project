@@ -369,7 +369,7 @@
 		justify-content: center;
 		align-items: center;
 		flex-wrap: nowrap;
-		overflow-x: auto;
+		overflow-x: hidden;
 	}
 
 	.lyric-column {

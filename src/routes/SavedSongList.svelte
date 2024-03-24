@@ -57,6 +57,7 @@
 <style>
 	#saved-song-list {
 		border-radius: var(--border-radius);
+		overflow: hidden;
 	}
 	#drawerDiv {
 		position: absolute;
@@ -65,17 +66,18 @@
 	}
 
 	#drawerButton {
-		background-color: var(--color); /* Green */
+		background-color: var(--dark1);
+		color: var(--white);
 		border: none;
 		text-align: center;
-		font-size: 16px;
-		width: 25px;
-		height: 75px;
+		font-size: large;
+		width: 2rem;
+		height: 8rem;
 		border-top-right-radius: 10px;
 		border-bottom-right-radius: 10px;
-		box-shadow:
+		/* box-shadow:
 			0 4px 8px 0 rgba(0, 0, 0, 0.2),
-			0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			0 6px 20px 0 rgba(0, 0, 0, 0.19); */
 	}
 
 	#searchBar {
@@ -95,5 +97,6 @@
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
+		scrollbar-track-color: red !important;
 	}
 </style>
