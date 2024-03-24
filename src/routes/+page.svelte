@@ -69,8 +69,6 @@
 			if ($workIsUnsaved) {
 				workIsUnsaved.set(false);
 				const data = JSON.stringify($currentSong);
-				console.log({ $rawClipboardContents, EMPTY_SONG_CONTENTS });
-				console.log($rawClipboardContents == EMPTY_SONG_CONTENTS);
 				if (
 					$lines?.length == 0 ||
 					$rawClipboardContents == EMPTY_SONG_CONTENTS

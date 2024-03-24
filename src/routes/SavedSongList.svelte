@@ -66,7 +66,7 @@
 	}
 
 	#drawerButton {
-		background-color: var(--dark1);
+		background-color: var(--dark0);
 		color: var(--white);
 		border: none;
 		text-align: center;
@@ -75,6 +75,7 @@
 		height: 8rem;
 		border-top-right-radius: 10px;
 		border-bottom-right-radius: 10px;
+		box-shadow: 2px 1px 15px var(--black);
 		/* box-shadow:
 			0 4px 8px 0 rgba(0, 0, 0, 0.2),
 			0 6px 20px 0 rgba(0, 0, 0, 0.19); */

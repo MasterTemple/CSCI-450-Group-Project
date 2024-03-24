@@ -85,7 +85,7 @@
 	}
 
 	#drawerButton {
-		background-color: var(--dark1);
+		background-color: var(--dark0);
 		color: var(--white);
 		border: none;
 		text-align: center;
@@ -94,7 +94,7 @@
 		height: 8rem;
 		border-top-left-radius: 10px;
 		border-bottom-left-radius: 10px;
-		/* box-shadow: 2px 1px 15px #907554; */
+		box-shadow: 2px 1px 15px var(--black);
 	}
 
 	#editorOrPresentationToggle {
