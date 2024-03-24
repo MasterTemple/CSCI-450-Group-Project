@@ -45,7 +45,7 @@
 	<div class="editor-settings-items">
 		<!-- <label>hello</label> -->
 		<label
-			>Text<input
+			>Text Color<input
 				name="editor-settings"
 				type="color"
 				id="textColor"
@@ -56,7 +56,7 @@
 
 	<div class="editor-settings-items">
 		<label
-			>Background<input
+			>Background Color<input
 				name="editor-settings"
 				type="color"
 				id="backgroundColor"
@@ -76,7 +76,7 @@
 
 	<div class="editor-settings-items">
 		<label
-			>Title Slide<input
+			>Include Title Slide<input
 				name="editor-settings"
 				type="checkbox"
 				id="titleSlide"
