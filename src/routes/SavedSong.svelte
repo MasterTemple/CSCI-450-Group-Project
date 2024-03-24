@@ -55,18 +55,63 @@
 	}
 </script>
 
-<div class="saved-song">
+<div class="saved-song column">
 	<button id="image" on:click={loadSongFromId}>
 		<Slide lyrics={firstSlideLyrics} fontSizeOverride={12} />
 	</button>
-	<p id="songTitle">{songTitle}</p>
-	<p id="dateCreated">{songAuthor} - {dateCreated.toLocaleDateString()}</p>
-	<button on:click={deleteSong}>Delete</button>
+	<div class="song-info">
+		<p id="songTitle">{songTitle}</p>
+		<div class="row">
+			<div class="column">
+				<p class="small-info">
+					Author: {songAuthor} <br />
+					Date: {dateCreated.toLocaleDateString()}
+				</p>
+			</div>
+			<button class="delete-icon" on:click={deleteSong}>
+				<img src="./trash.svg" alt="" srcset="" />
+			</button>
+		</div>
+	</div>
 </div>
 
 <style>
+	.song-info {
+		margin-top: 1rem;
+		background-color: var(--dark1);
+		border-radius: var(--border-radius);
+	}
+	.delete-icon {
+		/* height: 4ch; */
+		/* width: 4ch; */
+		padding: 0.25rem;
+		margin: 0.25rem;
+		display: flex;
+		justify-content: center;
+		background-color: red;
+		border: none;
+		border-radius: 5px;
+	}
+	p {
+		margin: 0.25rem;
+		padding: 0;
+	}
+	.column {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: start;
+	}
+	.row {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+	}
 	.saved-song {
 		font-family: var(--font-family);
+		justify-content: center;
+		align-items: center;
 	}
 	#image {
 		background-color: var(--background-color);
@@ -76,6 +121,7 @@
 		top: 20px;
 		border: none;
 		border-radius: 10px;
+		overflow: hidden;
 	}
 
 	#songTitle {
@@ -85,10 +131,12 @@
 		top: 10px;
 	}
 
-	#dateCreated {
+	.small-info {
 		font-size: smaller;
-		position: relative;
-		left: 3%;
-		top: 0px;
+		/* position: relative; */
+		width: 19ch;
+		text-overflow: ellipsis;
+		/* left: 3%;
+		top: 0px; */
 	}
 </style>

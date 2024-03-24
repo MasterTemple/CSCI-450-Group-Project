@@ -1,10 +1,10 @@
 <script>
 	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
+	import { EMPTY_SONG_CONTENTS } from "./constants.js";
 	import { insertAtIndex, removeAtIndex, splitLine } from "./functions.js";
 	import {
 		author,
-		backgroundColor,
 		breakIndexes,
 		color,
 		currentSongId,
@@ -27,10 +27,11 @@
 		// clear everything
 		title.set("");
 		author.set("");
-		setLyricDataFromClipboard("");
+		rawClipboardContents.set(EMPTY_SONG_CONTENTS);
 	}
 
 	onMount(async () => {
+		rawClipboardContents.subscribe((v) => setLyricDataFromClipboard(v));
 		document.addEventListener("paste", (event) => {
 			if (event.target.tagName != "INPUT") readClipboard();
 		});
@@ -265,7 +266,6 @@
 		type="text"
 		placeholder="Song Title"
 		id="songTitle"
-		style="--color: {color.darkBlue}"
 		bind:value={$title}
 	/>
 	<input
@@ -276,38 +276,65 @@
 		bind:value={$author}
 	/>
 </div>
-<div id="lyric-region" style="background-color: {$backgroundColor};">
+<div id="lyric-region">
 	{#each { length: NUMBER_OF_LINES_PER_COLUMN } as _, i}
 		{#if $leftMostDisplayColumn <= i && i <= $leftMostDisplayColumn + $numberOfColumns - 1 && $lines.length >= i * NUMBER_OF_LINES_PER_COLUMN}
 			<div id="column-{i}" class="lyric-column">
 				<!-- class:hide={i < $leftMostDisplayColumn || $leftMostDisplayColumn + $numberOfColumns <= i} -->
 				{#each $lines.slice(i * NUMBER_OF_LINES_PER_COLUMN, min((i + 1) * NUMBER_OF_LINES_PER_COLUMN), $lines.length) as line, j}
-					<p
-						class="lyric-text"
-						style="font-size: 14px; font-family: {$fontFamily}; color: {$textColor}"
+					<button
+						class="line-border"
+						on:click={() =>
+							($lines[
+								i * NUMBER_OF_LINES_PER_COLUMN + j
+							].divider =
+								!$lines[i * NUMBER_OF_LINES_PER_COLUMN + j]
+									.divider)}
+						class:start={$lines[
+							min(
+								max(i * NUMBER_OF_LINES_PER_COLUMN + j + -1, 0),
+								$lines.length - 1,
+							)
+						].divider ||
+							(i == 0 && j == 0)}
+						class:end={$lines[
+							min(
+								i * NUMBER_OF_LINES_PER_COLUMN + j + 0,
+								$lines.length - 1,
+							)
+						].divider ||
+							i * NUMBER_OF_LINES_PER_COLUMN + j ==
+								$lines.length - 1}
 					>
-						<!-- {line} -->
-						<textarea
-							type="text"
-							class="lyric-input"
-							id="lyric-input-{i * NUMBER_OF_LINES_PER_COLUMN +
-								j}"
-							data-lyric-line-number={i *
-								NUMBER_OF_LINES_PER_COLUMN +
-								j}
-							on:keydown={checkForEnter}
-							value={line.text}
-							rows="1"
-						/>
-						<!-- <textarea name="" id="" rows="1" class="lyric-input" value="{line.text}"/> -->
-						<!-- {#each [...line.text.match(/\S+/g)] as word, i}
+						<p
+							class="lyric-text"
+							style="font-size: 14px; font-family: {$fontFamily}; color: {$textColor}"
+						>
+							<textarea
+								type="text"
+								class="lyric-input"
+								id="lyric-input-{i *
+									NUMBER_OF_LINES_PER_COLUMN +
+									j}"
+								data-lyric-line-number={i *
+									NUMBER_OF_LINES_PER_COLUMN +
+									j}
+								on:keydown={checkForEnter}
+								value={line.text}
+								rows="1"
+							/>
+
+							<!-- <textarea name="" id="" rows="1" class="lyric-input" value="{line.text}"/> -->
+							<!-- {#each [...line.text.match(/\S+/g)] as word, i}
                         {word}
                         {#if i != [...line.text.match(/\S+/g)].length - 1}
                             <button class="vertical-separator"/>
                         {/if}
                     {/each} -->
-					</p>
-					<div
+						</p>
+					</button>
+
+					<!-- <div
 						class="outer-divider"
 						on:click|stopPropagation={() =>
 							($lines[
@@ -331,7 +358,7 @@
 								i * NUMBER_OF_LINES_PER_COLUMN + j
 							].divider}
 						/>
-					</div>
+					</div> -->
 				{/each}
 			</div>
 		{/if}
@@ -359,6 +386,46 @@
 </div>
 
 <style>
+	button.line-border {
+		all: unset;
+		background-color: var(--background-color);
+		/* padding: 0.5ch 2ch;
+		margin: 0; */
+		/* max-width: 100% !important; */
+		text-wrap: nowrap;
+		width: 40ch;
+	}
+	button.line-border {
+		/* button.line-border textarea { */
+		background-color: var(--background-color);
+		padding: 0.5ch 2ch;
+		margin: 0;
+		max-width: 100% !important;
+		width: fit-content;
+		text-wrap: nowrap;
+	}
+
+	button.line-border.start,
+	button.line-border:hover + button.line-border {
+		border-top-left-radius: 0.5rem;
+		border-top-right-radius: 0.5rem;
+		margin-top: 0.25ch;
+		padding-top: 0.25ch;
+	}
+	button.line-border.end,
+	button.line-border:hover {
+		border-bottom-left-radius: 0.5rem;
+		border-bottom-right-radius: 0.5rem;
+		margin-bottom: 0.25ch;
+		padding-bottom: 0.25ch;
+	}
+	button.line-border.end:hover,
+	button.line-border.end:hover + button.line-border.start {
+		padding: 0.5ch 2ch !important;
+		margin: 0 !important;
+		border-radius: 0rem !important;
+	}
+
 	#lyric-region {
 		display: flex;
 		flex-direction: row;
@@ -366,27 +433,31 @@
 		width: 100%;
 		max-width: 72vw;
 		height: 40rem;
-		background-color: black;
-		justify-content: center;
+		background-color: var(--dark1);
+		justify-content: space-between;
 		align-items: center;
 		flex-wrap: nowrap;
-		overflow-x: auto;
+		overflow-x: hidden;
 	}
 
 	.lyric-column {
 		align-items: center;
 		display: flex;
+		flex: 1;
 		flex-direction: column;
 		flex-wrap: nowrap;
+		/* flex-basis: content; */
 		/* flex: 0 0 auto; */
 		align-items: center;
-		max-width: 40ch;
-		min-width: 20ch;
-		width: fit-content;
-		background-color: var(--color);
+		/* max-width: 40ch;
+		min-width: 20ch; */
+		width: 40ch;
+		/* width: fit-content; */
+		/* background-color: red; */
 		/* margin: 0 auto; */
+		/* margin: 0 2rem; */
 		margin: 0;
-		padding: 0;
+		padding: 0 2rem;
 		border-radius: 10px;
 	}
 
@@ -444,14 +515,22 @@
 	}
 
 	.lyric-text {
+		width: 40ch;
+		/* width: 100%; */
 		margin: 0;
-		padding: 0;
+		padding: 1ch 0;
+		/* padding: 0; */
 	}
 
-	.lyric-input {
+	textarea.lyric-input {
 		all: unset;
-		height: fit-content;
-		width: 30rem;
+		/* height: fit-content; */
+		/* padding: 0;
+		margin: 0; */
+		/* width: 40ch; */
+		width: 100%;
+		overflow: hidden;
+		/* text-overflow: ellipsis; */
 	}
 
 	#column-nagivation {
@@ -469,19 +548,20 @@
 	#songTitle {
 		text-align: center;
 		border: none;
-		background-color: var(--color);
-		color: white;
+		background-color: var(--dark0);
+		color: var(--white);
 		border-radius: 5px;
-		font-size: larger;
+		font-size: x-large;
+		width: 20ch;
 	}
 
 	#songArtist {
 		text-align: center;
 		border: none;
-		background-color: var(--color);
-		color: white;
+		background-color: var(--dark0);
+		color: var(--white);
 		border-radius: 5px;
-		font-size: small;
+		font-size: medium;
 	}
 
 	::placeholder {

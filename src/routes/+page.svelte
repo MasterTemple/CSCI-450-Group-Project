@@ -6,13 +6,13 @@
 	import PresenterView from "./PresenterView/+page.svelte";
 	import SavedSongList from "./SavedSongList.svelte";
 	import Settings from "./Settings.svelte";
+	import { EMPTY_SONG_CONTENTS } from "./constants.js";
 	import { req } from "./db";
 	import { convertLyricLinesToSlides } from "./functions";
 	import {
 		allSongs,
 		authToken,
 		backgroundColor,
-		color,
 		currentSong,
 		currentSongId,
 		displayPresenterView,
@@ -57,8 +57,7 @@
 		if (savedCurrentSong) {
 			setCurrrentSong(savedCurrentSong);
 		} else {
-			rawClipboardContents.set(EXAMPLE_CONTENTS_2);
-			setLyricDataFromClipboard($rawClipboardContents);
+			rawClipboardContents.set(EMPTY_SONG_CONTENTS);
 		}
 
 		// keep track if work needs to be saved
@@ -70,7 +69,11 @@
 			if ($workIsUnsaved) {
 				workIsUnsaved.set(false);
 				const data = JSON.stringify($currentSong);
-				if ($lines?.length == 0) return;
+				if (
+					$lines?.length == 0 ||
+					$rawClipboardContents == EMPTY_SONG_CONTENTS
+				)
+					return;
 
 				// update current local storage
 				localStorage.setItem("currentSong", data);
@@ -126,9 +129,7 @@
 			<div id="content">
 				<div
 					id="saved"
-					style="--loc: {$savedSongsIsOpen
-						? 0
-						: -14.5}vw; --color: {color.brown}"
+					style="--loc: {$savedSongsIsOpen ? 0 : -14.5}vw;"
 				>
 					<SavedSongList />
 				</div>
@@ -139,9 +140,7 @@
 				</div>
 				<div
 					id="settings"
-					style="--loc: {$settingsIsOpen
-						? 0
-						: -14.5}vw; --color: {color.brown}"
+					style="--loc: {$settingsIsOpen ? 0 : -14.5}vw;"
 				>
 					<Settings />
 				</div>
@@ -151,6 +150,8 @@
 </div>
 
 <style>
+	@import "./style.css";
+
 	#everything {
 		max-width: 100wh;
 		max-height: 100vh;
@@ -168,6 +169,7 @@
 		height: 12vh;
 		position: relative;
 		display: flex;
+		background-color: var(--dark1);
 		/* background-color: pink;      <-- Uncomment to see outline */
 	}
 
@@ -176,13 +178,16 @@
 		flex-direction: row;
 		height: 88vh;
 		width: 100vw;
+		background-color: var(--dark2);
+		color: var(--white);
 		/* background-color: orange; <-- Uncomment to see outline */
 	}
 
 	#saved {
 		height: 100%;
 		width: 20vw;
-		background-color: var(--color);
+		background-color: var(--dark0);
+		color: var(--white);
 		position: relative;
 		left: var(--loc);
 		transition: left 1s;
@@ -190,9 +195,11 @@
 		box-shadow:
 			0 4px 8px 0 rgba(0, 0, 0, 0.2),
 			0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		border-radius: var(--border-radius);
 	}
 
 	#editor {
+		background-color: var(--dark1);
 		/* background-color: red;       <-- Uncomment to see outline */
 		height: 100%;
 		width: 100vw;
@@ -202,7 +209,7 @@
 	}
 
 	#settings {
-		background-color: var(--color);
+		background-color: var(--dark0);
 		height: 100%;
 		width: 20vw;
 		position: relative;

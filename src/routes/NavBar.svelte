@@ -157,7 +157,7 @@
 		id="logo"
 		alt="Lyric of Lyrics Logo: A trebble cleffe surrounded by dots and dashes"
 	/>
-	<h1 id="lolTitle" style="--color: {color.darkBlue}">Lyric of Lyrics</h1>
+	<h1 id="lolTitle">Lyric of Lyrics</h1>
 </div>
 
 <div id="presentButtonContainer">
@@ -195,9 +195,10 @@
 	<button
 		id="profileButton"
 		on:click={$authToken.length ? openAccountInfoModal : openEmailModal}
-		style="--color: {color.darkBlue}"
 	>
-		<h1 id="profileText" style="--color: {color.white}">{$emailAddress.length ? $emailAddress[0].toUpperCase(): "?"}</h1>
+		<h1 id="profileText" style="--color: {color.white}">
+			{$emailAddress.length ? $emailAddress[0].toUpperCase() : "?"}
+		</h1>
 	</button>
 </div>
 
@@ -278,7 +279,8 @@
 	}
 	.modal-content {
 		text-align: center;
-		background-color: #fefefe;
+		background-color: var(--dark1);
+		color: var(--white);
 		margin: 15% auto; /* 15% from the top and centered */
 		padding: 20px;
 		border: 1px solid #888;
@@ -303,14 +305,14 @@
 	}
 
 	#lolTitle {
-		color: var(--color);
+		color: var(--white);
 		left: 0%;
 		position: relative;
 		top: 15%;
 	}
 
 	#presentButton {
-		background-color: var(--color);
+		background-color: var(--action);
 		border: none;
 		display: flex;
 		width: fit-content;
@@ -341,7 +343,7 @@
 	}
 
 	#exportButton {
-		background-color: var(--color);
+		background-color: var(--action);
 		border: none;
 		display: flex;
 		width: fit-content;
@@ -370,7 +372,7 @@
 		box-shadow:
 			0 4px 8px 0 rgba(0, 0, 0, 0.2),
 			0 6px 20px 0 rgba(0, 0, 0, 0.19);
-		background-color: var(--color);
+		background-color: var(--primary);
 		border: none;
 		display: flex;
 		justify-content: center;

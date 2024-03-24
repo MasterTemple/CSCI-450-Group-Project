@@ -2,13 +2,9 @@
 	import { max, min } from "../functions.js";
 	import {
 		author,
-		backgroundColor,
 		color,
 		currentSlideIndex,
-		fontFamily,
-		fontSize,
 		lyricsBySlide,
-		textColor,
 		title,
 	} from "../stores.js";
 	import Slides from "./Slides.svelte";
@@ -63,18 +59,16 @@
 
 <div id="songSlideStack">
 	<div id="songInfo">
-		<div id="songTitle" style="--color: {color.darkBlue}">
+		<div id="songTitle">
 			<p>{$title}</p>
 		</div>
-		<div id="songArtist" style="--color: {color.darkBlue}">
+		<div id="songArtist">
 			<p>{$author || "No Author"}</p>
 		</div>
 	</div>
 
-	<div
-		id="currentSlide"
-		style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize} "
-	>
+	<!-- style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize} " -->
+	<div id="currentSlide">
 		<Slides {lyrics} fontSizeOverride={32} />
 	</div>
 
@@ -85,7 +79,7 @@
 			on:click={retreatSlides}>Left</button
 		>
 
-		<div id="slideCounter" style="--color: {color.black}">
+		<div id="slideCounter">
 			<p>{$currentSlideIndex + 1}/{$lyricsBySlide.length}</p>
 		</div>
 
@@ -98,6 +92,9 @@
 </div>
 
 <style>
+	* {
+		font-family: var(--font-family);
+	}
 	#button-stack {
 		position: absolute;
 		left: 0;
@@ -110,15 +107,15 @@
 		border-radius: 10px;
 		height: 50px;
 		width: 150px;
-		background-color: var(--color);
-		color: white;
+		background-color: var(--action);
+		color: var(--white);
 		box-shadow:
 			0 4px 8px 0 rgba(0, 0, 0, 0.2),
 			0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	}
 
 	#elapsedTime {
-		color: var(--color);
+		color: var(--white);
 		margin-top: 5px;
 	}
 
@@ -130,8 +127,8 @@
 		border-radius: 10px;
 		height: 50px;
 		width: 150px;
-		background-color: var(--color);
-		color: white;
+		background-color: var(--action);
+		color: var(--white);
 		box-shadow:
 			0 4px 8px 0 rgba(0, 0, 0, 0.2),
 			0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -145,6 +142,9 @@
 	}
 
 	#songInfo {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 		margin: auto;
 		margin-top: -10vh;
 		padding: 10px;
@@ -152,26 +152,31 @@
 
 	#songTitle {
 		border: none;
-		background-color: var(--color);
+		background-color: var(--info);
 		color: white;
 		border-radius: 5px;
-		height: 40px;
-		width: 150px;
-		text-wrap: balance;
-		font-size: larger;
-		content: "test";
+		height: 3rem;
+		width: 20ch;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		align-self: center;
+		font-size: x-large;
+		margin: 1rem;
 	}
 
 	#songArtist {
 		border: none;
-		background-color: var(--color);
+		background-color: var(--info);
 		color: white;
 		border-radius: 5px;
-		height: 40px;
-		width: 130px;
-		text-wrap: balance;
-		font-size: larger;
-		margin: auto;
+		height: 2rem;
+		width: 20ch;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		align-self: center;
+		font-size: medium;
 	}
 
 	#currentSlide {
@@ -180,7 +185,8 @@
 		height: 30vw;
 		width: 50vw;
 		padding: 10px;
-		background-color: lightblue;
+		background-color: var(--background-color);
+		color: var(--text-color);
 		overflow: hidden;
 		display: flex;
 		align-items: center;
@@ -206,5 +212,6 @@
 
 	#slideCounter {
 		font-size: larger;
+		color: var(--white);
 	}
 </style>

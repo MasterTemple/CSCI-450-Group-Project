@@ -109,7 +109,7 @@
 
 <style>
 	#row {
-		background-color: whitesmoke;
+		background-color: var(--dark0);
 		display: flex;
 		flex-direction: row;
 		height: 100vh;
