@@ -284,17 +284,10 @@
 						class="line-border"
 						on:click={() =>
 							($lines[
-								min(
-									i * NUMBER_OF_LINES_PER_COLUMN + j + 1,
-									$lines.length - 1,
-								)
+								i * NUMBER_OF_LINES_PER_COLUMN + j
 							].divider =
-								!$lines[
-									min(
-										i * NUMBER_OF_LINES_PER_COLUMN + j + 1,
-										$lines.length - 1,
-									)
-								].divider)}
+								!$lines[i * NUMBER_OF_LINES_PER_COLUMN + j]
+									.divider)}
 						class:start={$lines[
 							min(
 								max(i * NUMBER_OF_LINES_PER_COLUMN + j + -1, 0),
@@ -391,17 +384,17 @@
 </div>
 
 <style>
-	.line-border {
+	button.line-border {
 		all: unset;
 		background-color: var(--background-color);
-		padding: 0.5ch 2ch;
-		margin: 0;
+		/* padding: 0.5ch 2ch;
+		margin: 0; */
 		/* max-width: 100% !important; */
 		text-wrap: nowrap;
 		width: 40ch;
 	}
-	button.line-border,
-	button.line-border textarea {
+	button.line-border {
+		/* button.line-border textarea { */
 		background-color: var(--background-color);
 		padding: 0.5ch 2ch;
 		margin: 0;
@@ -439,7 +432,7 @@
 		max-width: 72vw;
 		height: 40rem;
 		background-color: var(--dark2);
-		justify-content: center;
+		justify-content: space-between;
 		align-items: center;
 		flex-wrap: nowrap;
 		overflow-x: hidden;
@@ -448,19 +441,21 @@
 	.lyric-column {
 		align-items: center;
 		display: flex;
+		flex: 1;
 		flex-direction: column;
 		flex-wrap: nowrap;
-		flex-basis: content;
+		/* flex-basis: content; */
 		/* flex: 0 0 auto; */
 		align-items: center;
 		/* max-width: 40ch;
 		min-width: 20ch; */
 		width: 40ch;
 		/* width: fit-content; */
-		background-color: var(--color);
+		/* background-color: red; */
 		/* margin: 0 auto; */
-		margin: 0 1rem;
-		padding: 0;
+		/* margin: 0 2rem; */
+		margin: 0;
+		padding: 0 2rem;
 		border-radius: 10px;
 	}
 
@@ -518,16 +513,19 @@
 	}
 
 	.lyric-text {
+		width: 40ch;
+		/* width: 100%; */
 		margin: 0;
-		padding: 0;
+		/* padding: 0; */
 	}
 
-	.lyric-input {
+	textarea.lyric-input {
 		all: unset;
-		height: fit-content;
-		padding: 0;
-		margin: 0;
-		width: 40ch;
+		/* height: fit-content; */
+		/* padding: 0;
+		margin: 0; */
+		/* width: 40ch; */
+		width: 100%;
 		overflow: hidden;
 		/* text-overflow: ellipsis; */
 	}
