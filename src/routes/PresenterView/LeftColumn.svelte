@@ -57,7 +57,9 @@
 </div>
 <button id="switchSong" style="--color: {color.darkBlue}">Switch Song</button>
 
-<div id="songSlideStack">
+<div id="songSlideStack"
+	style="--title-ch-width: {max($title.length, 20)}ch;--author-ch-width: {max($author.length, 20)}ch;"
+>
 	<div id="songInfo">
 		<div id="songTitle">
 			<p>{$title}</p>
