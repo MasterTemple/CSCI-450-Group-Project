@@ -218,6 +218,12 @@
 
 		// split at single newlines
 		let lyricLines = contents
+			// remove something like [Refrain]
+			.replace(/\[[^\]]+\]/g, "")
+			// remove indexes in hymns
+			.replace(/^\d\D/g, "")
+			// remove annotations
+			.replace(/^(Refrain|Verse|Chorus):?/g, "")
 			.trim()
 			.split(/\n/)
 			// remove leading and trailing whitespace
@@ -225,6 +231,9 @@
 			// split lines in half as necessary
 			.map(splitLine)
 			.flat();
+
+		// filter out lines
+		// lyricLines = lineFilter(lyricLines);
 
 		// get indexes of lines where spaces are after
 		// doing this before filtering them out
