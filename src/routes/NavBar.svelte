@@ -19,9 +19,12 @@
 
 	const loginCode = writable("");
 	loginCode.subscribe((v) => {
-		let str = $loginCode.toString();
-		if (str.length > 6) {
-			loginCode.set(parseInt(str.slice(0, 6)));
+		// it is null when loginCode input gets backspaced into being empty
+		if(v != null) {
+			let str = $loginCode.toString();
+			if (str.length > 6) {
+				loginCode.set(parseInt(str.slice(0, 6)));
+			}
 		}
 	});
 
@@ -240,7 +243,7 @@
 			</label>
 			<button
 				on:click={verifyLogin}
-				disabled={$loginCode.toString().length != 6}>Continue</button
+				disabled={($loginCode || "").toString().length != 6}>Continue</button
 			>
 		</div>
 	</div>
