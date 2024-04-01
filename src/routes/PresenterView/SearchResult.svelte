@@ -1,10 +1,10 @@
 <script>
-	import { allSongs, setCurrrentSong, currentSongId, currentSlideIndex } from "../stores";
+	import { allSongs, setCurrrentSong, currentSongId, currentSlideIndex, switchTabIndex } from "../stores";
 	export let name;
 	export let author;
 	export let songId
 	export let closeModal;
-	export let tabindex;
+	export let songIndex;
 	function switchSong() {
 		let newSong = $allSongs.find((s) => s["songId"] == songId);
 		currentSongId.set(songId);
@@ -16,10 +16,9 @@
 	}
 </script>
 
-<button class="card" on:click={switchSong}
-tabindex={tabindex}>
-	<!-- <p class="name">{name}</p> -->
-	<!-- <p class="author">By {author}</p> -->
+<button id={"search-result-" + songIndex} class="card" on:click={switchSong}
+	class:focused={$switchTabIndex==songIndex}
+>
 	<p class="result">
 		<span class="name">{name}</span>
 		-
@@ -44,6 +43,9 @@ tabindex={tabindex}>
 		/* margin: 1rem; */
 		width: 60%;
 	}
+
+
+	.card.focused,
 	.card:hover {
 		border-color: var(--primary);
 	}

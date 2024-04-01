@@ -9,6 +9,7 @@
 		lyricsBySlide,
 		title,
 		inputReserved,
+		switchTabIndex
 	} from "../stores.js";
 	import Slides from "./Slides.svelte";
 	import SwitchSong from "./SwitchSong.svelte";
@@ -65,6 +66,7 @@
 		inputReserved.set(false);
 		searchValue.set("")
 		document.querySelector("#search-input").value = ""
+		switchTabIndex.set(0);
 	}
 </script>
 
