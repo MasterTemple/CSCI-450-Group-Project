@@ -320,6 +320,7 @@
 		margin: 15% auto; /* 15% from the top and centered */
 		padding: 20px;
 		border: 1px solid var(--dark1);
-		width: 60%; /* Could be more or less, depending on screen size */
+		border-radius: 16px;
+		width: 50%; /* Could be more or less, depending on screen size */
 	}
 </style>
