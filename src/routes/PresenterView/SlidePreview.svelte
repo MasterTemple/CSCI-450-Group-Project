@@ -119,6 +119,9 @@
 		/* height: 13ch; */
 		overflow: hidden;
 	}
+	.slide-outline:hover {
+		border-color: var(--secondary);
+	}
 	.current-slide {
 		border-color: var(--primary);
 	}
