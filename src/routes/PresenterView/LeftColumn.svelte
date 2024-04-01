@@ -70,12 +70,12 @@
 
 <div id="button-stack">
 	<!-- <a href="/"> -->
-	<button id="backButton" on:click={exit} style="--color: {color.darkBlue}"
+	<button id="backButton" on:click={exit} 
 		>Back</button
 	>
 	<!-- </a> -->
 
-	<div id="elapsedTime" style="--color: {color.black}">
+	<div id="elapsedTime">
 		<p>{elapsedTime} Elapsed</p>
 	</div>
 </div>
@@ -147,11 +147,16 @@
 		text-align: center;
 	}
 	#backButton {
-		margin: 5px;
+		all: unset;
+		font-family: var(--font-family);
+		text-align: center;
+		margin-left: 1rem;
+		margin-top: 1rem;
 		border-radius: 10px;
+		border: 2px solid var(--dark2);
 		height: 50px;
 		width: 150px;
-		background-color: var(--action);
+		background-color: var(--secondary);
 		color: var(--white);
 		box-shadow:
 			0 4px 8px 0 rgba(0, 0, 0, 0.2),
@@ -164,14 +169,18 @@
 	}
 
 	#switch-song-button {
+		all: unset;
+		font-family: var(--font-family);
+		text-align: center;
 		position: absolute;
-		left: 0;
-		bottom: 0;
+		left: 1rem;
+		bottom: 1rem;
 		margin: 5px;
 		border-radius: 10px;
+		border: 2px solid var(--dark2);
 		height: 50px;
 		width: 150px;
-		background-color: var(--action);
+		background-color: var(--secondary);
 		color: var(--white);
 		box-shadow:
 			0 4px 8px 0 rgba(0, 0, 0, 0.2),
