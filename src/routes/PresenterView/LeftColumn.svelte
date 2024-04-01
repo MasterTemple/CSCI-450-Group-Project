@@ -1,5 +1,6 @@
 <script>
-    import { onMount } from "svelte";
+	import { onMount } from "svelte";
+	import { writable } from "svelte/store";
 	import { max, min } from "../functions.js";
 	import {
 		author,
@@ -7,11 +8,13 @@
 		currentSlideIndex,
 		lyricsBySlide,
 		title,
+		inputReserved,
 	} from "../stores.js";
 	import Slides from "./Slides.svelte";
 	import SwitchSong from "./SwitchSong.svelte";
 
 	export let lyrics;
+	const searchValue = writable("");
 
 	$: elapsedTime = "00:00";
 
@@ -52,9 +55,16 @@
 
 	function openSwitchSongDialog() {
 		switchSongDialog.style.display = "block";
+		inputReserved.set(true);
+		searchValue.set("")
+		document.querySelector("#search-input").focus()
+		document.querySelector("#search-input").value = ""
 	}
 	function closeSwitchSongDialog() {
 		switchSongDialog.style.display = "none";
+		inputReserved.set(false);
+		searchValue.set("")
+		document.querySelector("#search-input").value = ""
 	}
 </script>
 
@@ -70,7 +80,7 @@
 	</div>
 </div>
 <button
-	id="switchSong"
+	id="switch-song-button"
 	on:click={openSwitchSongDialog}
 >Switch Song</button>
 
@@ -112,11 +122,17 @@
 
 <div id="switch-song-dialog" class="modal">
 	<div class="modal-content">
-		<SwitchSong closeModal={closeSwitchSongDialog}/>
+		<SwitchSong closeModal={closeSwitchSongDialog} searchValue={searchValue}/>
 	</div>
 </div>
 
 <style>
+	#switch-song-dialog {
+		/* display: flex; */
+		/* justify-content: center; */
+		/* align-items: center; */
+		/* max-width: 30vw; */
+	}
 	#switch-song-dialog > div {
 		background: var(--dark0);
 	}
@@ -147,7 +163,7 @@
 		margin-top: 5px;
 	}
 
-	#switchSong {
+	#switch-song-button {
 		position: absolute;
 		left: 0;
 		bottom: 0;
@@ -273,7 +289,7 @@
 		top: 0;
 		width: 100%; /* Full width */
 		height: 100%; /* Full height */
-		overflow: auto; /* Enable scroll if needed */
+		overflow: hidden; /* Enable scroll if needed */
 		background-color: rgb(0, 0, 0); /* Fallback color */
 		background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 	}
@@ -284,6 +300,6 @@
 		margin: 15% auto; /* 15% from the top and centered */
 		padding: 20px;
 		border: 1px solid var(--dark1);
-		width: 80%; /* Could be more or less, depending on screen size */
+		width: 60%; /* Could be more or less, depending on screen size */
 	}
 </style>

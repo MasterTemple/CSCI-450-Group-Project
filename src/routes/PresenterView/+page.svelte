@@ -5,6 +5,7 @@
 		currentSlideIndex,
 		lyricsBySlide,
 		setCurrrentSong,
+		inputReserved,
 	} from "../stores";
 	import LeftColumn from "./LeftColumn.svelte";
 	import RightColumn from "./RightColumn.svelte";
@@ -53,9 +54,13 @@
 				msg: "close",
 			});
 		}
+		// press s: switch song
+		else if(key == "s") {
+			document.querySelector("#switch-song-button").click()
+		}
 	}
 
-	const RESERVED_KEYS = ["ArrowRight", "ArrowLeft", "Escape", " ", "h", "l"];
+	const RESERVED_KEYS = ["ArrowRight", "ArrowLeft", "Escape", " ", "h", "l", "s"];
 	onMount(() => {
 		// load data
 		lyricsBySlide.set([]);
@@ -82,6 +87,7 @@
 		});
 
 		document.addEventListener("keydown", (event) => {
+			if($inputReserved) return;
 			if (RESERVED_KEYS.includes(event.key)) {
 				event.preventDefault();
 				// bc.postMessage({ msg: "sendKey", key: event.key });
