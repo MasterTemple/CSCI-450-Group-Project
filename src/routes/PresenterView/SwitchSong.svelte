@@ -47,9 +47,10 @@
 	<!-- <p>{0}/{$allSongs.length}</p> -->
 </div>
 <div id="switch-songs">
-	{#each $allSongs as song}
+	{#each $allSongs as song, i}
 		{#if isSearchMatch($searchValue, song)}
 			<SearchResult
+				tabindex={i}
 				name={song["title"]}
 				author={song["author"] || UNKNOWN_SONG_AUTHOR_PLACEHOLDER}
 				songId={song["songId"]}
@@ -67,10 +68,15 @@
 	h1 {
 		color: var(--white);
 		/* background: var(--dark0); */
+		margin: 0;
 	}
 	#switch-songs {
 		display: flex;
-		flex-wrap: wrap;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		overflow-y: scroll;
+		scrollbar-face-color: green;
 	}
 	#search-input {
 		all: unset;
@@ -80,8 +86,8 @@
 		border-radius: 16px;
 		border: 3px solid var(--dark1);
 		padding: 1rem;
-		margin: 1rem;
-		width: 50%;
+		margin: 0.5rem;
+		width: 40%;
 	}
 	#search-input:focus {
 		border-color: var(--primary);
