@@ -151,3 +151,4 @@ export function deleteSongFromLocalList(songId) {
 export const displaySingleAudienceView = writable(false);
 export const displayPresenterView = writable(false);
 export const inputReserved = writable(false)
+export const switchTabIndex = writable(0);

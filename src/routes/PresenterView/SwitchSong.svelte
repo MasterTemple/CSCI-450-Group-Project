@@ -1,10 +1,13 @@
 <script>
 	import { onMount } from "svelte";
-	import { allSongs, color, savedSongsIsOpen } from "../stores";
+	import { allSongs, color, savedSongsIsOpen, switchTabIndex } from "../stores";
 	import SearchResult from "./SearchResult.svelte";
 	import { writable } from "svelte/store";
 
 	export let closeModal;
+	// export let closeModal = () => {
+	// 	closeModal();
+	// };
 	const UNKNOWN_SONG_AUTHOR_PLACEHOLDER = "Unknown";
 	// const searchValue = writable("");
 	export let searchValue;
@@ -21,8 +24,20 @@
 		);
 	}
 	
+	$: tabIndex = 0;
 	onMount(() => {
+		document.addEventListener("keydown", (event) => {
+			console.log(event)
+			if(event.key == "Tab")
+				if(event.shiftKey)
+					switchTabIndex.update((i) => i-1);
+				else
+					switchTabIndex.update((i) => i+1);
+				// document.querySelector(`#search-result-${tabIndex}`).focus()
+		})
 	})
+	let filteredSongs = writable([...$allSongs]);
+	searchValue.subscribe((v) => filteredSongs.set($allSongs.filter((s) => isSearchMatch(v, s))))
 </script>
 
 <h1>Switch Current Song:</h1>
@@ -34,8 +49,8 @@
 		bind:value={$searchValue}
 		on:keydown|stopPropagation={(event) => {
 			if(event.key == "Enter") {
-				console.log(document.querySelector("#switch-songs button"))
-				document.querySelector("#switch-songs button")?.click()
+				document.querySelector(`#search-result-${$switchTabIndex}`)?.click()
+				closeModal()
 			}
 			if(event.key == "Escape") {
 				event.preventDefault()
@@ -47,16 +62,18 @@
 	<!-- <p>{0}/{$allSongs.length}</p> -->
 </div>
 <div id="switch-songs">
-	{#each $allSongs as song, i}
-		{#if isSearchMatch($searchValue, song)}
+	<!-- {#each $allSongs.filter((song) => isSearchMatch($searchValue, song)) as song, i} -->
+	<!-- 	{#if } -->
+	{#each $filteredSongs as song, i}
+		<!-- {#if isSearchMatch($searchValue, song)} -->
 			<SearchResult
-				tabindex={i}
+				songIndex={i}
 				name={song["title"]}
 				author={song["author"] || UNKNOWN_SONG_AUTHOR_PLACEHOLDER}
 				songId={song["songId"]}
 				closeModal={closeModal}
 			/>
-		{/if}
+		<!-- {/if} -->
 	{/each}
 </div>
 
