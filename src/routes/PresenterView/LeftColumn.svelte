@@ -105,17 +105,19 @@
 		<button
 			id="slideLeft"
 			disabled={$currentSlideIndex == 0}
-			on:click={retreatSlides}>Left</button
+			on:click={retreatSlides}>
+			←
+		</button
 		>
 
-		<div id="slideCounter">
-			<p>{$currentSlideIndex + 1}/{$lyricsBySlide.length}</p>
-		</div>
+		<p id="slideCounter">
+			{$currentSlideIndex + 1}/{$lyricsBySlide.length}
+		</p>
 
 		<button
 			id="slideRight"
 			disabled={$currentSlideIndex == $lyricsBySlide.length - 1}
-			on:click={advanceSlides}>Right</button
+			on:click={advanceSlides}>→</button
 		>
 	</div>
 </div>
@@ -249,22 +251,31 @@
 	#slideControlStack {
 		display: flex;
 		flex-direction: row;
+		justify-content: center;
+		align-items: center;
 		margin: auto;
-		padding: 10px;
+		/* padding: 10px; */
+		/* background: var(--black); */
+		border-radius: 16px;
 	}
 
-	#slideLeft {
-		padding: 10px;
-		cursor: pointer;
+	#slideLeft,
+	#slideRight 
+	{
+		all: unset;
+		text-align: center;
+		color: var(--white);
+		font-size: 3rem;
+		margin: 1rem;
+		border-radius: 16px;
 	}
-
-	#slideRight {
-		padding: 10px;
-		cursor: pointer;
+	#slideLeft:hover,
+	#slideRight:hover {
+		color: var(--primary);
 	}
 
 	#slideCounter {
-		font-size: larger;
+		font-size: 1.5rem;
 		color: var(--white);
 	}
 
