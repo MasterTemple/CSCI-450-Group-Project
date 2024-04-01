@@ -120,9 +120,9 @@
 		overflow: hidden;
 	}
 	.current-slide {
-		border-color: green;
+		border-color: var(--primary);
 	}
 	.next-slide {
-		border-color: orange;
+		border-color: var(--accent);
 	}
 </style>
