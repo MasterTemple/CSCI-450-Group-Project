@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from "svelte";
 	import { max, min } from "../functions.js";
 	import {
 		author,
@@ -8,6 +9,7 @@
 		title,
 	} from "../stores.js";
 	import Slides from "./Slides.svelte";
+	import SwitchSong from "./SwitchSong.svelte";
 
 	export let lyrics;
 
@@ -42,6 +44,18 @@
 			msg: "close",
 		});
 	}
+
+	let switchSongDialog;
+	onMount(() => {
+		switchSongDialog = document.getElementById("switch-song-dialog");
+	})
+
+	function openSwitchSongDialog() {
+		switchSongDialog.style.display = "block";
+	}
+	function closeSwitchSongDialog() {
+		switchSongDialog.style.display = "none";
+	}
 </script>
 
 <div id="button-stack">
@@ -55,7 +69,10 @@
 		<p>{elapsedTime} Elapsed</p>
 	</div>
 </div>
-<button id="switchSong" style="--color: {color.darkBlue}">Switch Song</button>
+<button
+	id="switchSong"
+	on:click={openSwitchSongDialog}
+>Switch Song</button>
 
 <div id="songSlideStack"
 	style="--title-ch-width: {max($title.length, 20)}ch;--author-ch-width: {max($author.length, 20)}ch;"
@@ -90,6 +107,12 @@
 			disabled={$currentSlideIndex == $lyricsBySlide.length - 1}
 			on:click={advanceSlides}>Right</button
 		>
+	</div>
+</div>
+
+<div id="switch-song-dialog" class="modal">
+	<div class="modal-content">
+		<SwitchSong/>
 	</div>
 </div>
 
@@ -237,5 +260,27 @@
 		font-size: large;
 		padding: 0.25rem 0.5rem;
 		width: var(--author-ch-width);
+	}
+
+	.modal {
+		display: none; /* Hidden by default */
+		position: fixed; /* Stay in place */
+		z-index: 1; /* Sit on top */
+		left: 0;
+		top: 0;
+		width: 100%; /* Full width */
+		height: 100%; /* Full height */
+		overflow: auto; /* Enable scroll if needed */
+		background-color: rgb(0, 0, 0); /* Fallback color */
+		background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+	}
+	.modal-content {
+		text-align: center;
+		background-color: var(--dark1);
+		color: var(--white);
+		margin: 15% auto; /* 15% from the top and centered */
+		padding: 20px;
+		border: 1px solid var(--dark1);
+		width: 80%; /* Could be more or less, depending on screen size */
 	}
 </style>
