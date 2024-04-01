@@ -233,7 +233,7 @@
 	}
 
 	#currentSlide {
-		border: 4px solid darkgreen;
+		border: 4px solid var(--primary);
 		border-radius: 3%;
 		height: 30vw;
 		width: 50vw;
