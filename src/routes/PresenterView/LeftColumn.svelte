@@ -112,11 +112,14 @@
 
 <div id="switch-song-dialog" class="modal">
 	<div class="modal-content">
-		<SwitchSong/>
+		<SwitchSong closeModal={closeSwitchSongDialog}/>
 	</div>
 </div>
 
 <style>
+	#switch-song-dialog > div {
+		background: var(--dark0);
+	}
 	* {
 		font-family: var(--font-family);
 	}
