@@ -32,10 +32,14 @@
 		placeholder="Search for another song..."
 		id="search-input"
 		bind:value={$searchValue}
-		on:keydown={(event) => {
+		on:keydown|stopPropagation={(event) => {
 			if(event.key == "Enter") {
 				console.log(document.querySelector("#switch-songs button"))
 				document.querySelector("#switch-songs button")?.click()
+			}
+			if(event.key == "Escape") {
+				event.preventDefault()
+				closeModal()
 			}
 		}}
 		autocomplete="off"
@@ -67,7 +71,6 @@
 	#switch-songs {
 		display: flex;
 		flex-wrap: wrap;
-		
 	}
 	#search-input {
 		all: unset;
