@@ -38,7 +38,7 @@
 	}
 
 	#nextSlidePreview {
-		border: 4px solid darkgoldenrod;
+		border: 4px solid var(--accent);
 		border-radius: 3%;
 		height: 30vh;
 		width: 30vw;
