@@ -38,6 +38,7 @@
 				document.querySelector("#switch-songs button")?.click()
 			}
 		}}
+		autocomplete="off"
 	/>
 	<!-- <p>{0}/{$allSongs.length}</p> -->
 </div>
