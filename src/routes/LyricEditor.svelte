@@ -17,6 +17,7 @@
 		title,
 	} from "./stores.js";
 
+	const editLines = writable(true);
 	// let workIsUnsaved = false;
 	let column_ch_width = writable(30);
 
@@ -300,6 +301,12 @@
 		id="songArtist"
 		bind:value={$author}
 	/>
+
+	<div id="edit-mode-toggle">
+		<button class:edit-mode-selected={$editLines} on:click={() => editLines.set(true)}>Divide Lines</button>
+		<button class:edit-mode-selected={!$editLines} on:click={() => editLines.set(false)}>Edit Text</button>
+	</div>
+
 </div>
 <div id="lyric-region" style="--column-ch-width: {$column_ch_width}ch;">
 	{#each { length: NUMBER_OF_LINES_PER_COLUMN } as _, i}
@@ -583,5 +590,22 @@
 
 	::placeholder {
 		color: grey;
+	}
+	#edit-mode-toggle {
+		background: var(--dark0);
+		padding: 0.75rem;
+		border-radius: 8px;
+	}
+	#edit-mode-toggle > button {
+		all: unset;
+		font-family: var(--font-family);
+		background: var(--black);
+		padding: 0.75rem;
+		margin: 0.25rem;
+		border: 2px solid var(--dark1);
+		border-radius: 8px;
+	}
+	#edit-mode-toggle > button.edit-mode-selected {
+		border: 2px solid var(--primary);
 	}
 </style>
