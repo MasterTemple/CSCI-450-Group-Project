@@ -47,22 +47,31 @@
 		});
 	});
 
+	function removeRange(str, start, end) {
+		return str.slice(0, start) + str.slice(end);
+	}
+
 	async function handleTextAreaEdit(input) {
 		// console.log({ input });
 		// get index of lyric/textarea
 		const index = parseInt(input.target.dataset["lyricLineNumber"]);
 		// get cursor location
-		const cursor = document.getElementById(
+		const textareaElement = document.getElementById(
 			`lyric-input-${index}`,
-		).selectionStart;
+		);
+		const selectionStart = textareaElement.selectionStart;
+		const selectionEnd = textareaElement.selectionEnd;
+		const hasSelectionRange = selectionStart != selectionEnd;
+		console.log({selectionStart, selectionEnd})
+		console.log(input.target.value.length)
 		// sleep 100ms so I can read the target value after it is set
 		await new Promise((resolve) => setTimeout(resolve, 100));
 		// create a copy of lines to edit
 		let allLines = $lines;
 		let focusIndex = index;
-		let focusCursor = cursor;
+		let focusCursor = selectionStart;
 
-		// console.log(input.key == "Delete", cursor == input.target.value.length);
+		// console.log(input.key == "Delete", selectionStart == input.target.value.length);
 		// break into multiple lines as necessary
 		if (input.key == "Enter") {
 			// get contents into list of lines
@@ -91,20 +100,30 @@
 			focusCursor = 0;
 		}
 		// join next line to the current line
-		else if (input.key == "Delete" && cursor == input.target.value.length) {
+		else if (input.key == "Delete" && selectionEnd == input.target.value.length) {
+			let newText = allLines[index].text + " " + allLines[index + 1].text;
+			// console.log(allLines[index].text)
+			// console.log({newText})
+			// if(hasSelectionRange) {
+			// 	newText = removeRange(allLines[index].text, selectionStart, selectionEnd) + " " + allLines[index + 1].text;
+			// }
+			console.log({newText})
 			// update current line to have next line contents
 			allLines[index] = {
-				text: allLines[index].text + " " + allLines[index + 1].text,
+				// join lines
+				text: newText,
+				// keep divider
 				divider: allLines[index].divider || allLines[index + 1].divider,
 			};
 			// remove next line
 			allLines = removeAtIndex(allLines, index + 1);
 			// set focus location
 			focusIndex = index;
-			focusCursor = cursor + 1;
+			focusCursor = selectionStart + 1;
 		}
 		// join current line to the previous line
-		else if (input.key == "Backspace" && cursor == 0) {
+		else if (input.key == "Backspace" && selectionStart == 0 && !hasSelectionRange) {
+			console.log(input.key == "Backspace", selectionStart == 0, !hasSelectionRange)
 			// set focus location
 			focusIndex = index - 1;
 			focusCursor = allLines[index - 1].text.length + 1;
@@ -118,12 +137,13 @@
 		}
 		// ignore all other input
 		else {
+			allLines[index] = { text: textareaElement.value, divider: allLines[index].divider };
 			lines.set(allLines);
 			return;
 		}
 		// set lines
 		lines.set(allLines);
-		// after lines have been updated, focus and return cursor position
+		// after lines have been updated, focus and return selectionStart position
 		setTimeout(() => {
 			let el = document.getElementById(`lyric-input-${focusIndex}`);
 			el.focus();
@@ -240,7 +260,6 @@
 					<button
 						class="line-border"
 						on:click={() => {
-							console.log({$editLines, i, j})
 							if($editLines) {
 								$lines[i * NUMBER_OF_LINES_PER_COLUMN + j].divider =
 								!$lines[i * NUMBER_OF_LINES_PER_COLUMN + j].divider
