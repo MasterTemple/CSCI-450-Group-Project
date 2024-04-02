@@ -16,13 +16,14 @@
 
 	let divideEveryNLinesCount = 4;
 	let divideAtMatchWord = "";
+	let removeMatchText = "";
 	let selectedAction;
 
 	function applySettings(event) {
 		// const selectedAction = event.document;
 		console.log({ selectedAction });
 
-		if ("divideEveryCheck" == selectedAction) {
+		if (selectedAction == "divideEveryCheck") {
 			if (
 				divideEveryNLinesCount > $lines.length ||
 				divideEveryNLinesCount < 1
@@ -47,7 +48,7 @@
 				}
 				$lyricsBySlide[counter].push($lines[i].text);
 			}
-		} else if ("autodetectCheck" == selectedAction) {
+		} else if (selectedAction == "autodetectCheck") {
 			var counter = 0;
 			$lyricsBySlide = [[]];
 			// WHAT DOES THIS EVEN DO??
@@ -59,12 +60,12 @@
 					$lyricsBySlide[counter].push($lines[i].text);
 				}
 			}
-		} else if ("divideAtMatchCheck" == selectedAction) {
+		} else if (selectedAction == "divideAtMatchCheck") {
 			counter = 0;
 			if (divideAtMatchWord == "") {
 				return; //TODO: Implement error
 			}
-			for (var i = 0; i < $lines.length; i++) {
+			for (let i = 0; i < $lines.length; i++) {
 				if (
 					$lines[i].text.toLowerCase().includes(divideAtMatchWord.toLowerCase())
 				) {
@@ -76,12 +77,31 @@
 				}
 				$lyricsBySlide[counter].push($lines[i].text);
 			}
-		} else if ("removeDividers" == selectedAction) {
+		} else if (selectedAction == "removeDividers") {
 			lines.update((linesCopy) => {
 				return linesCopy.map(({ text }) => {
 					return { text, divider: false };
 				});
 			});
+		} else if(selectedAction == "removeMatch") {
+			removeMatchText
+			let matchText = removeMatchText;
+			if(removeMatchText.match(/^\/.*\/$/)) {
+				matchText = new RegExp(removeMatchText.match(/^\/(.*)\/$/)[1])
+			}
+			for (let i = 0; i < $lines.length; i++) {
+				$lines[i].text = $lines[i].text.replace(matchText, "")
+				// if (
+				// 	$lines[i].text.toLowerCase().includes(divideAtMatchWord.toLowerCase())
+				// ) {
+				// 	counter++;
+				// 	$lines[i].divider = true;
+				// 	$lyricsBySlide[counter] = [];
+				// } else {
+				// 	$lines[i].divider = false;
+				// }
+				// $lyricsBySlide[counter].push($lines[i].text);
+			}
 		}
 	}
 </script>
@@ -117,7 +137,7 @@
 		/>Autodetect from spacing</label
 	>
 	<br />
-	<!-- Divide at match: -->
+	<!-- Divide at match -->
 	<input
 		bind:group={selectedAction}
 		name="presentation-settings"
@@ -143,6 +163,23 @@
 			id="removeDividers"
 			value="removeDividers"
 		/>Remove All Dividers</label
+	>
+	<br />
+	<!-- Remove matches -->
+	<input
+		bind:group={selectedAction}
+		name="presentation-settings"
+		type="radio"
+		id="removeMatch"
+		value="removeMatch"
+	/><label
+		>Remove matches: <input
+			type="text"
+			id="removeMatchText"
+			name="removeMatchText"
+			placeholder="text"
+			bind:value={removeMatchText}
+		/></label
 	>
 </div>
 
