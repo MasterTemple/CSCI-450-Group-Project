@@ -19,7 +19,7 @@
 </script>
 
 <div id="previewStack">
-	<div id="nextSlidePreview" style="background-color: {$backgroundColor}">
+	<div id="nextSlidePreview">
 		<Slides
 			lyrics={$lyricsBySlide?.[$currentSlideIndex + 1]}
 			fontSizeOverride={24}
@@ -42,10 +42,10 @@
 		border-radius: 3%;
 		height: 30vh;
 		width: 30vw;
-		background-color: lightblue;
 		text-align: center;
 		align-items: center;
 		justify-content: center;
 		display: flex;
+		background-color: var(--background-color);
 	}
 </style>
