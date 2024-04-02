@@ -101,17 +101,10 @@
 		}
 		// join next line to the current line
 		else if (input.key == "Delete" && selectionEnd == input.target.value.length) {
-			let newText = allLines[index].text + " " + allLines[index + 1].text;
-			// console.log(allLines[index].text)
-			// console.log({newText})
-			// if(hasSelectionRange) {
-			// 	newText = removeRange(allLines[index].text, selectionStart, selectionEnd) + " " + allLines[index + 1].text;
-			// }
-			console.log({newText})
 			// update current line to have next line contents
 			allLines[index] = {
 				// join lines
-				text: newText,
+				text: (allLines[index].text + " " + allLines[index + 1].text).trim(),
 				// keep divider
 				divider: allLines[index].divider || allLines[index + 1].divider,
 			};
@@ -123,13 +116,12 @@
 		}
 		// join current line to the previous line
 		else if (input.key == "Backspace" && selectionStart == 0 && !hasSelectionRange) {
-			console.log(input.key == "Backspace", selectionStart == 0, !hasSelectionRange)
 			// set focus location
 			focusIndex = index - 1;
 			focusCursor = allLines[index - 1].text.length + 1;
 			// update previous line to have current line contents
 			allLines[index - 1] = {
-				text: allLines[index - 1].text + " " + allLines[index].text,
+				text: (allLines[index - 1].text + " " + allLines[index].text).trim(),
 				divider: allLines[index - 1].divider || allLines[index].divider,
 			};
 			// remove current line
