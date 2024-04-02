@@ -114,6 +114,7 @@
 </div>
 
 <style>
+	@import "../style.css";
 	#row {
 		background-color: var(--dark0);
 		display: flex;
