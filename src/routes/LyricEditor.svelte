@@ -311,14 +311,20 @@
 <div id="lyric-region" style="--column-ch-width: {$column_ch_width}ch;">
 	{#each { length: NUMBER_OF_LINES_PER_COLUMN } as _, i}
 		{#if $leftMostDisplayColumn <= i && i <= $leftMostDisplayColumn + $numberOfColumns - 1 && $lines.length >= i * NUMBER_OF_LINES_PER_COLUMN}
-			<div id="column-{i}" class="lyric-column">
+			<div id="column-{i}" class="lyric-column"
+				class:is-dividing-lines={$editLines}
+				>
 				<!-- class:hide={i < $leftMostDisplayColumn || $leftMostDisplayColumn + $numberOfColumns <= i} -->
 				{#each $lines.slice(i * NUMBER_OF_LINES_PER_COLUMN, min((i + 1) * NUMBER_OF_LINES_PER_COLUMN), $lines.length) as line, j}
 					<button
 						class="line-border"
-						on:click={() =>
-							($lines[i * NUMBER_OF_LINES_PER_COLUMN + j].divider =
-								!$lines[i * NUMBER_OF_LINES_PER_COLUMN + j].divider)}
+						on:click={() => {
+							console.log({$editLines, i, j})
+							if($editLines) {
+								$lines[i * NUMBER_OF_LINES_PER_COLUMN + j].divider =
+								!$lines[i * NUMBER_OF_LINES_PER_COLUMN + j].divider
+							}
+						}}
 						class:start={$lines[
 							min(
 								max(i * NUMBER_OF_LINES_PER_COLUMN + j + -1, 0),
@@ -341,9 +347,11 @@
 								id="lyric-input-{i * NUMBER_OF_LINES_PER_COLUMN + j}"
 								data-lyric-line-number={i * NUMBER_OF_LINES_PER_COLUMN + j}
 								on:keydown={checkForEnter}
+								readonly={$editLines}
 								value={line.text}
 								rows="1"
 							/>
+								<!-- disabled={$editLines} -->
 
 							<!-- <textarea name="" id="" rows="1" class="lyric-input" value="{line.text}"/> -->
 							<!-- {#each [...line.text.match(/\S+/g)] as word, i}
@@ -427,21 +435,21 @@
 	}
 
 	button.line-border.start,
-	button.line-border:hover + button.line-border {
+	.is-dividing-lines button.line-border:hover + button.line-border {
 		border-top-left-radius: 0.5rem;
 		border-top-right-radius: 0.5rem;
 		margin-top: 0.25ch;
 		padding-top: 0.25ch;
 	}
 	button.line-border.end,
-	button.line-border:hover {
+	.is-dividing-lines button.line-border:hover {
 		border-bottom-left-radius: 0.5rem;
 		border-bottom-right-radius: 0.5rem;
 		margin-bottom: 0.25ch;
 		padding-bottom: 0.25ch;
 	}
-	button.line-border.end:hover,
-	button.line-border.end:hover + button.line-border.start {
+	.is-dividing-lines button.line-border.end:hover,
+	.is-dividing-lines button.line-border.end:hover + button.line-border.start {
 		padding: 0.5ch 2ch !important;
 		margin: 0 !important;
 		border-radius: 0rem !important;
@@ -607,5 +615,12 @@
 	}
 	#edit-mode-toggle > button.edit-mode-selected {
 		border: 2px solid var(--primary);
+	}
+	/* .lyric-column p.lyric-text:not(.is-dividing-lines p.lyric-text), */
+	/* .lyric-column textarea.lyric-input:not(.is-dividing-lines textarea.lyric-input) */
+	.is-dividing-lines p.lyric-text,
+	.is-dividing-lines textarea.lyric-input
+	{
+		cursor: pointer;
 	}
 </style>
