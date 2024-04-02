@@ -6,6 +6,7 @@
 		lyricsBySlide,
 		setCurrrentSong,
 		inputReserved,
+		backgroundColor
 	} from "../stores";
 	import LeftColumn from "./LeftColumn.svelte";
 	import RightColumn from "./RightColumn.svelte";
@@ -102,7 +103,9 @@
 	});
 </script>
 
-<div id="row">
+<div id="row"
+style="--background-color: {$backgroundColor};"
+>
 	<div id="LeftColumn">
 		<LeftColumn lyrics={$lyricsBySlide?.[$currentSlideIndex] || []} />
 		<!-- <LeftColumn lyrics={["asdf", "fdas"]} /> -->
