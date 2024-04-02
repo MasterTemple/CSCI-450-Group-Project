@@ -44,104 +44,34 @@
 				if (text.length > longestLineWidth) longestLineWidth = text.length;
 			}
 			column_ch_width.set(longestLineWidth);
-			// column_ch_width.set(min(longestLineWidth, 30));
-			// console.log({ longestLineWidth, newLines });
 		});
-
-		// // load cloud storage and sync with local storage
-		// emailAddress.set(localStorage.getItem("emailAddress") || "");
-		// authToken.set(localStorage.getItem("authToken") || "");
-		// currentSongId.set(localStorage.getItem("currentSongId"));
-		// currentSongId.subscribe((v) => {
-		// 	localStorage.setItem("currentSongId", v);
-		// });
-		// const allCloudSongs = await req("load", {}, $authToken);
-		// if (allCloudSongs.length > 0) {
-		// 	allCloudSongs.sort((a, b) => b.songId - a.songId);
-		// 	localStorage.setItem("allSongs", JSON.stringify(allCloudSongs));
-		// 	let thisSong = allCloudSongs.find(
-		// 		(s) => s.songId == $currentSongId,
-		// 	);
-		// 	if (!thisSong) thisSong = allCloudSongs[0];
-		// 	localStorage.setItem("currentSong", JSON.stringify(thisSong));
-		// }
-		// // load local storage
-		// let savedCurrentSong = JSON.parse(localStorage.getItem("currentSong"));
-		// allSongs.set(JSON.parse(localStorage.getItem("allSongs")) || []);
-		// console.log({ $allSongs });
-
-		// console.log({ savedCurrentSong });
-		// if (savedCurrentSong) {
-		// 	setCurrrentSong(savedCurrentSong);
-		// } else {
-		// 	rawClipboardContents.set(EXAMPLE_CONTENTS_2);
-		// 	setLyricDataFromClipboard($rawClipboardContents);
-		// }
-
-		// // keep track if work needs to be saved
-		// currentSong.subscribe((v) => workIsUnsaved.set(true));
-
-		// // save work if edited every n seconds
-		// const N = 1;
-		// setInterval(async () => {
-		// 	if ($workIsUnsaved) {
-		// 		workIsUnsaved.set(false);
-		// 		const data = JSON.stringify($currentSong);
-		// 		if ($lines?.length == 0) return;
-
-		// 		// update current local storage
-		// 		localStorage.setItem("currentSong", data);
-
-		// 		// update all songs locally (memory and storage)
-		// 		allSongs.update((songs) => {
-		// 			const index = songs.findIndex(
-		// 				(s) => s.songId == $currentSongId,
-		// 			);
-		// 			songs[index] = $currentSong;
-		// 			localStorage.setItem("allSongs", JSON.stringify(songs));
-		// 			return songs;
-		// 		});
-
-		// 		// save to server
-		// 		const json = await req("save", $currentSong, $authToken);
-		// 		console.log({ json });
-
-		// 		workIsUnsaved.set(false);
-		// 	}
-		// }, N * 1000);
-
-		// // setInterval(async () => {
-		// // 	const allCloudSongs = await req("load", {}, $authToken);
-		// // 	if (allCloudSongs.length > 0) {
-		// // 		allCloudSongs.sort((a, b) => b.songId - a.songId);
-		// // 		localStorage.setItem("allSongs", JSON.stringify(allCloudSongs));
-		// // 		allSongs.set(allCloudSongs);
-		// // 	}
-		// // }, 1000);
-
-		// // YOU MUST WAIT UNTIL IT IS SET
-		// lines.subscribe((value) => {
-		// 	lyricsBySlide.set(convertLyricLinesToSlides(value));
-		// 	// setTimeout(() => console.log($lyricsBySlide), 100);
-		// });
 	});
 
-	async function checkForEnter(input) {
+	function removeRange(str, start, end) {
+		return str.slice(0, start) + str.slice(end);
+	}
+
+	async function handleTextAreaEdit(input) {
 		// console.log({ input });
 		// get index of lyric/textarea
 		const index = parseInt(input.target.dataset["lyricLineNumber"]);
 		// get cursor location
-		const cursor = document.getElementById(
+		const textareaElement = document.getElementById(
 			`lyric-input-${index}`,
-		).selectionStart;
+		);
+		const selectionStart = textareaElement.selectionStart;
+		const selectionEnd = textareaElement.selectionEnd;
+		const hasSelectionRange = selectionStart != selectionEnd;
+		console.log({selectionStart, selectionEnd})
+		console.log(input.target.value.length)
 		// sleep 100ms so I can read the target value after it is set
 		await new Promise((resolve) => setTimeout(resolve, 100));
 		// create a copy of lines to edit
 		let allLines = $lines;
 		let focusIndex = index;
-		let focusCursor = cursor;
+		let focusCursor = selectionStart;
 
-		// console.log(input.key == "Delete", cursor == input.target.value.length);
+		// console.log(input.key == "Delete", selectionStart == input.target.value.length);
 		// break into multiple lines as necessary
 		if (input.key == "Enter") {
 			// get contents into list of lines
@@ -170,26 +100,28 @@
 			focusCursor = 0;
 		}
 		// join next line to the current line
-		else if (input.key == "Delete" && cursor == input.target.value.length) {
+		else if (input.key == "Delete" && selectionEnd == input.target.value.length) {
 			// update current line to have next line contents
 			allLines[index] = {
-				text: allLines[index].text + " " + allLines[index + 1].text,
+				// join lines
+				text: (allLines[index].text + " " + allLines[index + 1].text).trim(),
+				// keep divider
 				divider: allLines[index].divider || allLines[index + 1].divider,
 			};
 			// remove next line
 			allLines = removeAtIndex(allLines, index + 1);
 			// set focus location
 			focusIndex = index;
-			focusCursor = cursor + 1;
+			focusCursor = selectionStart + 1;
 		}
 		// join current line to the previous line
-		else if (input.key == "Backspace" && cursor == 0) {
+		else if (input.key == "Backspace" && selectionStart == 0 && !hasSelectionRange) {
 			// set focus location
 			focusIndex = index - 1;
 			focusCursor = allLines[index - 1].text.length + 1;
 			// update previous line to have current line contents
 			allLines[index - 1] = {
-				text: allLines[index - 1].text + " " + allLines[index].text,
+				text: (allLines[index - 1].text + " " + allLines[index].text).trim(),
 				divider: allLines[index - 1].divider || allLines[index].divider,
 			};
 			// remove current line
@@ -197,12 +129,13 @@
 		}
 		// ignore all other input
 		else {
+			allLines[index] = { text: textareaElement.value, divider: allLines[index].divider };
 			lines.set(allLines);
 			return;
 		}
 		// set lines
 		lines.set(allLines);
-		// after lines have been updated, focus and return cursor position
+		// after lines have been updated, focus and return selectionStart position
 		setTimeout(() => {
 			let el = document.getElementById(`lyric-input-${focusIndex}`);
 			el.focus();
@@ -319,7 +252,6 @@
 					<button
 						class="line-border"
 						on:click={() => {
-							console.log({$editLines, i, j})
 							if($editLines) {
 								$lines[i * NUMBER_OF_LINES_PER_COLUMN + j].divider =
 								!$lines[i * NUMBER_OF_LINES_PER_COLUMN + j].divider
@@ -346,7 +278,7 @@
 								class="lyric-input"
 								id="lyric-input-{i * NUMBER_OF_LINES_PER_COLUMN + j}"
 								data-lyric-line-number={i * NUMBER_OF_LINES_PER_COLUMN + j}
-								on:keydown={checkForEnter}
+								on:keydown={handleTextAreaEdit}
 								readonly={$editLines}
 								value={line.text}
 								rows="1"
