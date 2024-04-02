@@ -217,8 +217,8 @@
 
 <div
 	id="songInformation"
-	style="--title-ch-width: {max($title?.length, 20)}ch;--author-ch-width: {max(
-		$author?.length,
+	style="--title-ch-width: {max($title?.length || 0, 20)}ch;--author-ch-width: {max(
+		$author?.length || 0,
 		20,
 	)}ch;"
 >
