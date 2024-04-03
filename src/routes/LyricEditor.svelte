@@ -45,6 +45,14 @@
 			}
 			column_ch_width.set(longestLineWidth);
 		});
+
+		//allow for scrolling with mouse wheel
+		let lyricRegion = document.getElementById("lyric-region");
+		if (lyricRegion) {
+			lyricRegion.addEventListener("wheel", function (e) {
+				lyricRegion.scrollLeft += e.deltaY;
+			});
+		}
 	});
 
 	function removeRange(str, start, end) {
@@ -244,7 +252,19 @@
 <div id="lyric-region" style="--column-ch-width: {$column_ch_width}ch;">
 	{#each { length: NUMBER_OF_LINES_PER_COLUMN } as _, i}
 		{#if $leftMostDisplayColumn <= i && i <= $leftMostDisplayColumn + $numberOfColumns - 1 && $lines.length >= i * NUMBER_OF_LINES_PER_COLUMN}
-			<!-- This is what should be contained in the scroll view? -->
+			<!-- This is what should be contained in the scroll view? 
+				This JS could potentially fix the horixontal scroll with mouse
+
+				var item = document.getElementById("lyric-region");
+
+				window.addEventListener("wheel", function (e) {
+					if (e.deltaY > 0) item.scrollLeft += 100;
+					else item.scrollLeft -= 100;
+				});
+
+				or mayve even this:
+				(event) => event.currentTarget.scrollLeft += event.deltaY
+			-->
 
 			<div id="column-{i}" class="lyric-column"
 				class:is-dividing-lines={$editLines}
@@ -401,6 +421,7 @@
 		align-items: center;
 		flex-wrap: nowrap;
 		overflow-x: scroll;
+		overflow-y: hidden;
 		scroll-snap-type: x mandatory;
 	}
 
