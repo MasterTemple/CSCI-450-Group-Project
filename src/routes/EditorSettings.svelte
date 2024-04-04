@@ -108,7 +108,7 @@
 
 <h2>Actions</h2>
 
-<div>
+<div id="actions-container">
 	<!-- Divide every n lines -->
 	<input
 		bind:group={selectedAction}
@@ -122,7 +122,6 @@
 			id="divideEveryLines"
 			name="divideEveryLines"
 			placeholder="n"
-			bind:value={divideEveryNLinesCount}
 		/> lines</label
 	>
 	<br />
@@ -187,7 +186,7 @@
 
 <h2>Settings</h2>
 
-<div class="editor-settings-items">
+<div class="editor-settings-items" id="settings-container">
 	<label
 		>Columns <input
 			name="editor-settings"
@@ -201,12 +200,22 @@
 </div>
 
 <style>
+	#applyChangesButton:hover { 
+		background-color: #01AE35;
+	}
 	#applyChangesButton {
 		background-color: antiquewhite;
 		border: none;
 		border-radius: 10px;
 		height: 3vh;
 		width: 95%;
+		box-shadow: 0 5px #999;
+	}
+
+	#applyChangesButton:active {
+		background-color: #01AE35;
+		box-shadow: 0 3px #666;
+		transform: translateY(4px);
 	}
 
 	#divideEveryLines {
@@ -232,5 +241,23 @@
 	/* Firefox */
 	input[type="number"] {
 		-moz-appearance: textfield;
+	}
+
+	#settings-container  {
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
+	#actions-container  {
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
 	}
 </style>
