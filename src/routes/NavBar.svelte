@@ -345,9 +345,7 @@
 		transform: translateY(4px);
 	}
 
-	#presentButtonText{
-		
-	}
+
 
 
 
