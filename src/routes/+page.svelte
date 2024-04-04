@@ -166,7 +166,7 @@
 	#navbar {
 		/* position: fixed; */
 		width: 100vw;
-		height: 12vh;
+		height: 15vh;
 		position: relative;
 		display: flex;
 		background-color: var(--dark1);

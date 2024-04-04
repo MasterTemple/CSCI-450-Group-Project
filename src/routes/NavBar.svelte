@@ -184,7 +184,7 @@
 	>
 		<span
 			class="material-symbols-rounded"
-			style="font-variation-settings: 'FILL' 1; font-size: 30px"
+			style="font-variation-settings: 'FILL' 1; font-size: 35px"
 			>download</span
 		>
 		<h1 id="exportButtonText">Export</h1>
@@ -309,6 +309,8 @@
 		left: 0%;
 		position: relative;
 		top: 15%;
+		min-width: 160px;
+
 	}
 
 	#presentButton {
@@ -316,53 +318,98 @@
 		border: none;
 		display: flex;
 		width: fit-content;
+		min-width: 160px;
+		
 		height: fit-content;
-		align-content: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		/* align-content: left; */
 		border-radius: 10px;
 		box-shadow:
 			0 4px 8px 0 rgba(0, 0, 0, 0.2),
 			0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	}
 
+	#presentButton:hover {
+  		background-color: skyblue; /* Change background color on hover */
+  		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+	}
+
+	#presentButtonContainer :active {
+		background-color: #01AE35;
+		box-shadow: 0 3px #666;
+		transform: translateY(4px);
+	}
+
+	#presentButtonText{
+		
+	}
+
+
+
 	#presentButtonContainer {
-		position: relative;
-		top: 20%;
-		left: 55%;
+		position: fixed;
+		top: 3%;
+		right: 260px;
 		display: flex;
 		align-content: center;
+		align-content: right;
 	}
 
 	#exportButtonContainer {
-		position: relative;
-		top: 20%;
-		left: 56%;
+		position: fixed;
+		top: 3%;
+		/* right: -56%; */
+		right: 80px;
 		display: flex;
 		flex-direction: row;
-		align-content: center;
+		align-content: right;
 		justify-content: center;
+
+		
 	}
 
 	#exportButton {
 		background-color: var(--action);
 		border: none;
-		display: flex;
+		min-width: 160px;
+		
 		width: fit-content;
 		height: fit-content;
-		align-content: center;
+		display: flex;
+		/* align-content: center; */
+		justify-content: center;
+		align-items: center;
+
+
 		border-radius: 10px;
 		box-shadow:
 			0 4px 8px 0 rgba(0, 0, 0, 0.2),
 			0 6px 20px 0 rgba(0, 0, 0, 0.19);
-		flex-direction: row;
-		align-content: center;
-		justify-content: center;
+
 	}
 
+	#exportButton:hover {
+  		background-color: skyblue; /* Change background color on hover */
+  		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+	}
+
+	#exportButtonContainer :active {
+		background-color: #01AE35;
+		box-shadow: 0 3px #666;
+		transform: translateY(4px);
+	}
+
+
+
 	#profileContainer {
-		position: relative;
-		top: 20%;
-		left: 62%;
-		align-content: center;
+		position: fixed;
+		top: 3.5%;
+		right: 15px
+		/* right: 5%; */
+		/* left: 56.5%; */
+		/* align-content: right; */
 	}
 
 	#profileButton {
@@ -403,4 +450,48 @@
 		width: 220px;
 		outline: none;
 	} */
+
+	@media (max-width: 700px) {
+		#exportButtonContainer{
+			width: fit-content;;
+			min-width: 80px;
+	
+		}
+
+		#exportButton{
+			width: fit-content;;
+			min-width: 80px;
+
+		}
+
+		#exportButtonText {
+			font-size: 1em;
+			padding-right: 8px;
+		}
+
+		#presentButtonContainer{
+			width: fit-content;
+			min-width: 80px;
+			right: 180px
+	
+		}
+
+		#presentButton{
+			width: fit-content;
+			min-width: 80px;
+			height: 40px;
+			
+		}
+
+		#presentButtonText {
+			font-size: 1em;
+			padding-right: 8px;
+		}
+
+		.material-symbols-rounded{
+			font-size: 10px
+		}
+
+
+	}
 </style>
