@@ -126,6 +126,7 @@
 		align-content: center;
 		text-align: center;
 		vertical-align: middle;
+		padding:10px;
 	}
 	p {
 		text-align: center;

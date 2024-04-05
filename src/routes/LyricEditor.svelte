@@ -3,6 +3,7 @@
 	import { writable } from "svelte/store";
 	import { EMPTY_SONG_CONTENTS } from "./constants.js";
 	import { insertAtIndex, removeAtIndex, splitLine } from "./functions.js";
+	import { max, min } from './functions.js';
 	import {
 		author,
 		breakIndexes,
@@ -43,7 +44,8 @@
 			for (let { text } of newLines) {
 				if (text.length > longestLineWidth) longestLineWidth = text.length;
 			}
-			column_ch_width.set(longestLineWidth);
+			//column_ch_width.set(longestLineWidth);
+			column_ch_width.set(max(20, min(longestLineWidth, 40)));
 		});
 
 		//allow for scrolling with mouse wheel
@@ -214,12 +216,7 @@
 	function divideLine(line) {}
 
 	const NUMBER_OF_LINES_PER_COLUMN = 12;
-	function max(a, b) {
-		return a < b ? b : a;
-	}
-	function min(a, b) {
-		return a > b ? b : a;
-	}
+
 	let leftMostDisplayColumn = writable(0);
 </script>
 
