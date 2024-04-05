@@ -307,10 +307,12 @@
 
 	#lolTitle {
 		color: var(--white);
+
 		left: 8%;
 		position: fixed;
 		top: 2%;
 		/* top: 15%; */
+
 		min-width: 160px;
 
 	}
@@ -494,4 +496,5 @@
 
 
 	}
+
 </style>
