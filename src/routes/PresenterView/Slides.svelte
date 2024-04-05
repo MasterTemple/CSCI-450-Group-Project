@@ -41,7 +41,7 @@
 		color: var(--text-color);
 		font-size: var(--font-size);
 		font-family: var(--font-family);
-		/* height: 13vh; */
+		height: 97%; 
 		/* width: 8vw; */
 		/* width: 40ch; */
 		border: 3px solid var(--background-color);

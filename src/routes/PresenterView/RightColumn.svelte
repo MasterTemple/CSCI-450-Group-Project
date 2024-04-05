@@ -22,7 +22,7 @@
 	<div id="nextSlidePreview">
 		<Slides
 			lyrics={$lyricsBySlide?.[$currentSlideIndex + 1]}
-			fontSizeOverride={24}
+			fontSizeOverride={18}
 		/>
 	</div>
 	<div id="allSlides">
@@ -35,6 +35,7 @@
 		display: flex;
 		flex-direction: column;
 		margin-top: 5vh;
+		overflow: hidden;
 	}
 
 	#nextSlidePreview {
