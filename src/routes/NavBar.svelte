@@ -250,12 +250,12 @@
 	<div class="modal-content">
 		<button on:click={closeAccountInfoModal} class="close">&times;</button>
 		<div class="column">
-			<h1>Personal Information</h1>
+			<h1 id="personal">Personal Information</h1>
 			<label for="">
 				<p>Email Address: {$emailAddress}</p>
 				<p>Songs Created: {$allSongs.length}</p>
 			</label>
-			<button on:click={logout}>Log Out</button>
+			<button id="logout" on:click={logout}>Log Out</button>
 		</div>
 	</div>
 </div>
@@ -264,6 +264,7 @@
 	.column {
 		/* display: flex;
 		flex-direction: column; */
+		/* float:left; */
 	}
 	.modal {
 		display: none; /* Hidden by default */
@@ -278,19 +279,25 @@
 		background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 	}
 	.modal-content {
-		text-align: center;
+		text-align:left;
 		background-color: var(--dark1);
 		color: var(--white);
 		margin: 15% auto; /* 15% from the top and centered */
 		padding: 20px;
 		border: 1px solid #888;
-		width: 80%; /* Could be more or less, depending on screen size */
+		width: 40%; /* Could be more or less, depending on screen size */
+	}
+	#logout{
+		position: fixed;
+		right:0;
+		top:0;
 	}
 	.close {
 		color: #aaa;
 		float: right;
 		font-size: 28px;
 		font-weight: bold;
+
 	}
 	#logoContainer {
 		position: fixed;
