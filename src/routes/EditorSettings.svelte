@@ -51,7 +51,6 @@
 		} else if (selectedAction == "autodetectCheck") {
 			var counter = 0;
 			$lyricsBySlide = [[]];
-			// WHAT DOES THIS EVEN DO??
 			for (i = 0; i < $lines.length; i++) {
 				if ($lines[i].divider) {
 					counter++;
@@ -206,6 +205,7 @@
 		color: white;
 	}
 	#applyChangesButton {
+		margin-top: 20px;
 		background-color: white;
 		border: none;
 		border-radius: 10px;
@@ -262,6 +262,7 @@
 		-ms-user-select: none;
 		user-select: none;
 	}
+	
 
 
 </style>

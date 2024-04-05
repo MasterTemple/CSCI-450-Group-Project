@@ -85,7 +85,7 @@
 		>
 	</div>
 
-	<button on:click={applySettingsToAll}>Apply to All</button>
+	<button on:click={applySettingsToAll} id="apply-to-all-button">Apply to All</button>
 	<p class="info-hint">
 		* Changes are automatically applied to the current slide
 	</p>
@@ -122,4 +122,26 @@
 		padding-top: 0.25rem;
 		margin: 0;
 	}
+
+	#apply-to-all-button:hover { 
+		background-color: #01AE35;
+		color: white;
+	}
+	#apply-to-all-button {
+		margin-top: 20px;
+		margin-bottom: 10px;
+		background-color: white;
+		border: none;
+		border-radius: 10px;
+		height: 3vh;
+		width: 95%;
+		box-shadow: 0 5px #999;
+	}
+
+	#apply-to-all-button:active {
+		background-color: #01AE35;
+		box-shadow: 0 3px #666;
+		transform: translateY(4px);
+	}
+
 </style>

@@ -88,7 +88,10 @@
 		border-top-right-radius: calc(2 * var(--border-radius));
 	}
 	#settings-section-select > button.selected {
-		background-color: var(--dark4);
+		background-color: black;
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+
 	}
 
 	#settings-content {

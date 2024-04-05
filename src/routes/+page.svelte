@@ -153,7 +153,7 @@
 	@import "./style.css";
 
 	#everything {
-		max-width: 100wh;
+		max-width: 100vw;
 		max-height: 100vh;
 		overflow-x: hidden;
 		overflow-y: hidden;
@@ -200,7 +200,6 @@
 
 	#editor {
 		background-color: var(--dark1);
-		/* background-color: red;       <-- Uncomment to see outline */
 		height: 100%;
 		width: 100vw;
 		display: flex;
