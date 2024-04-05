@@ -19,12 +19,9 @@
 
 	const loginCode = writable("");
 	loginCode.subscribe((v) => {
-		// it is null when loginCode input gets backspaced into being empty
-		if(v != null) {
-			let str = $loginCode.toString();
-			if (str.length > 6) {
-				loginCode.set(parseInt(str.slice(0, 6)));
-			}
+		let str = $loginCode.toString();
+		if (str.length > 6) {
+			loginCode.set(parseInt(str.slice(0, 6)));
 		}
 	});
 
@@ -243,7 +240,7 @@
 			</label>
 			<button
 				on:click={verifyLogin}
-				disabled={($loginCode || "").toString().length != 6}>Continue</button
+				disabled={$loginCode.toString().length != 6}>Continue</button
 			>
 		</div>
 	</div>
@@ -296,22 +293,26 @@
 		font-weight: bold;
 	}
 	#logoContainer {
-		position: relative;
+		position: fixed;
 		display: flex;
-		top: 0%;
-		left: 80 vw;
+		top: 2.5%;
+		/* left: 80 vw; */
+		left: 1.5%;
 	}
 
 	#logo {
-		width: 100px;
-		height: 100px;
+		width: 60px;
+		height: 60px;
 	}
 
 	#lolTitle {
 		color: var(--white);
-		left: 0%;
-		position: relative;
-		top: 15%;
+
+		left: 8%;
+		position: fixed;
+		top: 2%;
+		/* top: 15%; */
+
 		min-width: 160px;
 
 	}
@@ -495,4 +496,5 @@
 
 
 	}
+
 </style>
