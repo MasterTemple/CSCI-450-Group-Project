@@ -122,6 +122,7 @@
 			id="divideEveryLines"
 			name="divideEveryLines"
 			placeholder="n"
+			bind:value={divideEveryNLinesCount}
 		/> lines</label
 	>
 	<br />
