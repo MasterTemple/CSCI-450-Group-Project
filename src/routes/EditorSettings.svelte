@@ -203,9 +203,10 @@
 <style>
 	#applyChangesButton:hover { 
 		background-color: #01AE35;
+		color: white;
 	}
 	#applyChangesButton {
-		background-color: antiquewhite;
+		background-color: white;
 		border: none;
 		border-radius: 10px;
 		height: 3vh;
