@@ -287,11 +287,11 @@
 		border: 1px solid #888;
 		width: 40%; /* Could be more or less, depending on screen size */
 	}
-	#logout{
+	/* #logout{
 		position: fixed;
 		right:0;
 		top:0;
-	}
+	} */
 	.close {
 		color: #aaa;
 		float: right;
