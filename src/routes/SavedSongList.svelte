@@ -84,11 +84,18 @@
 	#searchBar {
 		border-radius: 8px;
 		width: 90%;
-		border: none;
-		margin: 0.75rem;
+		border: 3px solid var(--dark1);
+		margin: 0.35rem;
 		position: relative;
 		padding: 0.25rem;
-		font-size: medium;
+		font-size: 1rem;
+		background: var(--black);
+		color: var(--white);
+		
+	}
+	#searchBar:focus {
+		border-color: var(--primary);
+		outline-width: 0;
 	}
 
 	#songs {
