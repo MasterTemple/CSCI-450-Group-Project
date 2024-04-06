@@ -15,6 +15,7 @@ export const numberOfColumnsToDisplay = writable(3);
 export const savedSongsIsOpen = writable(true);
 
 export const settingsIsOpen = writable(true);
+
 export const settingsToggleOption = {
 	editor: 0,
 	presentation: 1,
