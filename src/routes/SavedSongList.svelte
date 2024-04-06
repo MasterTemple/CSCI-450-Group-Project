@@ -111,5 +111,7 @@
 		border: 6px solid transparent;
 		background-clip: content-box;
 	}
-
+	::-webkit-scrollbar-thumb:hover {
+		background-color: #cdcccc;
+	}
 </style>
