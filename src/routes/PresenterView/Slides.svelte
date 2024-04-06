@@ -42,6 +42,8 @@
 		font-size: var(--font-size);
 		font-family: var(--font-family);
 		height: 97%; 
+		max-height: 100px;
+		min-height: 140px;
 		/* width: 8vw; */
 		/* width: 40ch; */
 		border: 3px solid var(--background-color);
