@@ -246,6 +246,7 @@
 	</div>
 
 </div>
+
 <div id="lyric-region" style="--column-ch-width: {$column_ch_width}ch;">
 	{#each { length: NUMBER_OF_LINES_PER_COLUMN } as _, i}
 		{#if $leftMostDisplayColumn <= i && i <= $leftMostDisplayColumn + $numberOfColumns - 1 && $lines.length >= i * NUMBER_OF_LINES_PER_COLUMN}

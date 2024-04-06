@@ -61,7 +61,10 @@
 		/* justify-content: center; */
 		flex-direction: column;
 		border-radius: var(--border-radius);
+		overflow: hidden;
+		height: 100%;
 	}
+	
 	#drawerDiv {
 		position: absolute;
 		bottom: 50%;
