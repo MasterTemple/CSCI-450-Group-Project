@@ -61,7 +61,6 @@
 		/* justify-content: center; */
 		flex-direction: column;
 		border-radius: var(--border-radius);
-		overflow: hidden;
 	}
 	#drawerDiv {
 		position: absolute;
@@ -88,21 +87,24 @@
 	#searchBar {
 		border-radius: 8px;
 		width: 90%;
-		border: none;
-		margin-top: 20px;
-		/* margin: 0.75rem; */
+		border: 3px solid var(--dark1);
+		margin: 0.35rem;
 		position: relative;
-		/* padding: 0.25rem; */
-		font-size: medium;
+		padding: 0.25rem;
+		font-size: 1rem;
+		background: var(--black);
+		color: var(--white);
+	}
+	#searchBar:focus {
+		border-color: var(--primary);
+		outline-width: 0;
 	}
 
 	#songs {
-
-		height: 100%;
-		overflow-y: scroll;
-		
+		height: 100%;		
 		/* align-content: center; */
 		overflow-x: hidden;
+		overflow-y: scroll;
 		display: flex;
 		align-items: center;
 		flex-direction: column;
@@ -110,7 +112,7 @@
 		scrollbar-track-color: red !important;
 	}
 	::-webkit-scrollbar {
-		width:0px;
+		width:17px;
 	}
 	::-webkit-scrollbar-track {
 		background-color: transparent;
@@ -121,5 +123,7 @@
 		border: 6px solid transparent;
 		background-clip: content-box;
 	}
-
+	::-webkit-scrollbar-thumb:hover {
+		background-color: #cdcccc;
+	}
 </style>
