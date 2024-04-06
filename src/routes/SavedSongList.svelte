@@ -56,6 +56,10 @@
 
 <style>
 	#saved-song-list {
+		display:flex;
+		align-items: center;
+		/* justify-content: center; */
+		flex-direction: column;
 		border-radius: var(--border-radius);
 		overflow: hidden;
 	}
@@ -85,14 +89,18 @@
 		border-radius: 8px;
 		width: 90%;
 		border: none;
-		margin: 0.75rem;
+		margin-top: 20px;
+		/* margin: 0.75rem; */
 		position: relative;
-		padding: 0.25rem;
+		/* padding: 0.25rem; */
 		font-size: medium;
 	}
 
 	#songs {
-		height: 720px;
+
+		height: 100%;
+		overflow-y: scroll;
+
 		overflow-x: hidden;
 		display: flex;
 		flex-direction: column;

@@ -77,7 +77,8 @@
 
 <style>
 	.song-info {
-		margin-top: 1rem;
+		width: 90%;
+		margin-top: 20px;
 		background-color: var(--dark1);
 		border-radius: var(--border-radius);
 	}
@@ -107,17 +108,22 @@
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
+		width: 220px;
+
 	}
 	.saved-song {
+		display: flex;
 		font-family: var(--font-family);
 		justify-content: center;
 		align-items: center;
+		width: 100%;
+		/* max-height: 100px; */
 	}
 	#image {
 		background-color: var(--background-color);
 		width: 90%;
 		position: relative;
-		left: 3%;
+		/* left: 3%; */
 		top: 20px;
 		border: none;
 		border-radius: 10px;
