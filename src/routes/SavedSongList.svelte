@@ -102,15 +102,19 @@
 
 	#songs {
 		height: 100%;
+		overflow-y: scroll;
+		
+		/* align-content: center; */
 		overflow-x: hidden;
 		overflow-y: scroll;
 		display: flex;
+		align-items: center;
 		flex-direction: column;
-		gap: 10px;
+		/* gap: 10px; */
 		scrollbar-track-color: red !important;
 	}
 	::-webkit-scrollbar {
-		width:17px;
+		width:0px;
 	}
 	::-webkit-scrollbar-track {
 		background-color: transparent;
