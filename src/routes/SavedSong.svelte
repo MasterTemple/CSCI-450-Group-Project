@@ -77,7 +77,7 @@
 
 <style>
 	.song-info {
-		width: 90%;
+		width: 100%;
 		margin-top: 20px;
 		background-color: var(--dark1);
 		border-radius: var(--border-radius);
@@ -109,6 +109,8 @@
 		justify-content: center;
 		align-items: center;
 		width: 220px;
+		height: fit-content;
+		min-height: 70px;
 
 	}
 	.saved-song {
@@ -121,7 +123,7 @@
 	}
 	#image {
 		background-color: var(--background-color);
-		width: 90%;
+		width: 100%;
 		position: relative;
 		/* left: 3%; */
 		top: 20px;
