@@ -101,9 +101,7 @@
 	}
 
 	#songs {
-		height: 100%;
-		overflow-y: scroll;
-		
+		height: 100%;		
 		/* align-content: center; */
 		overflow-x: hidden;
 		overflow-y: scroll;
@@ -114,7 +112,7 @@
 		scrollbar-track-color: red !important;
 	}
 	::-webkit-scrollbar {
-		width:0px;
+		width:17px;
 	}
 	::-webkit-scrollbar-track {
 		background-color: transparent;
