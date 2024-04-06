@@ -100,7 +100,7 @@
 
 	<!-- style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize} " -->
 	<div id="currentSlide">
-		<Slides {lyrics} fontSizeOverride={32} />
+		<Slides {lyrics} fontSizeOverride={26} />
 	</div>
 
 	<div id="slideControlStack">

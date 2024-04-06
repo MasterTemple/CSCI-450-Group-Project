@@ -22,7 +22,7 @@
 	<div id="nextSlidePreview">
 		<Slides
 			lyrics={$lyricsBySlide?.[$currentSlideIndex + 1]}
-			fontSizeOverride={18}
+			fontSizeOverride={16}
 		/>
 	</div>
 	<div id="allSlides">
@@ -48,5 +48,6 @@
 		justify-content: center;
 		display: flex;
 		background-color: var(--background-color);
+		overflow: hidden;
 	}
 </style>

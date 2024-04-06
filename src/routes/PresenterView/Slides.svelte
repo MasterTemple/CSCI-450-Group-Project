@@ -56,7 +56,7 @@
 		align-items: center;
 		justify-content: center;
 		display: flex;
-		overflow: hidden;
+		overflow: visible;
 	}
 	#lyrics,
 	p {

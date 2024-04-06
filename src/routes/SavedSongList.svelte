@@ -28,7 +28,6 @@
 	<div id="drawerDiv">
 		<button
 			id="drawerButton"
-			style="--color: {color.brown}"
 			on:click={toggleDrawer}>{icons[$savedSongsIsOpen ? 1 : 0]}</button
 		>
 	</div>
@@ -63,6 +62,7 @@
 		border-radius: var(--border-radius);
 		overflow: hidden;
 		height: 100%;
+		width: 100%;
 	}
 	
 	#drawerDiv {
@@ -82,6 +82,7 @@
 		border-top-right-radius: 10px;
 		border-bottom-right-radius: 10px;
 		box-shadow: 2px 1px 15px var(--black);
+		visibility: visible;
 		/* box-shadow:
 			0 4px 8px 0 rgba(0, 0, 0, 0.2),
 			0 6px 20px 0 rgba(0, 0, 0, 0.19); */
