@@ -220,33 +220,32 @@
 	let leftMostDisplayColumn = writable(0);
 </script>
 
-<div
-	id="songInformation"
-	style="--title-ch-width: {max($title?.length || 0, 20)}ch;--author-ch-width: {max(
-		$author?.length || 0,
-		20,
-	)}ch;"
->
-	<input
-		type="text"
-		placeholder="Song Title"
-		id="songTitle"
-		bind:value={$title}
-	/>
-	<input
-		type="text"
-		placeholder="Artist"
-		id="songArtist"
-		bind:value={$author}
-	/>
-
+<div id="songInfoAndEditMode">
+	<div
+		id="songInformation"
+		style="--title-ch-width: {max($title?.length || 0, 20)}ch;--author-ch-width: {max(
+			$author?.length || 0,
+			20,
+		)}ch;"
+	>
+		<input
+			type="text"
+			placeholder="Song Title"
+			id="songTitle"
+			bind:value={$title}
+		/>
+		<input
+			type="text"
+			placeholder="Artist"
+			id="songArtist"
+			bind:value={$author}
+		/>
+	</div>
 	<div id="edit-mode-toggle">
 		<button class:edit-mode-selected={$editLines} on:click={() => editLines.set(true)}>Divide Lines</button>
 		<button class:edit-mode-selected={!$editLines} on:click={() => editLines.set(false)}>Edit Text</button>
 	</div>
-
 </div>
-
 <div id="lyric-region" style="--column-ch-width: {$column_ch_width}ch;">
 	{#each { length: NUMBER_OF_LINES_PER_COLUMN } as _, i}
 		{#if $leftMostDisplayColumn <= i && i <= $leftMostDisplayColumn + $numberOfColumns - 1 && $lines.length >= i * NUMBER_OF_LINES_PER_COLUMN}
@@ -522,41 +521,54 @@
 		display: flex;
 		flex-direction: row;
 	}
+	#songInfoAndEditMode {
+		display: flex;
+		flex-direction: row;
+		
+	}
 
 	#songInformation {
 		align-items: center;
 		display: flex;
-		gap: 10px;
+		gap: 5px;
 		flex-direction: column;
+		margin: 0 10% 0 30%;
 	}
 
 	#songTitle {
 		text-align: center;
-		border: none;
+		border: 3px solid var(--dark1);
 		background-color: var(--dark0);
 		color: var(--white);
-		border-radius: 5px;
+		border-radius: 10px;
 		font-size: xx-large;
 		width: var(--title-ch-width);
 		padding: 0.25rem 0;
 	}
+	#songTitle:focus {
+		border-color: var(--primary);
+		outline-width: 0;
+	}
 
 	#songArtist {
 		text-align: center;
-		border: none;
+		border: 3px solid var(--dark1);
 		background-color: var(--dark0);
 		color: var(--white);
-		border-radius: 5px;
+		border-radius: 8px;
 		font-size: large;
 		padding: 0.25rem 0;
 		width: var(--author-ch-width);
+	}
+	#songArtist:focus {
+		border-color: var(--primary);
+		outline-width: 0;
 	}
 
 	::placeholder {
 		color: grey;
 	}
 	#edit-mode-toggle {
-		background: var(--dark0);
 		padding: 0.75rem;
 		border-radius: 8px;
 	}

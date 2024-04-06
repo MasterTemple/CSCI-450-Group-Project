@@ -12,6 +12,7 @@
 	let icons = ["<", ">"];
 
 	function toggleDrawer() {
+		console.log("Toggle Drawer:" + $settingsIsOpen);
 		settingsIsOpen.set(!$settingsIsOpen);
 	}
 
@@ -21,41 +22,49 @@
 	}
 </script>
 
-<div id="drawerDiv">
-	<button id="drawerButton" on:click={toggleDrawer}
-		>{icons[$settingsIsOpen ? 1 : 0]}</button
-	>
-</div>
+<div id="settings-list">
+	<div id="drawerDiv">
+		<button 
+			id="drawerButton" 
+			on:click={toggleDrawer}>{icons[$settingsIsOpen ? 1 : 0]}</button
+		>
+	</div>
 
-<div id="settings-section-select">
-	<button
-		id="editorToggle"
-		on:click={() => isEditorSettings.set(true)}
-		class:selected={$isEditorSettings}>Editor</button
-	>
-	<button
-		id="presentationToggle"
-		on:click={() => isEditorSettings.set(false)}
-		class:selected={!$isEditorSettings}>Presentation</button
-	>
-</div>
+	<div id="settings-section-select">
+		<button
+			id="editorToggle"
+			on:click={() => isEditorSettings.set(true)}
+			class:selected={$isEditorSettings}>Editor</button
+		>
+		<button
+			id="presentationToggle"
+			on:click={() => isEditorSettings.set(false)}
+			class:selected={!$isEditorSettings}>Presentation</button
+		>
+	</div>
 
-<div id="settings-content">
-	{#if $isEditorSettings}
-		<EditorSettings />
-	{:else}
-		<PresentationSettings />
-	{/if}
+	<div id="settings-content">
+		{#if $isEditorSettings}
+			<EditorSettings />
+		{:else}
+			<PresentationSettings />
+		{/if}
+	</div>
 </div>
 
 <style>
-	* {
+	
+	#settings-list {
 		font-family: var(--font-family);
+		/* justify-content: center; */
+		height: 100%;
+		width: 100%;
+		
 	}
 	#drawerDiv {
 		position: absolute;
 		bottom: 50%;
-		left: -25px;
+		right: 100%;
 	}
 
 	#drawerButton {
