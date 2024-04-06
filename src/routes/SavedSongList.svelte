@@ -93,11 +93,23 @@
 
 	#songs {
 		height: 720px;
-		overflow-y: scroll;
 		overflow-x: hidden;
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
 		scrollbar-track-color: red !important;
 	}
+	::-webkit-scrollbar {
+		width:17px;
+	}
+	::-webkit-scrollbar-track {
+		background-color: transparent;
+	}
+	::-webkit-scrollbar-thumb {
+		background-color: var(--white);
+		border-radius: 25px;
+		border: 6px solid transparent;
+		background-clip: content-box;
+	}
+
 </style>
