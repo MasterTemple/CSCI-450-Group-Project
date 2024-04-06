@@ -61,7 +61,6 @@
 		/* justify-content: center; */
 		flex-direction: column;
 		border-radius: var(--border-radius);
-		overflow: hidden;
 	}
 	#drawerDiv {
 		position: absolute;
@@ -89,14 +88,12 @@
 		border-radius: 8px;
 		width: 90%;
 		border: 3px solid var(--dark1);
-		margin-top: 20px;
-		/* margin: 0.35rem; */
+		margin: 0.35rem;
 		position: relative;
 		padding: 0.25rem;
 		font-size: 1rem;
 		background: var(--black);
 		color: var(--white);
-		
 	}
 	#searchBar:focus {
 		border-color: var(--primary);
@@ -104,11 +101,9 @@
 	}
 
 	#songs {
-
 		height: 100%;
-		overflow-y: scroll;
-
 		overflow-x: hidden;
+		overflow-y: scroll;
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
