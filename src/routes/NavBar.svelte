@@ -325,7 +325,7 @@
 	}
 
 	#presentButton {
-		background-color: var(--action);
+		background-color: var(--secondary);
 		border: none;
 		display: flex;
 		width: fit-content;
@@ -336,6 +336,7 @@
 		justify-content: center;
 		align-items: center;
 		/* align-content: left; */
+		border: 0.1rem solid var(--tertiary);
 		border-radius: 10px;
 		box-shadow:
 			0 4px 8px 0 rgba(0, 0, 0, 0.2),
@@ -343,7 +344,7 @@
 	}
 
 	#presentButton:hover {
-  		background-color: skyblue; /* Change background color on hover */
+  		background-color: var(--primary); /* Change background color on hover */
   		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
 	}
 
@@ -380,7 +381,7 @@
 	}
 
 	#exportButton {
-		background-color: var(--action);
+		background-color: var(--secondary);
 		border: none;
 		min-width: 160px;
 		
@@ -390,9 +391,8 @@
 		/* align-content: center; */
 		justify-content: center;
 		align-items: center;
-
-
 		border-radius: 10px;
+		border: 0.1rem solid var(--tertiary);
 		box-shadow:
 			0 4px 8px 0 rgba(0, 0, 0, 0.2),
 			0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -400,7 +400,7 @@
 	}
 
 	#exportButton:hover {
-  		background-color: skyblue; /* Change background color on hover */
+  		background-color: var(--primary); /* Change background color on hover */
   		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
 	}
 
