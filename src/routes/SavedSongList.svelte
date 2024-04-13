@@ -26,16 +26,10 @@
 </script>
 
 <div id="saved-song-list">
-	<div id="drawerDiv">
-		<button
-			id="drawerButton"
-			on:click={toggleDrawer}>{icons[$savedSongsIsOpen ? 1 : 0]}</button
-		>
-	</div>
 	<input
 		type="text"
 		placeholder="Search.."
-		id="searchBar"
+		id="search-bar"
 		bind:value={$searchValue}
 	/>
 	<div id="songs">
@@ -65,42 +59,20 @@
 		height: 100%;
 		width: 100%;
 	}
-	
-	#drawerDiv {
-		position: absolute;
-		bottom: 50%;
-		left: 100%;
-	}
 
-	#drawerButton {
-		background-color: var(--dark0);
-		color: var(--white);
-		border: none;
-		text-align: center;
-		font-size: large;
-		width: 2rem;
-		height: 8rem;
-		border-top-right-radius: 10px;
-		border-bottom-right-radius: 10px;
-		box-shadow: 2px 1px 15px var(--black);
-		visibility: visible;
-		/* box-shadow:
-			0 4px 8px 0 rgba(0, 0, 0, 0.2),
-			0 6px 20px 0 rgba(0, 0, 0, 0.19); */
-	}
-
-	#searchBar {
+	#search-bar {
 		border-radius: 8px;
 		width: 90%;
 		border: 3px solid var(--dark1);
 		margin: 0.35rem;
+		margin-top: 0.5rem;
 		position: relative;
 		padding: 0.25rem;
 		font-size: 1rem;
 		background: var(--black);
 		color: var(--white);
 	}
-	#searchBar:focus {
+	#search-bar:focus {
 		border-color: var(--primary);
 		outline-width: 0;
 	}
