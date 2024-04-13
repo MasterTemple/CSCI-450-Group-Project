@@ -12,6 +12,7 @@
 	}
 	const searchValue = writable("");
 	function isSearchMatch(query, song) {
+		query = query.toLowerCase();
 		const title = song["title"].toLowerCase();
 		const author = (
 			song["author"] || UNKNOWN_SONG_AUTHOR_PLACEHOLDER
