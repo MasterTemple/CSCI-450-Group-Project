@@ -1,4 +1,5 @@
 <script>
+	import { writable } from "svelte/store";
 	import {
 		backgroundColor,
 		breakIndexes,
@@ -17,11 +18,14 @@
 	let divideEveryNLinesCount = 4;
 	let divideAtMatchWord = "";
 	let removeMatchText = "";
+	const action = writable("");
+	action.subscribe((a) => console.log({a}))
 	let selectedAction;
 
 	function applySettings(event) {
 		// const selectedAction = event.document;
 		console.log({ selectedAction });
+		selectedAction = $action;
 
 		if (selectedAction == "divideEveryCheck") {
 			if (
@@ -102,21 +106,20 @@
 				// $lyricsBySlide[counter].push($lines[i].text);
 			}
 		}
+		action.set("")
 	}
 </script>
 
-	<!-- <h2>Actions</h2> -->
+<!-- <h2>Actions</h2> -->
 
 <div id="actions-container">
 	<!-- Divide every n lines -->
-	<div class="row">
-		<input
-			bind:group={selectedAction}
-			name="presentation-settings"
-			type="radio"
-			id="divideEveryCheck"
-			value="divideEveryCheck"
-		/><label
+	<button
+		class="row"
+		on:click={() => action.set("divideEveryCheck")}
+		class:selected={$action == "divideEveryCheck"}
+	>
+		<label
 			>Divide every <input
 				type="number"
 				id="divideEveryLines"
@@ -125,28 +128,13 @@
 				bind:value={divideEveryNLinesCount}
 			/> lines</label
 		>
-	</div>
-	<!-- Autodetect from spacing -->
-	<!-- <div class="row"> -->
-	<!-- 	<label -->
-	<!-- 		><input -->
-	<!-- 			bind:group={selectedAction} -->
-	<!-- 			name="presentation-settings" -->
-	<!-- 			type="radio" -->
-	<!-- 			id="autodetectCheck" -->
-	<!-- 			value="autodetectCheck" -->
-	<!-- 		/>Autodetect from spacing</label -->
-	<!-- 	> -->
-	<!-- </div> -->
+	</button>
 	<!-- Divide at match -->
-	<div class="row">
-		<input
-			bind:group={selectedAction}
-			name="presentation-settings"
-			type="radio"
-			id="divideAtMatchCheck"
-			value="divideAtMatchCheck"
-		/>
+	<button
+		class="row"
+		on:click={() => action.set("divideAtMatchCheck")}
+		class:selected={$action == "divideAtMatchCheck"}
+	>
 		<label
 			>Divide at match:
 			<input
@@ -159,28 +147,21 @@
 		</label>
 
 		<!-- </div> -->
-	</div>
+	</button>
 	<!-- Remove All Dividers -->
-	<div class="row">
-		<label
-			><input
-				bind:group={selectedAction}
-				name="presentation-settings"
-				type="radio"
-				id="removeDividers"
-				value="removeDividers"
-			/>Remove All Dividers</label
-		>
-	</div>
+	<button
+		class="row"
+		on:click={() => action.set("removeDividers")}
+		class:selected={$action == "removeDividers"}
+	>
+		Remove All Dividers
+	</button>
 	<!-- Remove matches -->
-	<div class="row">
-		<input
-			bind:group={selectedAction}
-			name="presentation-settings"
-			type="radio"
-			id="removeMatch"
-			value="removeMatch"
-		/>
+	<button
+		class="row"
+		on:click={() => action.set("removeMatch")}
+		class:selected={$action == "removeMatch"}
+	>
 		<label
 			>Remove matches: <input
 				type="text"
@@ -190,33 +171,13 @@
 				bind:value={removeMatchText}
 			/></label
 		>
-	</div>
+	</button>
 
-	<button id="applyChangesButton" on:click={applySettings}>Apply Changes</button
+	<button id="apply-changes-button" on:click={applySettings}>Apply Changes</button
 	>
 </div>
 
 <style>
-	#applyChangesButton:hover {
-		border-color: var(--primary);
-		background-color: var(--black);
-	}
-
-	#applyChangesButton {
-		margin-top: 1rem;
-		border: none;
-		border-radius: 10px;
-		height: 3vh;
-		width: 16ch;
-		color: var(--white);
-		background-color: var(--dark1);
-		border: 2px solid var(--dark5);
-		border-radius: calc(2 * var(--border-radius));
-	}
-
-	#applyChangesButton:active {
-		background-color: var(--primary);
-	}
 
 	#divideEveryLines {
 		width: 2ch;
@@ -263,10 +224,22 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		align-items: left;
+		align-items: center;
 	}
 
-	#actions-container > div {
+	* {
+		font-size: medium;
+	}
+
+	#actions-container > button {
+		color: var(--white);
+	}
+
+	#actions-container > button.row {
+		width: 100%;
+	}
+
+	#actions-container > button.row {
 		max-width: 12vw;
 		margin: 0.5vw;
 		padding: 0.5vw;
@@ -274,10 +247,15 @@
 		background-color: var(--black);
 		border: 2px solid var(--dark2);
 		border-radius: calc(2 * var(--border-radius));
+		justify-content: center;
+	}
+
+	#actions-container > button.selected {
+		border-color: var(--primary);
 	}
 
 	/* #actions-container > div input[type="number"] , */
-	#actions-container > div input[type="text"] {
+	#actions-container > * input[type="text"] {
 		all: unset;
 		color: var(--white);
 		background-color: var(--dark0);
@@ -299,15 +277,30 @@
 		padding: 0.25rem;
 	}
 
-	/* #actions-container > div:focus-within { */
-	/* 	border-color: var(--primary); */
-	/* } */
-
-	input[type="text"]:checked + div {
-		border-color: var(--secondary);
+	#apply-changes-button {
+		border: none;
+		border-radius: 10px;
+		height: 3vh;
+		width: 18ch;
+		color: var(--white);
+		background-color: var(--dark1);
+		border: 2px solid var(--dark5);
+		border-radius: calc(2 * var(--border-radius));
+		margin: 1rem;
+		padding: 1rem;
+		display: flex;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
 	}
 
-	input[name="presentation-settings"] {
-		margin-right: 1rem;
+	#apply-changes-button:hover {
+		border-color: var(--primary);
+		background-color: var(--black);
 	}
+
+	#apply-changes-button:active {
+		background-color: var(--primary);
+	}
+
 </style>
