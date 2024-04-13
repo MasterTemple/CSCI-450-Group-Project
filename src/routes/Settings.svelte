@@ -23,13 +23,6 @@
 </script>
 
 <div id="settings-list">
-	<div id="drawerDiv">
-		<button 
-			id="drawerButton" 
-			on:click={toggleDrawer}>{icons[$settingsIsOpen ? 1 : 0]}</button
-		>
-	</div>
-
 	<div id="settings-section-select">
 		<button
 			id="editorToggle"
@@ -60,24 +53,6 @@
 		height: 100%;
 		width: 100%;
 		
-	}
-	#drawerDiv {
-		position: absolute;
-		bottom: 50%;
-		right: 100%;
-	}
-
-	#drawerButton {
-		background-color: var(--dark0);
-		color: var(--white);
-		border: none;
-		text-align: center;
-		font-size: large;
-		width: 2rem;
-		height: 8rem;
-		border-top-left-radius: 10px;
-		border-bottom-left-radius: 10px;
-		box-shadow: 2px 1px 15px var(--black);
 	}
 
 	#settings-section-select {
