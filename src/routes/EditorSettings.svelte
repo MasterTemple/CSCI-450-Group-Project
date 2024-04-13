@@ -63,9 +63,13 @@
 			if (divideAtMatchWord == "") {
 				return; //TODO: Implement error
 			}
+			let matchText = divideAtMatchWord;
+			if (divideAtMatchWord.match(/^\/.*\/$/)) {
+				matchText = new RegExp(divideAtMatchWord.match(/^\/(.*)\/$/)[1], "gim");
+			}
 			for (let i = 0; i < $lines.length; i++) {
 				if (
-					$lines[i].text.toLowerCase().includes(divideAtMatchWord.toLowerCase())
+					$lines[i].text.match(matchText)
 				) {
 					counter++;
 					$lines[i].divider = true;
@@ -84,7 +88,7 @@
 		} else if ($action == "removeMatch") {
 			let matchText = removeMatchText;
 			if (removeMatchText.match(/^\/.*\/$/)) {
-				matchText = new RegExp(removeMatchText.match(/^\/(.*)\/$/)[1]);
+				matchText = new RegExp(removeMatchText.match(/^\/(.*)\/$/)[1], "gim");
 			}
 			for (let i = 0; i < $lines.length; i++) {
 				$lines[i].text = $lines[i].text.replace(matchText, "");
