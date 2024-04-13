@@ -30,9 +30,7 @@
 	};
 
 	currentSlideIndex.subscribe((newIndex) => {
-		if($includeTitleSlide) newIndex++;
-		if ($currentSlideIndex < 0) return;
-		if ($currentSlideIndex == 0) {
+		if ($currentSlideIndex == 0 && $includeTitleSlide) {
 			bc.postMessage({
 				msg: "setTitleSlide",
 				title: $title,
@@ -40,11 +38,14 @@
 			})
 			return;
 		}
+		if($includeTitleSlide) newIndex--;
+		if ($currentSlideIndex < 0) return;
 		if (!$lyricsBySlide?.[newIndex]) return;
 		console.log({ lyrics: $lyricsBySlide[newIndex], newIndex });
 		bc.postMessage({
 			msg: "setLyrics",
 			lyrics: $lyricsBySlide[newIndex],
+			includeTitleSlide: $includeTitleSlide
 		});
 	});
 
@@ -53,7 +54,7 @@
 		// right arrow: advance slide
 		if (["ArrowRight", " ", "l"].includes(key)) {
 			currentSlideIndex.set(
-				min($lyricsBySlide.length - 1, $currentSlideIndex + 1),
+				min($lyricsBySlide.length - 1 + $includeTitleSlide, $currentSlideIndex + 1),
 			);
 		}
 		// left arrow: retreat slide
@@ -119,7 +120,7 @@
 style="--background-color: {$backgroundColor};"
 >
 	<div id="LeftColumn">
-		<LeftColumn lyrics={$lyricsBySlide?.[$currentSlideIndex] || []} />
+		<LeftColumn lyrics={$lyricsBySlide?.[$currentSlideIndex - ($includeTitleSlide ? 1 : 0)] || []} />
 		<!-- <LeftColumn lyrics={["asdf", "fdas"]} /> -->
 	</div>
 	<div id="RightColumn">

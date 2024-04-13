@@ -37,7 +37,7 @@
 
 	function advanceSlides() {
 		currentSlideIndex.set(
-			min($lyricsBySlide.length - 1, $currentSlideIndex + 1),
+			min($lyricsBySlide.length - 1 + ($includeTitleSlide), $currentSlideIndex + 1),
 		);
 	}
 
@@ -121,12 +121,12 @@
 		>
 
 		<p id="slideCounter">
-			{$currentSlideIndex + 1}/{$lyricsBySlide.length}
+			{$currentSlideIndex + 1}/{$lyricsBySlide.length + ($includeTitleSlide)}
 		</p>
 
 		<button
 			id="slideRight"
-			disabled={$currentSlideIndex == $lyricsBySlide.length - 1}
+			disabled={$currentSlideIndex == $lyricsBySlide.length + ($includeTitleSlide) - 1}
 			on:click={advanceSlides}>→</button
 		>
 	</div>

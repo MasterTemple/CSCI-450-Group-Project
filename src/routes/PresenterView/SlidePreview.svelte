@@ -11,6 +11,7 @@
 	const lyrics = writable([]);
 
 	currentSlideIndex.subscribe((newIndex) => {
+		if($includeTitleSlide) newIndex--;
 		if ($currentSlideIndex < 0) return;
 		if (!$lyricsBySlide[newIndex]) return;
 		lyrics.set($lyricsBySlide[newIndex]);
@@ -46,14 +47,14 @@
 						on:click={currentSlideIndex.set(
 							min(
 								baseIndex + 3 * i + j,
-								$lyricsBySlide.length - 1,
-							),
+								$lyricsBySlide.length + ($includeTitleSlide) - 1,
+							)
 						)}
 					>
 						<div class="slide-zoom">
 							<div class="slide-preview">
 								{#if $includeTitleSlide}
-									{#if i == 0 && j == 0}
+									{#if i == 0 && j == 0 && $currentSlideIndex < 5}
 										<TitleSlide fontSizeOverride={10}/>
 									{:else}
 										<Slides
