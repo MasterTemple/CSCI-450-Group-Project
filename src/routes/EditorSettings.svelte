@@ -184,20 +184,20 @@
 
 <button id="applyChangesButton" on:click={applySettings}>Apply Changes</button>
 
-<h2>Settings</h2>
+<!-- <h2>Settings</h2> -->
 
-<div class="editor-settings-items" id="settings-container">
-	<label
-		>Columns <input
-			name="editor-settings"
-			type="number"
-			min="1"
-			max="6"
-			id="numberOfColumns"
-			bind:value={$numberOfColumns}
-		/></label
-	>
-</div>
+<!-- <div class="editor-settings-items" id="settings-container"> -->
+	<!-- <label -->
+	<!-- 	>Columns <input -->
+	<!-- 		name="editor-settings" -->
+	<!-- 		type="number" -->
+	<!-- 		min="1" -->
+	<!-- 		max="6" -->
+	<!-- 		id="numberOfColumns" -->
+	<!-- 		bind:value={$numberOfColumns} -->
+	<!-- 	/></label -->
+	<!-- > -->
+<!-- </div> -->
 
 <style>
 	#applyChangesButton:hover { 

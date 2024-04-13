@@ -54,7 +54,20 @@
 		let lyricRegion = document.getElementById("lyric-region");
 		if (lyricRegion) {
 			lyricRegion.addEventListener("wheel", function (e) {
-				lyricRegion.scrollLeft += e.deltaY;
+				console.log({e})
+				let c0 = document.getElementById("column-0")
+				let c1 = document.getElementById("column-1")
+				if(c0 == undefined || c1 == undefined) return;
+				let offset = c1.offsetLeft - c0.offsetLeft
+				// scroll left
+				if(e.deltaY < 0) {
+					lyricRegion.scrollLeft -= offset
+				}
+				// scroll right
+				if(e.deltaY > 0) {
+					lyricRegion.scrollLeft += offset
+
+				}
 			});
 		}
 	});
@@ -254,7 +267,7 @@
 </div>
 <div id="lyric-region" style="--column-ch-width: {$column_ch_width}ch;">
 	{#each { length: NUMBER_OF_LINES_PER_COLUMN } as _, i}
-		{#if $leftMostDisplayColumn <= i && i <= $leftMostDisplayColumn + $numberOfColumns - 1 && $lines.length >= i * NUMBER_OF_LINES_PER_COLUMN}
+		<!-- {#if $leftMostDisplayColumn <= i && i <= $leftMostDisplayColumn + $numberOfColumns - 1 && $lines.length >= i * NUMBER_OF_LINES_PER_COLUMN} -->
 			<!-- This is what should be contained in the scroll view? 
 				This JS could potentially fix the horixontal scroll with mouse
 
@@ -347,28 +360,13 @@
 					</div> -->
 				{/each}
 			</div>
-		{/if}
+		<!-- {/if} -->
 	{/each}
 </div>
 
 <button on:click={readClipboard}>Paste from Clipboard</button>
 <div id="column-nagivation">
 	<button id="create-new-song" on:click={createNewSong}>Create New Song <span style="font-weight: bolder;">+</span></button>
-	<button
-		disabled={$leftMostDisplayColumn == 0}
-		on:click={leftMostDisplayColumn.set(max(0, $leftMostDisplayColumn - 1))}
-		>Left</button
-	>
-	<button
-		disabled={$leftMostDisplayColumn + $numberOfColumns ==
-			Math.floor($lines.length / NUMBER_OF_LINES_PER_COLUMN + 0.99)}
-		on:click={leftMostDisplayColumn.set(
-			min(
-				Math.floor($lines.length / NUMBER_OF_LINES_PER_COLUMN + 0.99),
-				$leftMostDisplayColumn + 1,
-			),
-		)}>Right</button
-	>
 </div>
 		<p id="save-message" style="color: {$workIsUnsaved ? '#ff0000' : '#00af35'};">{$workIsUnsaved ? "Unsaved changes" : "Changes saved"}</p>
 
@@ -427,6 +425,8 @@
 		overflow-x: scroll;
 		overflow-y: hidden;
 		scroll-snap-type: x mandatory;
+		/* scroll-snap-points-x: repeat(100%); */
+		scroll-snap-align: start;
 	}
 
 
@@ -556,13 +556,13 @@
 		background-color: transparent;
 	}
 	::-webkit-scrollbar-thumb {
-		background-color: var(--white);
+		background-color: var(--primary);
 		border-radius: 25px;
 		border: 6px solid transparent;
 		background-clip: content-box;
 	}
 	::-webkit-scrollbar-thumb:hover {
-		background-color: #cdcccc;
+		background-color: var(--primary);
 	}
 	#save-message {
 		text-align: center;
