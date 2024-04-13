@@ -350,6 +350,7 @@
 
 <button on:click={readClipboard}>Paste from Clipboard</button>
 <div id="column-nagivation">
+	<button id="create-new-song" on:click={createNewSong}>Create New Song <span style="font-weight: bolder;">+</span></button>
 	<button
 		disabled={$leftMostDisplayColumn == 0}
 		on:click={leftMostDisplayColumn.set(max(0, $leftMostDisplayColumn - 1))}
@@ -365,7 +366,6 @@
 			),
 		)}>Right</button
 	>
-	<button on:click={createNewSong}>Create New Song</button>
 </div>
 		<p id="save-message" style="color: {$workIsUnsaved ? '#ff0000' : '#00af35'};">{$workIsUnsaved ? "Unsaved changes" : "Changes saved"}</p>
 
@@ -571,5 +571,20 @@
 		padding: 0.3rem 0.5rem;
 		margin-left: 1rem;
 		width: 16ch;
+	}
+	#create-new-song {
+		color: var(--primary);
+		text-align: center;
+		font-family: var(--font-family);
+		font-size: large;
+		border: 1px solid var(--dark2);
+		background-color: var(--dark0);
+		border-radius: 10px;
+		padding: 0.5rem;
+		margin-left: 1rem;
+		width: 19ch;
+	}
+	#create-new-song:hover {
+		border-color: var(--secondary);
 	}
 </style>
