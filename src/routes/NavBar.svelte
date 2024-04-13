@@ -196,7 +196,7 @@
 		id="profileButton"
 		on:click={$authToken.length ? openAccountInfoModal : openEmailModal}
 	>
-		<h1 id="profileText" style="--color: {color.white}">
+		<h1 id="profileText">
 			{$emailAddress.length ? $emailAddress[0].toUpperCase() : "?"}
 		</h1>
 	</button>
@@ -319,125 +319,61 @@
 
 	#lolTitle {
 		color: var(--white);
-
 		left: 8%;
 		position: fixed;
 		top: 2%;
-		/* top: 15%; */
-
-		min-width: 160px;
-
+		font-family: var(--font-family);
+		width: 15ch;
 	}
 
-	#presentButton {
-		background-color: var(--secondary);
-		border: none;
-		display: flex;
-		width: fit-content;
-		min-width: 160px;
-		
-		height: fit-content;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		/* align-content: left; */
-		border: 0.1rem solid var(--tertiary);
-		border-radius: 10px;
-		box-shadow:
-			0 4px 8px 0 rgba(0, 0, 0, 0.2),
-			0 6px 20px 0 rgba(0, 0, 0, 0.19);
-	}
-
-	#presentButton:hover {
-  		background-color: var(--primary); /* Change background color on hover */
-  		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
-	}
-
-	#presentButtonContainer :active {
-		background-color: #01AE35;
-		box-shadow: 0 3px #666;
-		transform: translateY(4px);
-	}
-
-
-
-
-
-	#presentButtonContainer {
+	#presentButtonContainer,
+	#exportButtonContainer,
+	#profileContainer {
 		position: fixed;
 		top: 3%;
-		right: 260px;
-		display: flex;
-		align-content: center;
-		align-content: right;
+	}
+
+	#presentButtonContainer {
+		right: 18vw;
 	}
 
 	#exportButtonContainer {
-		position: fixed;
-		top: 3%;
-		/* right: -56%; */
-		right: 80px;
-		display: flex;
-		flex-direction: row;
-		align-content: right;
-		justify-content: center;
-
-		
+		right: 8vw;
 	}
 
+	#profileContainer {
+		right: 3vw;
+	}
+
+	#profileButton,
+	#presentButton,
 	#exportButton {
-		background-color: var(--secondary);
-		border: none;
-		min-width: 160px;
-		
 		width: fit-content;
-		height: fit-content;
 		display: flex;
-		/* align-content: center; */
 		justify-content: center;
 		align-items: center;
-		border-radius: 10px;
-		border: 0.1rem solid var(--tertiary);
 		box-shadow:
 			0 4px 8px 0 rgba(0, 0, 0, 0.2),
 			0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
+		color: var(--white);
+		text-align: center;
+		border: 1.5px solid var(--tertiary);
+		background-color: var(--dark0);
+		border-radius: 10px;
+		padding: 0 1.5rem;
 	}
 
+	#profileButton:hover,
+	#presentButton:hover,
 	#exportButton:hover {
-  		background-color: var(--primary); /* Change background color on hover */
-  		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
-	}
-
-	#exportButtonContainer :active {
-		background-color: #01AE35;
-		box-shadow: 0 3px #666;
-		transform: translateY(4px);
-	}
-
-
-
-	#profileContainer {
-		position: fixed;
-		top: 3.5%;
-		right: 15px
-		/* right: 5%; */
-		/* left: 56.5%; */
-		/* align-content: right; */
+		color: var(--primary); /* Change background color on hover */
+		background-color: var(--black);
+		border-color: var(--secondary);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
 	}
 
 	#profileButton {
-		border-radius: 100px;
-		width: 50px;
-		height: 50px;
-		box-shadow:
-			0 4px 8px 0 rgba(0, 0, 0, 0.2),
-			0 6px 20px 0 rgba(0, 0, 0, 0.19);
-		background-color: var(--primary);
-		border: none;
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		border-radius: 100rem;
 	}
 
 	#profileText {
@@ -446,24 +382,6 @@
 	#email-address {
 		width: 30ch;
 	}
-
-	/* https://stackoverflow.com/questions/41698357/how-to-partition-input-field-to-appear-as-separate-input-fields-on-screen */
-	/* #verification-code {
-		padding-left: 15px;
-		letter-spacing: 42px;
-		border: 0;
-		background-image: linear-gradient(
-			to left,
-			black 70%,
-			rgba(255, 255, 255, 0) 0%
-		);
-		background-position: bottom;
-		background-size: 50px 1px;
-		background-repeat: repeat-x;
-		background-position-x: 35px;
-		width: 220px;
-		outline: none;
-	} */
 
 	@media (max-width: 700px) {
 		#exportButtonContainer{

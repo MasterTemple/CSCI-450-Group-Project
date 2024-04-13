@@ -551,9 +551,15 @@
 		padding: 0.5rem;
 		margin-left: 1rem;
 		width: 19ch;
+		box-shadow:
+			0 4px 8px 0 rgba(0, 0, 0, 0.2),
+			0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	}
 	#read-from-clipboard:hover,
 	#create-new-song:hover {
 		color: var(--primary);
+		background-color: var(--black);
+		border-color: var(--secondary);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
 	}
 </style>
