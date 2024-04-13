@@ -23,10 +23,11 @@
 
 	currentSlideIndex.subscribe((newIndex) => {
 		// offset cause of title slide
-		if($includeTitleSlide) newIndex++;
 		if ($currentSlideIndex < 0) return;
+		if($includeTitleSlide) newIndex--;
 		if (!$lyricsBySlide[newIndex]) return;
 		lyrics.set($lyricsBySlide[newIndex]);
+		console.log({$lyricsBySlide, $currentSlideIndex, newIndex})
 	});
 
 	function goFullscreen() {
