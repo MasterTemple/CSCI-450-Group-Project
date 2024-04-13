@@ -1,10 +1,6 @@
 <script>
 	import { onMount } from "svelte";
-	import {
-		backgroundColor,
-		currentSlideIndex,
-		lyricsBySlide,
-	} from "../stores";
+	import { backgroundColor, currentSlideIndex, lyricsBySlide } from "../stores";
 	import SlidePreview from "./SlidePreview.svelte";
 	import Slides from "./Slides.svelte";
 

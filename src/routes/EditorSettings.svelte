@@ -1,4 +1,5 @@
 <script>
+	import { writable } from "svelte/store";
 	import {
 		backgroundColor,
 		breakIndexes,
@@ -17,13 +18,10 @@
 	let divideEveryNLinesCount = 4;
 	let divideAtMatchWord = "";
 	let removeMatchText = "";
-	let selectedAction;
+	const action = writable("");
 
-	function applySettings(event) {
-		// const selectedAction = event.document;
-		console.log({ selectedAction });
-
-		if (selectedAction == "divideEveryCheck") {
+	function applySettings() {
+		if ($action == "divideEveryCheck") {
 			if (
 				divideEveryNLinesCount > $lines.length ||
 				divideEveryNLinesCount < 1
@@ -48,7 +46,7 @@
 				}
 				$lyricsBySlide[counter].push($lines[i].text);
 			}
-		} else if (selectedAction == "autodetectCheck") {
+		} else if ($action == "autodetectCheck") {
 			var counter = 0;
 			$lyricsBySlide = [[]];
 			for (i = 0; i < $lines.length; i++) {
@@ -59,7 +57,7 @@
 					$lyricsBySlide[counter].push($lines[i].text);
 				}
 			}
-		} else if (selectedAction == "divideAtMatchCheck") {
+		} else if ($action == "divideAtMatchCheck") {
 			counter = 0;
 			if (divideAtMatchWord == "") {
 				return; //TODO: Implement error
@@ -76,20 +74,19 @@
 				}
 				$lyricsBySlide[counter].push($lines[i].text);
 			}
-		} else if (selectedAction == "removeDividers") {
+		} else if ($action == "removeDividers") {
 			lines.update((linesCopy) => {
 				return linesCopy.map(({ text }) => {
 					return { text, divider: false };
 				});
 			});
-		} else if(selectedAction == "removeMatch") {
-			removeMatchText
+		} else if ($action == "removeMatch") {
 			let matchText = removeMatchText;
-			if(removeMatchText.match(/^\/.*\/$/)) {
-				matchText = new RegExp(removeMatchText.match(/^\/(.*)\/$/)[1])
+			if (removeMatchText.match(/^\/.*\/$/)) {
+				matchText = new RegExp(removeMatchText.match(/^\/(.*)\/$/)[1]);
 			}
 			for (let i = 0; i < $lines.length; i++) {
-				$lines[i].text = $lines[i].text.replace(matchText, "")
+				$lines[i].text = $lines[i].text.replace(matchText, "");
 				// if (
 				// 	$lines[i].text.toLowerCase().includes(divideAtMatchWord.toLowerCase())
 				// ) {
@@ -102,134 +99,89 @@
 				// $lyricsBySlide[counter].push($lines[i].text);
 			}
 		}
+		action.set("")
 	}
 </script>
 
-<h2>Actions</h2>
+<!-- <h2>Actions</h2> -->
 
 <div id="actions-container">
 	<!-- Divide every n lines -->
-	<input
-		bind:group={selectedAction}
-		name="presentation-settings"
-		type="radio"
-		id="divideEveryCheck"
-		value="divideEveryCheck"
-	/><label
-		>Divide every <input
-			type="number"
-			id="divideEveryLines"
-			name="divideEveryLines"
-			placeholder="n"
-			bind:value={divideEveryNLinesCount}
-		/> lines</label
+	<button
+		class="row"
+		on:click={() => action.set("divideEveryCheck")}
+		class:selected={$action == "divideEveryCheck"}
 	>
-	<br />
-	<!-- Autodetect from spacing -->
-	<label
-		><input
-			bind:group={selectedAction}
-			name="presentation-settings"
-			type="radio"
-			id="autodetectCheck"
-			value="autodetectCheck"
-		/>Autodetect from spacing</label
-	>
-	<br />
+		<label
+			>Divide every <input
+				type="number"
+				id="divideEveryLines"
+				name="divideEveryLines"
+				placeholder="n"
+				bind:value={divideEveryNLinesCount}
+			/> lines</label
+		>
+	</button>
 	<!-- Divide at match -->
-	<input
-		bind:group={selectedAction}
-		name="presentation-settings"
-		type="radio"
-		id="divideAtMatchCheck"
-		value="divideAtMatchCheck"
-	/><label
-		>Divide at match: <input
-			type="text"
-			id="divideAtMatch"
-			name="divideAtMatch"
-			placeholder="text"
-			bind:value={divideAtMatchWord}
-		/></label
+	<button
+		class="row"
+		on:click={() => action.set("divideAtMatchCheck")}
+		class:selected={$action == "divideAtMatchCheck"}
 	>
-	<br />
+		<label
+			>Divide at match:
+			<input
+				type="text"
+				id="divideAtMatch"
+				name="divideAtMatch"
+				placeholder="Enter pattern"
+				bind:value={divideAtMatchWord}
+			/>
+		</label>
+
+		<!-- </div> -->
+	</button>
 	<!-- Remove All Dividers -->
-	<label
-		><input
-			bind:group={selectedAction}
-			name="presentation-settings"
-			type="radio"
-			id="removeDividers"
-			value="removeDividers"
-		/>Remove All Dividers</label
+	<button
+		class="row"
+		on:click={() => action.set("removeDividers")}
+		class:selected={$action == "removeDividers"}
 	>
-	<br />
+		Remove All Dividers
+	</button>
 	<!-- Remove matches -->
-	<input
-		bind:group={selectedAction}
-		name="presentation-settings"
-		type="radio"
-		id="removeMatch"
-		value="removeMatch"
-	/><label
-		>Remove matches: <input
-			type="text"
-			id="removeMatchText"
-			name="removeMatchText"
-			placeholder="text"
-			bind:value={removeMatchText}
-		/></label
+	<button
+		class="row"
+		on:click={() => action.set("removeMatch")}
+		class:selected={$action == "removeMatch"}
+	>
+		<label
+			>Remove matches: <input
+				type="text"
+				id="removeMatchText"
+				name="removeMatchText"
+				placeholder="Enter pattern"
+				bind:value={removeMatchText}
+			/></label
+		>
+	</button>
+
+	<button id="apply-changes-button" on:click={applySettings}>Apply Changes</button
 	>
 </div>
 
-<button id="applyChangesButton" on:click={applySettings}>Apply Changes</button>
-
-<!-- <h2>Settings</h2> -->
-
-<!-- <div class="editor-settings-items" id="settings-container"> -->
-	<!-- <label -->
-	<!-- 	>Columns <input -->
-	<!-- 		name="editor-settings" -->
-	<!-- 		type="number" -->
-	<!-- 		min="1" -->
-	<!-- 		max="6" -->
-	<!-- 		id="numberOfColumns" -->
-	<!-- 		bind:value={$numberOfColumns} -->
-	<!-- 	/></label -->
-	<!-- > -->
-<!-- </div> -->
-
 <style>
-	#applyChangesButton:hover { 
-		background-color: #01AE35;
-		color: white;
-	}
-	#applyChangesButton {
-		margin-top: 20px;
-		background-color: white;
-		border: none;
-		border-radius: 10px;
-		height: 3vh;
-		width: 95%;
-		box-shadow: 0 5px #999;
-	}
-
-	#applyChangesButton:active {
-		background-color: #01AE35;
-		box-shadow: 0 3px #666;
-		transform: translateY(4px);
-	}
 
 	#divideEveryLines {
-		width: 15px;
+		width: 2ch;
 		text-align: center;
 	}
 
-	#divideAtMatch {
-		position: relative;
-		width: 50%;
-		left: 25%;
-	}
+	/* #divideAtMatch { */
+	/* 	position: relative; */
+	/* 	width: 50%; */
+	/* 	left: 25%; */
+	/* } */
 
 	/* https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp */
 
@@ -245,24 +197,100 @@
 		-moz-appearance: textfield;
 	}
 
-	#settings-container  {
+	.column {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.row {
+		display: flex;
+		flex-direction: row;
+	}
+
+	#actions-container {
 		-webkit-touch-callout: none;
 		-webkit-user-select: none;
 		-khtml-user-select: none;
 		-moz-user-select: none;
 		-ms-user-select: none;
 		user-select: none;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 	}
 
-	#actions-container  {
-		-webkit-touch-callout: none;
-		-webkit-user-select: none;
-		-khtml-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
+	* {
+		font-size: medium;
 	}
-	
 
+	#actions-container > button {
+		color: var(--white);
+	}
+
+	#actions-container > button.row {
+		width: 90%;
+		/* max-width: 12vw; */
+		margin: 0.5vw;
+		padding: 0.5vw;
+		/* padding: 0.5rem; */
+		background-color: var(--black);
+		border: 2px solid var(--dark2);
+		border-radius: calc(2 * var(--border-radius));
+		justify-content: center;
+	}
+
+	#actions-container > button.selected {
+		border-color: var(--primary);
+	}
+
+	/* #actions-container > div input[type="number"] , */
+	#actions-container > * input[type="text"] {
+		all: unset;
+		color: var(--white);
+		background-color: var(--dark0);
+		border-radius: calc(2 * var(--border-radius));
+		border: 2px solid var(--dark2);
+		margin: 0.5rem;
+		padding: 0.5rem;
+		margin-left: 0;
+		max-width: 10vw;
+	}
+
+	#divideEveryLines {
+		width: 2ch;
+		color: var(--white);
+		background-color: var(--dark0);
+		border-radius: calc(var(--border-radius));
+		border: 2px solid var(--dark2);
+		margin: 0.25rem;
+		padding: 0.25rem;
+	}
+
+	#apply-changes-button {
+		border: none;
+		border-radius: 10px;
+		height: 3vh;
+		width: 18ch;
+		color: var(--white);
+		background-color: var(--dark1);
+		border: 2px solid var(--dark5);
+		border-radius: calc(2 * var(--border-radius));
+		margin: 1rem;
+		padding: 1rem;
+		display: flex;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+	}
+
+	#apply-changes-button:hover {
+		border-color: var(--primary);
+		background-color: var(--black);
+	}
+
+	#apply-changes-button:active {
+		background-color: var(--primary);
+	}
 
 </style>

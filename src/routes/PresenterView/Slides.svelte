@@ -41,7 +41,7 @@
 		color: var(--text-color);
 		font-size: var(--font-size);
 		font-family: var(--font-family);
-		height: 97%; 
+		height: 97%;
 		max-height: 100px;
 		min-height: 140px;
 		/* width: 8vw; */

@@ -160,46 +160,47 @@
 	<h1 id="lolTitle">Lyric of Lyrics</h1>
 </div>
 
-<div id="presentButtonContainer">
-	<button
-		id="presentButton"
-		href="/PresenterView"
-		style="--color: {color.darkPurple}"
-		on:click={present}
-	>
-		<span
-			class="material-symbols-rounded"
-			style="font-variation-settings: 'FILL' 1; font-size: 50px"
-			>play_arrow</span
+<div id="top-left-button-container">
+	<div id="presentButtonContainer">
+		<button
+			id="presentButton"
+			href="/PresenterView"
+			style="--color: {color.darkPurple}"
+			on:click={present}
 		>
-		<h1 id="presentButtonText">Present</h1>
-	</button>
-</div>
+			<span
+				class="material-symbols-rounded"
+				style="font-variation-settings: 'FILL' 1; font-size: 50px"
+				>play_arrow</span
+			>
+			<h1 id="presentButtonText">Present</h1>
+		</button>
+	</div>
 
-<div id="exportButtonContainer">
-	<button
-		id="exportButton"
-		style="--color: {color.darkPurple}"
-		on:click={exportPowerpoint}
-	>
-		<span
-			class="material-symbols-rounded"
-			style="font-variation-settings: 'FILL' 1; font-size: 35px"
-			>download</span
+	<div id="exportButtonContainer">
+		<button
+			id="exportButton"
+			style="--color: {color.darkPurple}"
+			on:click={exportPowerpoint}
 		>
-		<h1 id="exportButtonText">Export</h1>
-	</button>
-</div>
+			<span
+				class="material-symbols-rounded"
+				style="font-variation-settings: 'FILL' 1; font-size: 35px">download</span
+			>
+			<h1 id="exportButtonText">Export</h1>
+		</button>
+	</div>
 
-<div id="profileContainer">
-	<button
-		id="profileButton"
-		on:click={$authToken.length ? openAccountInfoModal : openEmailModal}
-	>
-		<h1 id="profileText" style="--color: {color.white}">
-			{$emailAddress.length ? $emailAddress[0].toUpperCase() : "?"}
-		</h1>
-	</button>
+	<div id="profileContainer">
+		<button
+			id="profileButton"
+			on:click={$authToken.length ? openAccountInfoModal : openEmailModal}
+		>
+			<h1 id="profileText">
+				{$emailAddress.length ? $emailAddress[0].toUpperCase() : "?"}
+			</h1>
+		</button>
+	</div>
 </div>
 
 <div id="enter-email-popup" class="modal">
@@ -216,9 +217,7 @@
 					bind:value={$emailAddress}
 				/>
 			</label>
-			<button id="email-submit-button" on:click={sendEmail}
-				>Continue</button
-			>
+			<button id="email-submit-button" on:click={sendEmail}>Continue</button>
 		</div>
 	</div>
 </div>
@@ -279,7 +278,7 @@
 		background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 	}
 	.modal-content {
-		text-align:left;
+		text-align: left;
 		background-color: var(--dark1);
 		color: var(--white);
 		margin: 15% auto; /* 15% from the top and centered */
@@ -287,12 +286,12 @@
 		border: 1px solid #888;
 		width: 40%; /* Could be more or less, depending on screen size */
 	}
-	#logout{
+	#logout {
 		border: none;
 	}
-	 #logout:hover{
+	#logout:hover {
 		background-color: #cdcccc;
-	} 
+	}
 	.close {
 		color: var(--white);
 		float: right;
@@ -319,125 +318,54 @@
 
 	#lolTitle {
 		color: var(--white);
-
 		left: 8%;
 		position: fixed;
 		top: 2%;
-		/* top: 15%; */
-
-		min-width: 160px;
-
+		font-family: var(--font-family);
+		width: 15ch;
 	}
 
-	#presentButton {
-		background-color: var(--secondary);
-		border: none;
-		display: flex;
-		width: fit-content;
-		min-width: 160px;
-		
-		height: fit-content;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		/* align-content: left; */
-		border: 0.1rem solid var(--tertiary);
-		border-radius: 10px;
-		box-shadow:
-			0 4px 8px 0 rgba(0, 0, 0, 0.2),
-			0 6px 20px 0 rgba(0, 0, 0, 0.19);
-	}
-
-	#presentButton:hover {
-  		background-color: var(--primary); /* Change background color on hover */
-  		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
-	}
-
-	#presentButtonContainer :active {
-		background-color: #01AE35;
-		box-shadow: 0 3px #666;
-		transform: translateY(4px);
-	}
-
-
-
-
-
-	#presentButtonContainer {
+	#top-left-button-container {
 		position: fixed;
 		top: 3%;
-		right: 260px;
-		display: flex;
-		align-content: center;
-		align-content: right;
-	}
-
-	#exportButtonContainer {
-		position: fixed;
-		top: 3%;
-		/* right: -56%; */
-		right: 80px;
+		right: 3%;
 		display: flex;
 		flex-direction: row;
-		align-content: right;
-		justify-content: center;
-
-		
+	}
+	#top-left-button-container > div {
+		margin-left: 1rem;
 	}
 
+	#profileButton,
+	#presentButton,
 	#exportButton {
-		background-color: var(--secondary);
-		border: none;
-		min-width: 160px;
-		
 		width: fit-content;
 		height: fit-content;
 		display: flex;
-		/* align-content: center; */
 		justify-content: center;
 		align-items: center;
-		border-radius: 10px;
-		border: 0.1rem solid var(--tertiary);
 		box-shadow:
 			0 4px 8px 0 rgba(0, 0, 0, 0.2),
 			0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
+		color: var(--white);
+		text-align: center;
+		border: 1.5px solid var(--tertiary);
+		background-color: var(--dark0);
+		border-radius: 10px;
+		padding: 0 1.5rem;
 	}
 
+	#profileButton:hover,
+	#presentButton:hover,
 	#exportButton:hover {
-  		background-color: var(--primary); /* Change background color on hover */
-  		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
-	}
-
-	#exportButtonContainer :active {
-		background-color: #01AE35;
-		box-shadow: 0 3px #666;
-		transform: translateY(4px);
-	}
-
-
-
-	#profileContainer {
-		position: fixed;
-		top: 3.5%;
-		right: 15px
-		/* right: 5%; */
-		/* left: 56.5%; */
-		/* align-content: right; */
+		color: var(--primary); /* Change background color on hover */
+		background-color: var(--black);
+		border-color: var(--secondary);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
 	}
 
 	#profileButton {
-		border-radius: 100px;
-		width: 50px;
-		height: 50px;
-		box-shadow:
-			0 4px 8px 0 rgba(0, 0, 0, 0.2),
-			0 6px 20px 0 rgba(0, 0, 0, 0.19);
-		background-color: var(--primary);
-		border: none;
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		border-radius: 100rem;
 	}
 
 	#profileText {
@@ -447,35 +375,15 @@
 		width: 30ch;
 	}
 
-	/* https://stackoverflow.com/questions/41698357/how-to-partition-input-field-to-appear-as-separate-input-fields-on-screen */
-	/* #verification-code {
-		padding-left: 15px;
-		letter-spacing: 42px;
-		border: 0;
-		background-image: linear-gradient(
-			to left,
-			black 70%,
-			rgba(255, 255, 255, 0) 0%
-		);
-		background-position: bottom;
-		background-size: 50px 1px;
-		background-repeat: repeat-x;
-		background-position-x: 35px;
-		width: 220px;
-		outline: none;
-	} */
-
 	@media (max-width: 700px) {
-		#exportButtonContainer{
-			width: fit-content;;
+		#exportButtonContainer {
+			width: fit-content;
 			min-width: 80px;
-	
 		}
 
-		#exportButton{
-			width: fit-content;;
+		#exportButton {
+			width: fit-content;
 			min-width: 80px;
-
 		}
 
 		#exportButtonText {
@@ -483,30 +391,26 @@
 			padding-right: 8px;
 		}
 
-		#presentButtonContainer{
-			width: fit-content;
-			min-width: 80px;
-			right: 180px
-	
+
+		/* #presentButtonContainer { */
+		/* 	width: fit-content; */
+		/* 	min-width: 80px; */
+		/* 	right: 180px; */
+		/* } */
+
+		/* #presentButton { */
+		/* 	width: fit-content; */
+		/* 	min-width: 80px; */
+		/* 	height: 40px; */
+		/* } */
+
+		/* #presentButtonText { */
+		/* 	font-size: 1em; */
+		/* 	padding-right: 8px; */
+		/* } */
+
+		.material-symbols-rounded {
+			font-size: 10px;
 		}
-
-		#presentButton{
-			width: fit-content;
-			min-width: 80px;
-			height: 40px;
-			
-		}
-
-		#presentButtonText {
-			font-size: 1em;
-			padding-right: 8px;
-		}
-
-		.material-symbols-rounded{
-			font-size: 10px
-		}
-
-
 	}
-
 </style>

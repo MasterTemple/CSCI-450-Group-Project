@@ -20,25 +20,23 @@
 		).toLowerCase();
 		const terms = query.split(/ +/);
 		if (terms.length == 0) return true;
-		return terms.every(
-			(term) => title.includes(term) || author.includes(term),
-		);
+		return terms.every((term) => title.includes(term) || author.includes(term));
 	}
-	
+
 	$: tabIndex = 0;
 	onMount(() => {
 		document.addEventListener("keydown", (event) => {
-			console.log(event)
-			if(event.key == "Tab")
-				if(event.shiftKey)
-					switchTabIndex.update((i) => i-1);
-				else
-					switchTabIndex.update((i) => i+1);
-				// document.querySelector(`#search-result-${tabIndex}`).focus()
-		})
-	})
+			console.log(event);
+			if (event.key == "Tab")
+				if (event.shiftKey) switchTabIndex.update((i) => i - 1);
+				else switchTabIndex.update((i) => i + 1);
+			// document.querySelector(`#search-result-${tabIndex}`).focus()
+		});
+	});
 	let filteredSongs = writable([...$allSongs]);
-	searchValue.subscribe((v) => filteredSongs.set($allSongs.filter((s) => isSearchMatch(v, s))))
+	searchValue.subscribe((v) =>
+		filteredSongs.set($allSongs.filter((s) => isSearchMatch(v, s))),
+	);
 </script>
 
 <h1>Switch Current Song:</h1>
@@ -49,13 +47,13 @@
 		id="search-input"
 		bind:value={$searchValue}
 		on:keydown|stopPropagation={(event) => {
-			if(event.key == "Enter") {
-				document.querySelector(`#search-result-${$switchTabIndex}`)?.click()
-				closeModal()
+			if (event.key == "Enter") {
+				document.querySelector(`#search-result-${$switchTabIndex}`)?.click();
+				closeModal();
 			}
-			if(event.key == "Escape") {
-				event.preventDefault()
-				closeModal()
+			if (event.key == "Escape") {
+				event.preventDefault();
+				closeModal();
 			}
 		}}
 		autocomplete="off"
@@ -67,17 +65,16 @@
 	<!-- 	{#if } -->
 	{#each $filteredSongs as song, i}
 		<!-- {#if isSearchMatch($searchValue, song)} -->
-			<SearchResult
-				songIndex={i}
-				name={song["title"]}
-				author={song["author"] || UNKNOWN_SONG_AUTHOR_PLACEHOLDER}
-				songId={song["songId"]}
-				closeModal={closeModal}
-			/>
+		<SearchResult
+			songIndex={i}
+			name={song["title"]}
+			author={song["author"] || UNKNOWN_SONG_AUTHOR_PLACEHOLDER}
+			songId={song["songId"]}
+			{closeModal}
+		/>
 		<!-- {/if} -->
 	{/each}
 </div>
-
 
 <style>
 	* {

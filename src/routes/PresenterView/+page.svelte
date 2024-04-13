@@ -35,17 +35,17 @@
 				msg: "setTitleSlide",
 				title: $title,
 				author: $author,
-			})
+			});
 			return;
 		}
-		if($includeTitleSlide) newIndex--;
+		if ($includeTitleSlide) newIndex--;
 		if ($currentSlideIndex < 0) return;
 		if (!$lyricsBySlide?.[newIndex]) return;
 		console.log({ lyrics: $lyricsBySlide[newIndex], newIndex });
 		bc.postMessage({
 			msg: "setLyrics",
 			lyrics: $lyricsBySlide[newIndex],
-			includeTitleSlide: $includeTitleSlide
+			includeTitleSlide: $includeTitleSlide,
 		});
 	});
 
@@ -54,7 +54,10 @@
 		// right arrow: advance slide
 		if (["ArrowRight", " ", "l"].includes(key)) {
 			currentSlideIndex.set(
-				min($lyricsBySlide.length - 1 + $includeTitleSlide, $currentSlideIndex + 1),
+				min(
+					$lyricsBySlide.length - 1 + ($includeTitleSlide ? 1 : 0),
+					$currentSlideIndex + 1,
+				),
 			);
 		}
 		// left arrow: retreat slide
@@ -69,23 +72,27 @@
 			});
 		}
 		// press s: switch song
-		else if(key == "s") {
-			document.querySelector("#switch-song-button").click()
+		else if (key == "s") {
+			document.querySelector("#switch-song-button").click();
 		}
 	}
 
-	const RESERVED_KEYS = ["ArrowRight", "ArrowLeft", "Escape", " ", "h", "l", "s"];
+	const RESERVED_KEYS = [
+		"ArrowRight",
+		"ArrowLeft",
+		"Escape",
+		" ",
+		"h",
+		"l",
+		"s",
+	];
 	onMount(() => {
 		// load data
 		lyricsBySlide.set([]);
 		console.log({ $lyricsBySlide });
-		const allLocalSongs = JSON.parse(
-			localStorage.getItem("allSongs") || "[]",
-		);
+		const allLocalSongs = JSON.parse(localStorage.getItem("allSongs") || "[]");
 		const currentSongId = JSON.parse(localStorage.getItem("currentSongId"));
-		let savedCurrentSong = allLocalSongs.find(
-			(s) => s.songId == currentSongId,
-		);
+		let savedCurrentSong = allLocalSongs.find((s) => s.songId == currentSongId);
 
 		console.log({ savedCurrentSong });
 		if (savedCurrentSong) {
@@ -101,7 +108,7 @@
 		});
 
 		document.addEventListener("keydown", (event) => {
-			if($inputReserved) return;
+			if ($inputReserved) return;
 			if (RESERVED_KEYS.includes(event.key)) {
 				event.preventDefault();
 				// bc.postMessage({ msg: "sendKey", key: event.key });
@@ -116,11 +123,13 @@
 	});
 </script>
 
-<div id="row"
-style="--background-color: {$backgroundColor};"
->
+<div id="row" style="--background-color: {$backgroundColor};">
 	<div id="LeftColumn">
-		<LeftColumn lyrics={$lyricsBySlide?.[$currentSlideIndex - ($includeTitleSlide ? 1 : 0)] || []} />
+		<LeftColumn
+			lyrics={$lyricsBySlide?.[
+				$currentSlideIndex - ($includeTitleSlide ? 1 : 0)
+			] || []}
+		/>
 		<!-- <LeftColumn lyrics={["asdf", "fdas"]} /> -->
 	</div>
 	<div id="RightColumn">

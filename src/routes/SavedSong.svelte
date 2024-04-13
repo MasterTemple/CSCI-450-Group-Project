@@ -36,9 +36,7 @@
 			// save locally
 			localStorage.setItem("currentSong", JSON.stringify($currentSong));
 			allSongs.update((songs) => {
-				const index = songs.findIndex(
-					(s) => s.songId == $currentSongId,
-				);
+				const index = songs.findIndex((s) => s.songId == $currentSongId);
 				songs[index] = $currentSong;
 				localStorage.setItem("allSongs", JSON.stringify(songs));
 				return songs;
@@ -111,7 +109,6 @@
 		width: 220px;
 		height: fit-content;
 		min-height: 70px;
-
 	}
 	.saved-song {
 		display: flex;
