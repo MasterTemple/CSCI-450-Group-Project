@@ -320,8 +320,8 @@
 	{/each}
 </div>
 
-<button on:click={readClipboard}>Paste from Clipboard</button>
 <div id="column-nagivation">
+	<button id="read-from-clipboard" on:click={readClipboard}>Read from Clipboard</button>
 	<button id="create-new-song" on:click={createNewSong}>Create New Song <span style="font-weight: bolder;">+</span></button>
 </div>
 		<p id="save-message" style="color: {$workIsUnsaved ? '#ff0000' : '#00af35'};">{$workIsUnsaved ? "Unsaved changes" : "Changes saved"}</p>
@@ -518,13 +518,13 @@
 		background-color: transparent;
 	}
 	::-webkit-scrollbar-thumb {
-		background-color: var(--primary);
+		background-color: var(--tertiary);
 		border-radius: 25px;
 		border: 6px solid transparent;
 		background-clip: content-box;
 	}
 	::-webkit-scrollbar-thumb:hover {
-		background-color: var(--primary);
+		background-color: var(--tertiary);
 	}
 	#save-message {
 		text-align: center;
@@ -537,19 +537,21 @@
 		margin-left: 1rem;
 		width: 16ch;
 	}
+	#read-from-clipboard,
 	#create-new-song {
-		color: var(--primary);
+		color: var(--white);
 		text-align: center;
 		font-family: var(--font-family);
 		font-size: large;
-		border: 1px solid var(--dark2);
+		border: 1px solid var(--tertiary);
 		background-color: var(--dark0);
 		border-radius: 10px;
 		padding: 0.5rem;
 		margin-left: 1rem;
 		width: 19ch;
 	}
+	#read-from-clipboard:hover,
 	#create-new-song:hover {
-		border-color: var(--secondary);
+		color: var(--primary);
 	}
 </style>
