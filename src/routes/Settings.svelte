@@ -55,6 +55,7 @@
 
 	button.selected {
 		border-color: var(--secondary);
+		background-color: var(--black);
 	}
 
 	button:hover {
