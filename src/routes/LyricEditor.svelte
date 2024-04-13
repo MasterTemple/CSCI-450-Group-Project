@@ -23,6 +23,7 @@
 	const editLines = writable(true);
 	// let workIsUnsaved = false;
 	let column_ch_width = writable(30);
+	let scroll_extra_px = writable(0)
 
 	function createNewSong() {
 		// new id
@@ -54,7 +55,27 @@
 		let lyricRegion = document.getElementById("lyric-region");
 		if (lyricRegion) {
 			lyricRegion.addEventListener("wheel", function (e) {
-				lyricRegion.scrollLeft += e.deltaY;
+				// console.log({e})
+				let c0 = document.getElementById("column-0")
+				let c1 = document.getElementById("column-1")
+				let columns = [...document.querySelectorAll(".lyric-column")].map(e => e.offsetWidth)
+				scroll_extra_px
+				let lrOffset = lyricRegion.offsetWidth;
+				// scroll_extra_px.set(columns[columns.length - 2] - columns[columns.length - 1])
+				// scroll_extra_px.set(columns[0] - lrOffset % columns[0])
+				scroll_extra_px.set(lrOffset % columns[0])
+				console.log({lrOffset, columns})
+				if(c0 == undefined || c1 == undefined) return;
+				let offset = c1.offsetLeft - c0.offsetLeft
+				// scroll left
+				if(e.deltaY < 0) {
+					lyricRegion.scrollLeft -= offset
+				}
+				// scroll right
+				if(e.deltaY > 0) {
+					lyricRegion.scrollLeft += offset
+
+				}
 			});
 		}
 	});
@@ -252,27 +273,11 @@
 		<button class:edit-mode-selected={!$editLines} on:click={() => editLines.set(false)}>Edit Text</button>
 	</div>
 </div>
-<div id="lyric-region" style="--column-ch-width: {$column_ch_width}ch;">
-	{#each { length: NUMBER_OF_LINES_PER_COLUMN } as _, i}
-		{#if $leftMostDisplayColumn <= i && i <= $leftMostDisplayColumn + $numberOfColumns - 1 && $lines.length >= i * NUMBER_OF_LINES_PER_COLUMN}
-			<!-- This is what should be contained in the scroll view? 
-				This JS could potentially fix the horixontal scroll with mouse
-
-				var item = document.getElementById("lyric-region");
-
-				window.addEventListener("wheel", function (e) {
-					if (e.deltaY > 0) item.scrollLeft += 100;
-					else item.scrollLeft -= 100;
-				});
-
-				or mayve even this:
-				(event) => event.currentTarget.scrollLeft += event.deltaY
-			-->
-
+<div id="lyric-region" style="--column-ch-width: {$column_ch_width}ch; --scroll-extra-px: {$scroll_extra_px}px;">
+	{#each { length: Math.floor($lines.length / NUMBER_OF_LINES_PER_COLUMN + 0.5) } as _, i}
 			<div id="column-{i}" class="lyric-column"
 				class:is-dividing-lines={$editLines}
 				>
-				<!-- class:hide={i < $leftMostDisplayColumn || $leftMostDisplayColumn + $numberOfColumns <= i} -->
 				{#each $lines.slice(i * NUMBER_OF_LINES_PER_COLUMN, min((i + 1) * NUMBER_OF_LINES_PER_COLUMN), $lines.length) as line, j}
 					<button
 						class="line-border"
@@ -308,67 +313,16 @@
 								value={line.text}
 								rows="1"
 							/>
-								<!-- disabled={$editLines} -->
-
-							<!-- <textarea name="" id="" rows="1" class="lyric-input" value="{line.text}"/> -->
-							<!-- {#each [...line.text.match(/\S+/g)] as word, i}
-                        {word}
-                        {#if i != [...line.text.match(/\S+/g)].length - 1}
-                            <button class="vertical-separator"/>
-                        {/if}
-                    {/each} -->
-						</p>
 					</button>
-
-					<!-- <div
-						class="outer-divider"
-						on:click|stopPropagation={() =>
-							($lines[
-								i * NUMBER_OF_LINES_PER_COLUMN + j
-							].divider =
-								!$lines[i * NUMBER_OF_LINES_PER_COLUMN + j]
-									.divider)}
-						class:selected={$lines[
-							i * NUMBER_OF_LINES_PER_COLUMN + j
-						].divider}
-					>
-						<button
-							class="divider"
-							on:click|stopPropagation={() =>
-								($lines[
-									i * NUMBER_OF_LINES_PER_COLUMN + j
-								].divider =
-									!$lines[i * NUMBER_OF_LINES_PER_COLUMN + j]
-										.divider)}
-							class:selected={$lines[
-								i * NUMBER_OF_LINES_PER_COLUMN + j
-							].divider}
-						/>
-					</div> -->
 				{/each}
 			</div>
-		{/if}
+		<!-- {/if} -->
 	{/each}
 </div>
 
 <button on:click={readClipboard}>Paste from Clipboard</button>
 <div id="column-nagivation">
 	<button id="create-new-song" on:click={createNewSong}>Create New Song <span style="font-weight: bolder;">+</span></button>
-	<button
-		disabled={$leftMostDisplayColumn == 0}
-		on:click={leftMostDisplayColumn.set(max(0, $leftMostDisplayColumn - 1))}
-		>Left</button
-	>
-	<button
-		disabled={$leftMostDisplayColumn + $numberOfColumns ==
-			Math.floor($lines.length / NUMBER_OF_LINES_PER_COLUMN + 0.99)}
-		on:click={leftMostDisplayColumn.set(
-			min(
-				Math.floor($lines.length / NUMBER_OF_LINES_PER_COLUMN + 0.99),
-				$leftMostDisplayColumn + 1,
-			),
-		)}>Right</button
-	>
 </div>
 		<p id="save-message" style="color: {$workIsUnsaved ? '#ff0000' : '#00af35'};">{$workIsUnsaved ? "Unsaved changes" : "Changes saved"}</p>
 
@@ -417,16 +371,24 @@
 		display: flex;
 		flex-direction: row;
 		color: white;
-		width: 100%;
+		/* width: 100%; */
 		max-width: 72vw;
 		height: 36rem;
 		background-color: var(--dark1);
 		justify-content: space-between;
+		/* justify-content: left; */
 		align-items: center;
 		flex-wrap: nowrap;
 		overflow-x: scroll;
 		overflow-y: hidden;
 		scroll-snap-type: x mandatory;
+		/* scroll-snap-points-x: repeat(100%); */
+		scroll-snap-align: start;
+	}
+
+	#lyric-region::after {
+		content: "";
+		flex: 0 0 var(--scroll-extra-px);
 	}
 
 
@@ -556,13 +518,13 @@
 		background-color: transparent;
 	}
 	::-webkit-scrollbar-thumb {
-		background-color: var(--white);
+		background-color: var(--primary);
 		border-radius: 25px;
 		border: 6px solid transparent;
 		background-clip: content-box;
 	}
 	::-webkit-scrollbar-thumb:hover {
-		background-color: #cdcccc;
+		background-color: var(--primary);
 	}
 	#save-message {
 		text-align: center;
