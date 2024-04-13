@@ -10,6 +10,11 @@
 		lyricsBySlide,
 		setCurrrentSong,
 		textColor,
+		title,
+		author,
+
+        includeTitleSlide
+
 	} from "../stores.js";
 
 	const bc = new BroadcastChannel("lyric_of_lyrics");
@@ -17,9 +22,12 @@
 	const lyrics = writable([]);
 
 	currentSlideIndex.subscribe((newIndex) => {
+		// offset cause of title slide
 		if ($currentSlideIndex < 0) return;
+		if($includeTitleSlide) newIndex--;
 		if (!$lyricsBySlide[newIndex]) return;
 		lyrics.set($lyricsBySlide[newIndex]);
+		console.log({$lyricsBySlide, $currentSlideIndex, newIndex})
 	});
 
 	function goFullscreen() {
@@ -36,7 +44,7 @@
 		// right arrow: advance slide
 		if (["ArrowRight", " ", "l"].includes(key)) {
 			currentSlideIndex.set(
-				min($lyricsBySlide.length - 1, $currentSlideIndex + 1),
+				min($lyricsBySlide.length - 1 + ($includeTitleSlide), $currentSlideIndex + 1),
 			);
 		}
 		// left arrow: retreat slide
@@ -101,14 +109,27 @@
 		2}px;"
 >
 	<div id="lyrics">
-		{#each $lyrics as line}
+		{#if $currentSlideIndex == 0 && $includeTitleSlide}
 			<p
-				style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize *
-					2}px;"
+				style="color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize * 2.5}px;"
 			>
-				{line}
+				{$title}
 			</p>
-		{/each}
+			<p
+				style="color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize * 1.25}px;"
+			>
+				{$author}
+			</p>
+		{:else}
+			{#each $lyrics as line}
+				<p
+					style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize *
+						2}px;"
+				>
+					{line}
+				</p>
+			{/each}
+		{/if}
 	</div>
 </div>
 

@@ -16,6 +16,7 @@
 		songId,
 		textColor,
 		title,
+		workIsUnsaved,
 	} from "./stores.js";
 
 	const maxLength = 23;
@@ -219,6 +220,7 @@
 	const NUMBER_OF_LINES_PER_COLUMN = 12;
 
 	let leftMostDisplayColumn = writable(0);
+	$: lastSaved = new Date();
 </script>
 
 <div id="songInfoAndEditMode">
@@ -243,6 +245,7 @@
 			maxlength = {maxLength};
 			bind:value={$author}
 		/>
+		<!-- <p id="save-message" style="color: {$workIsUnsaved ? '#ff0000' : '#00af35'};">{$workIsUnsaved ? "Unsaved changes" : "Changes saved"}</p> -->
 	</div>
 	<div id="edit-mode-toggle">
 		<button class:edit-mode-selected={$editLines} on:click={() => editLines.set(true)}>Divide Lines</button>
@@ -367,6 +370,7 @@
 	>
 	<button on:click={createNewSong}>Create New Song</button>
 </div>
+		<p id="save-message" style="color: {$workIsUnsaved ? '#ff0000' : '#00af35'};">{$workIsUnsaved ? "Unsaved changes" : "Changes saved"}</p>
 
 <style>
 	button.line-border {
@@ -415,7 +419,7 @@
 		color: white;
 		width: 100%;
 		max-width: 72vw;
-		height: 40rem;
+		height: 36rem;
 		background-color: var(--dark1);
 		justify-content: space-between;
 		align-items: center;
@@ -450,55 +454,6 @@
 
 	p {
 		text-align: center;
-	}
-
-	.outer-divider {
-		padding: 0;
-		margin: 0;
-		width: 100%;
-		display: flex;
-		justify-content: center;
-		opacity: 0.4;
-	}
-	.outer-divider:hover {
-		opacity: 0.8;
-	}
-
-	.divider {
-		margin: 0.3rem;
-		background-color: red;
-		border: none;
-		height: 0.5rem;
-		width: 70%;
-		/* opacity: 0.4; */
-		border-radius: 4px;
-	}
-
-	/* .divider:hover {
-		opacity: 0.8;
-	} */
-
-	.divider.selected,
-	.outer-divider.selected {
-		opacity: 1;
-	}
-
-	.vertical-separator {
-		opacity: 0.05;
-		background-color: blue;
-		margin: 0;
-		padding: 0;
-		border: none;
-		width: 0.25rem;
-		height: 1rem;
-	}
-
-	.vertical-separator:hover {
-		opacity: 0.8;
-	}
-
-	.hide {
-		display: none;
 	}
 
 	.lyric-text {
@@ -608,5 +563,16 @@
 	}
 	::-webkit-scrollbar-thumb:hover {
 		background-color: #cdcccc;
+	}
+	#save-message {
+		text-align: center;
+		font-family: var(--font-family);
+		font-size: small;
+		border: 1px solid var(--dark2);
+		background-color: var(--dark0);
+		border-radius: 10px;
+		padding: 0.3rem 0.5rem;
+		margin-left: 1rem;
+		width: 16ch;
 	}
 </style>

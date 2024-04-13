@@ -129,7 +129,6 @@
 			<div id="content">
 				<div
 					id="saved"
-					style="--loc: {$savedSongsIsOpen ? 0 : -14.5}vw;"
 				>
 					<SavedSongList />
 				</div>
@@ -140,7 +139,6 @@
 				</div>
 				<div
 					id="settings"
-					style="--loc: {$settingsIsOpen ? 0 : -14.5}vw;"
 				>
 					<Settings />
 				</div>
@@ -178,14 +176,14 @@
 		flex-direction: row;
 		height: 88vh;
 		width: 100vw;
-		background-color: var(--dark2);
+		background-color: var(--dark1);
 		color: var(--white);
 		/* background-color: orange; <-- Uncomment to see outline */
 		overflow: hidden;
 	}
 
 	#saved {
-		height: 100%;
+		height: 80vh;
 		width: 20vw;
 		background-color: var(--dark0);
 		color: var(--white);
@@ -193,10 +191,10 @@
 		left: var(--loc);
 		transition: left 1s;
 		border-top-right-radius: 20px;
+		border-bottom-right-radius: 20px;
 		box-shadow:
 			0 4px 8px 0 rgba(0, 0, 0, 0.2),
 			0 6px 20px 0 rgba(0, 0, 0, 0.19);
-		border-radius: var(--border-radius);
 	}
 
 	#editor {
@@ -210,12 +208,13 @@
 
 	#settings {
 		background-color: var(--dark0);
-		height: 100%;
+		height: 80vh;
 		width: 20vw;
 		position: relative;
 		right: var(--loc);
 		transition: right 1s;
 		border-top-left-radius: 20px;
+		border-bottom-left-radius: 20px;
 		box-shadow:
 			0 4px 8px 0 rgba(0, 0, 0, 0.2),
 			0 6px 20px 0 rgba(0, 0, 0, 0.19);

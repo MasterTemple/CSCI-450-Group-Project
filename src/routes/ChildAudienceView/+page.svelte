@@ -13,6 +13,9 @@
 	const bc = new BroadcastChannel("lyric_of_lyrics");
 	const isReady = writable(false);
 	const lyrics = writable([]);
+	const title = writable("");
+	const author = writable("");
+	const showTitleSlide = writable(false);
 
 	function goFullscreen() {
 		// tell presenter screen to go fullscreen
@@ -25,9 +28,17 @@
 
 	bc.onmessage = (event) => {
 		if (event.data.msg == "setLyrics") {
-			console.log({ data: event.data });
+			// console.log({ data: event.data });
 			lyrics.set([...event.data.lyrics]);
-		} else if (event.data.msg == "close") {
+			showTitleSlide.set(false)
+		}
+		else if (event.data.msg == "setTitleSlide") {
+			// console.log({ data: event.data });
+			title.set(event.data.title);
+			author.set(event.data.author);
+			showTitleSlide.set(true)
+		}
+		else if (event.data.msg == "close") {
 			window.close();
 		}
 	};
@@ -79,14 +90,28 @@
 		<p>Click anywhere to enter Fullscreen Mode</p>
 	{:else}
 		<div id="lyrics">
-			{#each $lyrics as line}
+
+			{#if $showTitleSlide}
 				<p
-					style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize *
-						2}px;"
+					style="color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize * 2.5}px;"
 				>
-					{line}
+					{$title}
 				</p>
-			{/each}
+				<p
+					style="color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize * 1.25}px;"
+				>
+					{$author}
+				</p>
+			{:else}
+				{#each $lyrics as line}
+					<p
+						style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize *
+							2}px;"
+					>
+						{line}
+					</p>
+				{/each}
+			{/if}
 		</div>
 	{/if}
 </div>

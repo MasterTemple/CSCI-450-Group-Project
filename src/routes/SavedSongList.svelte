@@ -25,7 +25,7 @@
 	<input
 		type="text"
 		placeholder="Search.."
-		id="searchBar"
+		id="search-bar"
 		bind:value={$searchValue}
 	/>
 	<div id="songs">
@@ -56,18 +56,19 @@
 		width: 100%;
 	}
 
-	#searchBar {
+	#search-bar {
 		border-radius: 8px;
 		width: 90%;
 		border: 3px solid var(--dark1);
 		margin: 0.35rem;
+		margin-top: 0.5rem;
 		position: relative;
 		padding: 0.25rem;
 		font-size: 1rem;
 		background: var(--black);
 		color: var(--white);
 	}
-	#searchBar:focus {
+	#search-bar:focus {
 		border-color: var(--primary);
 		outline-width: 0;
 	}

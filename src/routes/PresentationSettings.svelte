@@ -12,7 +12,6 @@
 		fontFamily,
 		fontSize,
 		includeTitleSlide,
-		numberOfColumns,
 		textColor,
 	} from "./stores";
 
@@ -68,9 +67,9 @@
 	<div class="editor-settings-items">
 		<label for="Font Family">Font</label>
 		<select name="editor-settings" id="fontFamily" bind:value={$fontFamily}>
-			<option value="arial" selected>Arial</option>
-			<option value="timeNewRoman">Times New Roman</option>
-			<option value="helvetica">Helvetica</option>
+			<option value="Arial" selected>Arial</option>
+			<option value="Times New Roman">Times New Roman</option>
+			<option value="Helvetica">Helvetica</option>
 		</select>
 	</div>
 
@@ -80,12 +79,14 @@
 				name="editor-settings"
 				type="checkbox"
 				id="titleSlide"
-				bind:value={$includeTitleSlide}
+				bind:checked={$includeTitleSlide}
 			/></label
 		>
 	</div>
 
-	<button on:click={applySettingsToAll} id="apply-to-all-button">Apply to All</button>
+	<button on:click={applySettingsToAll} id="apply-to-all-button"
+		>Apply to All</button
+	>
 	<p class="info-hint">
 		* Changes are automatically applied to the current slide
 	</p>
@@ -123,8 +124,8 @@
 		margin: 0;
 	}
 
-	#apply-to-all-button:hover { 
-		background-color: #01AE35;
+	#apply-to-all-button:hover {
+		background-color: #01ae35;
 		color: white;
 	}
 	#apply-to-all-button {
@@ -139,9 +140,8 @@
 	}
 
 	#apply-to-all-button:active {
-		background-color: #01AE35;
+		background-color: #01ae35;
 		box-shadow: 0 3px #666;
 		transform: translateY(4px);
 	}
-
 </style>

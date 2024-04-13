@@ -9,10 +9,14 @@
 		lyricsBySlide,
 		title,
 		inputReserved,
-		switchTabIndex
+		switchTabIndex,
+
+        includeTitleSlide
+
 	} from "../stores.js";
 	import Slides from "./Slides.svelte";
 	import SwitchSong from "./SwitchSong.svelte";
+    import TitleSlide from "./TitleSlide.svelte";
 
 	export let lyrics;
 	const searchValue = writable("");
@@ -33,7 +37,7 @@
 
 	function advanceSlides() {
 		currentSlideIndex.set(
-			min($lyricsBySlide.length - 1, $currentSlideIndex + 1),
+			min($lyricsBySlide.length - 1 + ($includeTitleSlide), $currentSlideIndex + 1),
 		);
 	}
 
@@ -100,7 +104,11 @@
 
 	<!-- style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize} " -->
 	<div id="currentSlide">
-		<Slides {lyrics} fontSizeOverride={26} />
+		{#if $includeTitleSlide && $currentSlideIndex == 0}
+			<TitleSlide />
+		{:else}	
+			<Slides {lyrics} fontSizeOverride={26} />
+		{/if}
 	</div>
 
 	<div id="slideControlStack">
@@ -113,12 +121,12 @@
 		>
 
 		<p id="slideCounter">
-			{$currentSlideIndex + 1}/{$lyricsBySlide.length}
+			{$currentSlideIndex + 1}/{$lyricsBySlide.length + ($includeTitleSlide)}
 		</p>
 
 		<button
 			id="slideRight"
-			disabled={$currentSlideIndex == $lyricsBySlide.length - 1}
+			disabled={$currentSlideIndex == $lyricsBySlide.length + ($includeTitleSlide) - 1}
 			on:click={advanceSlides}>→</button
 		>
 	</div>
