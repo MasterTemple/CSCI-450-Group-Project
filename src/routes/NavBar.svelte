@@ -160,45 +160,47 @@
 	<h1 id="lolTitle">Lyric of Lyrics</h1>
 </div>
 
-<div id="presentButtonContainer">
-	<button
-		id="presentButton"
-		href="/PresenterView"
-		style="--color: {color.darkPurple}"
-		on:click={present}
-	>
-		<span
-			class="material-symbols-rounded"
-			style="font-variation-settings: 'FILL' 1; font-size: 50px"
-			>play_arrow</span
+<div id="top-left-button-container">
+	<div id="presentButtonContainer">
+		<button
+			id="presentButton"
+			href="/PresenterView"
+			style="--color: {color.darkPurple}"
+			on:click={present}
 		>
-		<h1 id="presentButtonText">Present</h1>
-	</button>
-</div>
+			<span
+				class="material-symbols-rounded"
+				style="font-variation-settings: 'FILL' 1; font-size: 50px"
+				>play_arrow</span
+			>
+			<h1 id="presentButtonText">Present</h1>
+		</button>
+	</div>
 
-<div id="exportButtonContainer">
-	<button
-		id="exportButton"
-		style="--color: {color.darkPurple}"
-		on:click={exportPowerpoint}
-	>
-		<span
-			class="material-symbols-rounded"
-			style="font-variation-settings: 'FILL' 1; font-size: 35px">download</span
+	<div id="exportButtonContainer">
+		<button
+			id="exportButton"
+			style="--color: {color.darkPurple}"
+			on:click={exportPowerpoint}
 		>
-		<h1 id="exportButtonText">Export</h1>
-	</button>
-</div>
+			<span
+				class="material-symbols-rounded"
+				style="font-variation-settings: 'FILL' 1; font-size: 35px">download</span
+			>
+			<h1 id="exportButtonText">Export</h1>
+		</button>
+	</div>
 
-<div id="profileContainer">
-	<button
-		id="profileButton"
-		on:click={$authToken.length ? openAccountInfoModal : openEmailModal}
-	>
-		<h1 id="profileText">
-			{$emailAddress.length ? $emailAddress[0].toUpperCase() : "?"}
-		</h1>
-	</button>
+	<div id="profileContainer">
+		<button
+			id="profileButton"
+			on:click={$authToken.length ? openAccountInfoModal : openEmailModal}
+		>
+			<h1 id="profileText">
+				{$emailAddress.length ? $emailAddress[0].toUpperCase() : "?"}
+			</h1>
+		</button>
+	</div>
 </div>
 
 <div id="enter-email-popup" class="modal">
@@ -323,29 +325,22 @@
 		width: 15ch;
 	}
 
-	#presentButtonContainer,
-	#exportButtonContainer,
-	#profileContainer {
+	#top-left-button-container {
 		position: fixed;
 		top: 3%;
+		right: 3%;
+		display: flex;
+		flex-direction: row;
 	}
-
-	#presentButtonContainer {
-		right: 18vw;
-	}
-
-	#exportButtonContainer {
-		right: 8vw;
-	}
-
-	#profileContainer {
-		right: 3vw;
+	#top-left-button-container > div {
+		margin-left: 1rem;
 	}
 
 	#profileButton,
 	#presentButton,
 	#exportButton {
 		width: fit-content;
+		height: fit-content;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -396,22 +391,23 @@
 			padding-right: 8px;
 		}
 
-		#presentButtonContainer {
-			width: fit-content;
-			min-width: 80px;
-			right: 180px;
-		}
 
-		#presentButton {
-			width: fit-content;
-			min-width: 80px;
-			height: 40px;
-		}
+		/* #presentButtonContainer { */
+		/* 	width: fit-content; */
+		/* 	min-width: 80px; */
+		/* 	right: 180px; */
+		/* } */
 
-		#presentButtonText {
-			font-size: 1em;
-			padding-right: 8px;
-		}
+		/* #presentButton { */
+		/* 	width: fit-content; */
+		/* 	min-width: 80px; */
+		/* 	height: 40px; */
+		/* } */
+
+		/* #presentButtonText { */
+		/* 	font-size: 1em; */
+		/* 	padding-right: 8px; */
+		/* } */
 
 		.material-symbols-rounded {
 			font-size: 10px;
