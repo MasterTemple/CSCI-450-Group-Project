@@ -181,6 +181,7 @@
 		background-color: var(--dark2);
 		color: var(--white);
 		/* background-color: orange; <-- Uncomment to see outline */
+		overflow: hidden;
 	}
 
 	#saved {

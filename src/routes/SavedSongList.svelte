@@ -6,12 +6,9 @@
 	let icons = [">", "<"];
 	const UNKNOWN_SONG_AUTHOR_PLACEHOLDER = "Unknown";
 	var icon = 1;
-	function toggleDrawer() {
-		console.log("Toggle Drawer:" + $savedSongsIsOpen);
-		savedSongsIsOpen.set(!$savedSongsIsOpen);
-	}
 	const searchValue = writable("");
 	function isSearchMatch(query, song) {
+		query = query.toLowerCase();
 		const title = song["title"].toLowerCase();
 		const author = (
 			song["author"] || UNKNOWN_SONG_AUTHOR_PLACEHOLDER
@@ -25,12 +22,6 @@
 </script>
 
 <div id="saved-song-list">
-	<div id="drawerDiv">
-		<button
-			id="drawerButton"
-			on:click={toggleDrawer}>{icons[$savedSongsIsOpen ? 1 : 0]}</button
-		>
-	</div>
 	<input
 		type="text"
 		placeholder="Search.."
@@ -63,29 +54,6 @@
 		overflow: hidden;
 		height: 100%;
 		width: 100%;
-	}
-	
-	#drawerDiv {
-		position: absolute;
-		bottom: 50%;
-		left: 100%;
-	}
-
-	#drawerButton {
-		background-color: var(--dark0);
-		color: var(--white);
-		border: none;
-		text-align: center;
-		font-size: large;
-		width: 2rem;
-		height: 8rem;
-		border-top-right-radius: 10px;
-		border-bottom-right-radius: 10px;
-		box-shadow: 2px 1px 15px var(--black);
-		visibility: visible;
-		/* box-shadow:
-			0 4px 8px 0 rgba(0, 0, 0, 0.2),
-			0 6px 20px 0 rgba(0, 0, 0, 0.19); */
 	}
 
 	#searchBar {

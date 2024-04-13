@@ -55,7 +55,7 @@
 									lyrics={$lyricsBySlide?.[
 										baseIndex + 3 * i + j
 									]}
-									fontSizeOverride={10}
+									fontSizeOverride={8}
 								/>
 							</div>
 						</div>
