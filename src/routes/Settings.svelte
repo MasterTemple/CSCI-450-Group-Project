@@ -41,7 +41,7 @@
 		display: flex;
 	}
 
-	#settings-section-select > button {
+	button {
 		flex: 1;
 		width: 50%;
 		color: var(--white);
@@ -52,8 +52,14 @@
 		border-radius: calc(2 * var(--border-radius));
 		margin: 4px;
 	}
-	#settings-section-select > button.selected {
+
+	button.selected {
 		border-color: var(--secondary);
+	}
+
+	button:hover {
+		border-color: var(--primary);
+		background-color: var(--black);
 	}
 
 	#settings-content {

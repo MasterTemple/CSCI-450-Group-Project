@@ -180,44 +180,31 @@
 			bind:value={removeMatchText}
 		/></label
 	>
-</div>
 
 <button id="applyChangesButton" on:click={applySettings}>Apply Changes</button>
 
-<!-- <h2>Settings</h2> -->
-
-<!-- <div class="editor-settings-items" id="settings-container"> -->
-<!-- <label -->
-<!-- 	>Columns <input -->
-<!-- 		name="editor-settings" -->
-<!-- 		type="number" -->
-<!-- 		min="1" -->
-<!-- 		max="6" -->
-<!-- 		id="numberOfColumns" -->
-<!-- 		bind:value={$numberOfColumns} -->
-<!-- 	/></label -->
-<!-- > -->
-<!-- </div> -->
+</div>
 
 <style>
 	#applyChangesButton:hover {
-		background-color: #01ae35;
-		color: white;
+		border-color: var(--primary);
+		background-color: var(--black);
 	}
+
 	#applyChangesButton {
-		margin-top: 20px;
-		background-color: white;
+		margin-top: 1rem;
 		border: none;
 		border-radius: 10px;
 		height: 3vh;
-		width: 95%;
-		box-shadow: 0 5px #999;
+		width: 16ch;
+		color: var(--white);
+		background-color: var(--dark1);
+		border: 2px solid var(--dark5);
+		border-radius: calc(2 * var(--border-radius));
 	}
 
 	#applyChangesButton:active {
-		background-color: #01ae35;
-		box-shadow: 0 3px #666;
-		transform: translateY(4px);
+		background-color: var(--primary);
 	}
 
 	#divideEveryLines {
@@ -245,14 +232,6 @@
 		-moz-appearance: textfield;
 	}
 
-	#settings-container {
-		-webkit-touch-callout: none;
-		-webkit-user-select: none;
-		-khtml-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
-	}
 
 	#actions-container {
 		-webkit-touch-callout: none;
@@ -261,5 +240,9 @@
 		-moz-user-select: none;
 		-ms-user-select: none;
 		user-select: none;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 	}
 </style>
