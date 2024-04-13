@@ -3,31 +3,33 @@
 		backgroundColor,
 		fontFamily,
 		fontSize,
+		includeTitleSlide,
 		textColor,
+        title,
+		author
 	} from "../stores.js";
 
-	// export let lyrics = writable([]);
-	export let lyrics = undefined;
 	export let fontSizeOverride;
-	const EMPTY_SLIDE_CONTENTS = ["[EMPTY SLIDE]"];
-	// onMount(() => {
-	// 	if (lyrics == undefined) lyrics = EMPTY_SLIDE_CONTENTS;
-	// });
-	$: safeLyrics = lyrics || EMPTY_SLIDE_CONTENTS;
+
 </script>
 
 <!-- style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size:{$fontSize}" -->
 <div id="slide">
 	<div id="lyrics">
-		{#each safeLyrics as line}
+			<p
+				style="color: {$textColor}; font-family: {$fontFamily}; font-size: {fontSizeOverride
+					? fontSizeOverride * 1.25
+					: $fontSize * 2}px;"
+			>
+				{$title}
+			</p>
 			<p
 				style="color: {$textColor}; font-family: {$fontFamily}; font-size: {fontSizeOverride
 					? fontSizeOverride
-					: $fontSize * 2}px;"
+					: $fontSize}px;"
 			>
-				{line}
+				{$author}
 			</p>
-		{/each}
 	</div>
 </div>
 
