@@ -11,11 +11,6 @@
 
 	let icons = ["<", ">"];
 
-	function toggleDrawer() {
-		console.log("Toggle Drawer:" + $settingsIsOpen);
-		settingsIsOpen.set(!$settingsIsOpen);
-	}
-
 	let isEditorSettings = writable(true);
 	function settingsToggle() {
 		isEditorSettings.set(!$isEditorSettings);

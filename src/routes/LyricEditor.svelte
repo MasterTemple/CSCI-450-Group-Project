@@ -19,6 +19,7 @@
 		workIsUnsaved,
 	} from "./stores.js";
 
+	const maxLength = 23;
 	const editLines = writable(true);
 	// let workIsUnsaved = false;
 	let column_ch_width = writable(30);
@@ -234,12 +235,14 @@
 			type="text"
 			placeholder="Song Title"
 			id="songTitle"
+			maxlength = {maxLength};
 			bind:value={$title}
 		/>
 		<input
 			type="text"
 			placeholder="Artist"
 			id="songArtist"
+			maxlength = {maxLength};
 			bind:value={$author}
 		/>
 		<!-- <p id="save-message" style="color: {$workIsUnsaved ? '#ff0000' : '#00af35'};">{$workIsUnsaved ? "Unsaved changes" : "Changes saved"}</p> -->

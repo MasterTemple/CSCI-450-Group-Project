@@ -6,10 +6,6 @@
 	let icons = [">", "<"];
 	const UNKNOWN_SONG_AUTHOR_PLACEHOLDER = "Unknown";
 	var icon = 1;
-	function toggleDrawer() {
-		console.log("Toggle Drawer:" + $savedSongsIsOpen);
-		savedSongsIsOpen.set(!$savedSongsIsOpen);
-	}
 	const searchValue = writable("");
 	function isSearchMatch(query, song) {
 		query = query.toLowerCase();

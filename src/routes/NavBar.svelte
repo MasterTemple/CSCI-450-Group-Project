@@ -287,17 +287,22 @@
 		border: 1px solid #888;
 		width: 40%; /* Could be more or less, depending on screen size */
 	}
-	/* #logout{
-		position: fixed;
-		right:0;
-		top:0;
-	} */
+	#logout{
+		border: none;
+	}
+	 #logout:hover{
+		background-color: #cdcccc;
+	} 
 	.close {
-		color: #aaa;
+		color: var(--white);
 		float: right;
 		font-size: 28px;
 		font-weight: bold;
-
+		background-color: transparent;
+		border: none;
+	}
+	.close:hover {
+		color: #cdcccc;
 	}
 	#logoContainer {
 		position: fixed;

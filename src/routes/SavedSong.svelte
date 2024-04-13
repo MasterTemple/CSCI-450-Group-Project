@@ -142,7 +142,7 @@
 	.small-info {
 		font-size: smaller;
 		/* position: relative; */
-		width: 19ch;
+		width: 21ch;
 		text-overflow: ellipsis;
 		/* left: 3%;
 		top: 0px; */
