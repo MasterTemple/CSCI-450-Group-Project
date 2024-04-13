@@ -19,15 +19,9 @@
 	let divideAtMatchWord = "";
 	let removeMatchText = "";
 	const action = writable("");
-	action.subscribe((a) => console.log({a}))
-	let selectedAction;
 
-	function applySettings(event) {
-		// const selectedAction = event.document;
-		console.log({ selectedAction });
-		selectedAction = $action;
-
-		if (selectedAction == "divideEveryCheck") {
+	function applySettings() {
+		if ($action == "divideEveryCheck") {
 			if (
 				divideEveryNLinesCount > $lines.length ||
 				divideEveryNLinesCount < 1
@@ -52,7 +46,7 @@
 				}
 				$lyricsBySlide[counter].push($lines[i].text);
 			}
-		} else if (selectedAction == "autodetectCheck") {
+		} else if ($action == "autodetectCheck") {
 			var counter = 0;
 			$lyricsBySlide = [[]];
 			for (i = 0; i < $lines.length; i++) {
@@ -63,7 +57,7 @@
 					$lyricsBySlide[counter].push($lines[i].text);
 				}
 			}
-		} else if (selectedAction == "divideAtMatchCheck") {
+		} else if ($action == "divideAtMatchCheck") {
 			counter = 0;
 			if (divideAtMatchWord == "") {
 				return; //TODO: Implement error
@@ -80,14 +74,13 @@
 				}
 				$lyricsBySlide[counter].push($lines[i].text);
 			}
-		} else if (selectedAction == "removeDividers") {
+		} else if ($action == "removeDividers") {
 			lines.update((linesCopy) => {
 				return linesCopy.map(({ text }) => {
 					return { text, divider: false };
 				});
 			});
-		} else if (selectedAction == "removeMatch") {
-			removeMatchText;
+		} else if ($action == "removeMatch") {
 			let matchText = removeMatchText;
 			if (removeMatchText.match(/^\/.*\/$/)) {
 				matchText = new RegExp(removeMatchText.match(/^\/(.*)\/$/)[1]);
@@ -236,11 +229,8 @@
 	}
 
 	#actions-container > button.row {
-		width: 100%;
-	}
-
-	#actions-container > button.row {
-		max-width: 12vw;
+		width: 90%;
+		/* max-width: 12vw; */
 		margin: 0.5vw;
 		padding: 0.5vw;
 		/* padding: 0.5rem; */
