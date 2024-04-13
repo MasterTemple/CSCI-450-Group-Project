@@ -6,7 +6,10 @@
 		lyricsBySlide,
 		setCurrrentSong,
 		inputReserved,
-		backgroundColor
+		backgroundColor,
+		includeTitleSlide,
+		title,
+		author,
 	} from "../stores";
 	import LeftColumn from "./LeftColumn.svelte";
 	import RightColumn from "./RightColumn.svelte";
@@ -27,7 +30,16 @@
 	};
 
 	currentSlideIndex.subscribe((newIndex) => {
+		if($includeTitleSlide) newIndex++;
 		if ($currentSlideIndex < 0) return;
+		if ($currentSlideIndex == 0) {
+			bc.postMessage({
+				msg: "setTitleSlide",
+				title: $title,
+				author: $author,
+			})
+			return;
+		}
 		if (!$lyricsBySlide?.[newIndex]) return;
 		console.log({ lyrics: $lyricsBySlide[newIndex], newIndex });
 		bc.postMessage({

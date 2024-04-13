@@ -2,8 +2,9 @@
 	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
 	import { min } from "../functions.js";
-	import { currentSlideIndex, lyricsBySlide } from "../stores.js";
+	import { currentSlideIndex, includeTitleSlide, lyricsBySlide } from "../stores.js";
 	import Slides from "./Slides.svelte";
+    import TitleSlide from "./TitleSlide.svelte";
 
 	//Need to fix slide preview
 
@@ -51,12 +52,25 @@
 					>
 						<div class="slide-zoom">
 							<div class="slide-preview">
-								<Slides
-									lyrics={$lyricsBySlide?.[
-										baseIndex + 3 * i + j
-									]}
-									fontSizeOverride={10}
-								/>
+								{#if $includeTitleSlide}
+									{#if i == 0 && j == 0}
+										<TitleSlide fontSizeOverride={10}/>
+									{:else}
+										<Slides
+											lyrics={$lyricsBySlide?.[
+												baseIndex + 3 * i + j - 1
+											]}
+											fontSizeOverride={10}
+										/>
+									{/if}
+									{:else}
+										<Slides
+											lyrics={$lyricsBySlide?.[
+												baseIndex + 3 * i + j
+											]}
+											fontSizeOverride={10}
+										/>
+								{/if}
 							</div>
 						</div>
 					</button>

@@ -9,10 +9,14 @@
 		lyricsBySlide,
 		title,
 		inputReserved,
-		switchTabIndex
+		switchTabIndex,
+
+        includeTitleSlide
+
 	} from "../stores.js";
 	import Slides from "./Slides.svelte";
 	import SwitchSong from "./SwitchSong.svelte";
+    import TitleSlide from "./TitleSlide.svelte";
 
 	export let lyrics;
 	const searchValue = writable("");
@@ -100,7 +104,11 @@
 
 	<!-- style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize} " -->
 	<div id="currentSlide">
-		<Slides {lyrics} fontSizeOverride={26} />
+		{#if $includeTitleSlide && $currentSlideIndex == 0}
+			<TitleSlide />
+		{:else}	
+			<Slides {lyrics} fontSizeOverride={26} />
+		{/if}
 	</div>
 
 	<div id="slideControlStack">
