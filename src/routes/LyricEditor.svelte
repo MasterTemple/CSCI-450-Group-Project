@@ -3,7 +3,7 @@
 	import { writable } from "svelte/store";
 	import { EMPTY_SONG_CONTENTS } from "./constants.js";
 	import { insertAtIndex, removeAtIndex, splitLine } from "./functions.js";
-	import { max, min } from './functions.js';
+	import { max, min } from "./functions.js";
 	import {
 		author,
 		breakIndexes,
@@ -23,7 +23,7 @@
 	const editLines = writable(true);
 	// let workIsUnsaved = false;
 	let column_ch_width = writable(30);
-	let scroll_extra_px = writable(0)
+	let scroll_extra_px = writable(0);
 
 	function createNewSong() {
 		// new id
@@ -56,25 +56,26 @@
 		if (lyricRegion) {
 			lyricRegion.addEventListener("wheel", function (e) {
 				// console.log({e})
-				let c0 = document.getElementById("column-0")
-				let c1 = document.getElementById("column-1")
-				let columns = [...document.querySelectorAll(".lyric-column")].map(e => e.offsetWidth)
-				scroll_extra_px
+				let c0 = document.getElementById("column-0");
+				let c1 = document.getElementById("column-1");
+				let columns = [...document.querySelectorAll(".lyric-column")].map(
+					(e) => e.offsetWidth,
+				);
+				scroll_extra_px;
 				let lrOffset = lyricRegion.offsetWidth;
 				// scroll_extra_px.set(columns[columns.length - 2] - columns[columns.length - 1])
 				// scroll_extra_px.set(columns[0] - lrOffset % columns[0])
-				scroll_extra_px.set(lrOffset % columns[0])
-				console.log({lrOffset, columns})
-				if(c0 == undefined || c1 == undefined) return;
-				let offset = c1.offsetLeft - c0.offsetLeft
+				scroll_extra_px.set(lrOffset % columns[0]);
+				console.log({ lrOffset, columns });
+				if (c0 == undefined || c1 == undefined) return;
+				let offset = c1.offsetLeft - c0.offsetLeft;
 				// scroll left
-				if(e.deltaY < 0) {
-					lyricRegion.scrollLeft -= offset
+				if (e.deltaY < 0) {
+					lyricRegion.scrollLeft -= offset;
 				}
 				// scroll right
-				if(e.deltaY > 0) {
-					lyricRegion.scrollLeft += offset
-
+				if (e.deltaY > 0) {
+					lyricRegion.scrollLeft += offset;
 				}
 			});
 		}
@@ -89,14 +90,12 @@
 		// get index of lyric/textarea
 		const index = parseInt(input.target.dataset["lyricLineNumber"]);
 		// get cursor location
-		const textareaElement = document.getElementById(
-			`lyric-input-${index}`,
-		);
+		const textareaElement = document.getElementById(`lyric-input-${index}`);
 		const selectionStart = textareaElement.selectionStart;
 		const selectionEnd = textareaElement.selectionEnd;
 		const hasSelectionRange = selectionStart != selectionEnd;
-		console.log({selectionStart, selectionEnd})
-		console.log(input.target.value.length)
+		console.log({ selectionStart, selectionEnd });
+		console.log(input.target.value.length);
 		// sleep 100ms so I can read the target value after it is set
 		await new Promise((resolve) => setTimeout(resolve, 100));
 		// create a copy of lines to edit
@@ -133,7 +132,10 @@
 			focusCursor = 0;
 		}
 		// join next line to the current line
-		else if (input.key == "Delete" && selectionEnd == input.target.value.length) {
+		else if (
+			input.key == "Delete" &&
+			selectionEnd == input.target.value.length
+		) {
 			// update current line to have next line contents
 			allLines[index] = {
 				// join lines
@@ -148,7 +150,11 @@
 			focusCursor = selectionStart + 1;
 		}
 		// join current line to the previous line
-		else if (input.key == "Backspace" && selectionStart == 0 && !hasSelectionRange) {
+		else if (
+			input.key == "Backspace" &&
+			selectionStart == 0 &&
+			!hasSelectionRange
+		) {
 			// set focus location
 			focusIndex = index - 1;
 			focusCursor = allLines[index - 1].text.length + 1;
@@ -162,7 +168,10 @@
 		}
 		// ignore all other input
 		else {
-			allLines[index] = { text: textareaElement.value, divider: allLines[index].divider };
+			allLines[index] = {
+				text: textareaElement.value,
+				divider: allLines[index].divider,
+			};
 			lines.set(allLines);
 			return;
 		}
@@ -247,84 +256,101 @@
 <div id="songInfoAndEditMode">
 	<div
 		id="songInformation"
-		style="--title-ch-width: {max($title?.length || 0, 20)}ch;--author-ch-width: {max(
-			$author?.length || 0,
+		style="--title-ch-width: {max(
+			$title?.length || 0,
 			20,
-		)}ch;"
+		)}ch;--author-ch-width: {max($author?.length || 0, 20)}ch;"
 	>
 		<input
 			type="text"
 			placeholder="Song Title"
 			id="songTitle"
-			maxlength = {maxLength};
+			maxlength="{maxLength};"
 			bind:value={$title}
 		/>
 		<input
 			type="text"
 			placeholder="Artist"
 			id="songArtist"
-			maxlength = {maxLength};
+			maxlength="{maxLength};"
 			bind:value={$author}
 		/>
 		<!-- <p id="save-message" style="color: {$workIsUnsaved ? '#ff0000' : '#00af35'};">{$workIsUnsaved ? "Unsaved changes" : "Changes saved"}</p> -->
 	</div>
 	<div id="edit-mode-toggle">
-		<button class:edit-mode-selected={$editLines} on:click={() => editLines.set(true)}>Divide Lines</button>
-		<button class:edit-mode-selected={!$editLines} on:click={() => editLines.set(false)}>Edit Text</button>
+		<button
+			class:edit-mode-selected={$editLines}
+			on:click={() => editLines.set(true)}>Divide Lines</button
+		>
+		<button
+			class:edit-mode-selected={!$editLines}
+			on:click={() => editLines.set(false)}>Edit Text</button
+		>
 	</div>
 </div>
-<div id="lyric-region" style="--column-ch-width: {$column_ch_width}ch; --scroll-extra-px: {$scroll_extra_px}px;">
+<div
+	id="lyric-region"
+	style="--column-ch-width: {$column_ch_width}ch; --scroll-extra-px: {$scroll_extra_px}px;"
+>
 	{#each { length: Math.floor($lines.length / NUMBER_OF_LINES_PER_COLUMN + 0.5) } as _, i}
-			<div id="column-{i}" class="lyric-column"
-				class:is-dividing-lines={$editLines}
+		<div
+			id="column-{i}"
+			class="lyric-column"
+			class:is-dividing-lines={$editLines}
+		>
+			{#each $lines.slice(i * NUMBER_OF_LINES_PER_COLUMN, min((i + 1) * NUMBER_OF_LINES_PER_COLUMN), $lines.length) as line, j}
+				<button
+					class="line-border"
+					on:click={() => {
+						if ($editLines) {
+							$lines[i * NUMBER_OF_LINES_PER_COLUMN + j].divider =
+								!$lines[i * NUMBER_OF_LINES_PER_COLUMN + j].divider;
+						}
+					}}
+					class:start={$lines[
+						min(
+							max(i * NUMBER_OF_LINES_PER_COLUMN + j + -1, 0),
+							$lines.length - 1,
+						)
+					].divider ||
+						(i == 0 && j == 0)}
+					class:end={$lines[
+						min(i * NUMBER_OF_LINES_PER_COLUMN + j + 0, $lines.length - 1)
+					].divider || i * NUMBER_OF_LINES_PER_COLUMN + j == $lines.length - 1}
 				>
-				{#each $lines.slice(i * NUMBER_OF_LINES_PER_COLUMN, min((i + 1) * NUMBER_OF_LINES_PER_COLUMN), $lines.length) as line, j}
-					<button
-						class="line-border"
-						on:click={() => {
-							if($editLines) {
-								$lines[i * NUMBER_OF_LINES_PER_COLUMN + j].divider =
-								!$lines[i * NUMBER_OF_LINES_PER_COLUMN + j].divider
-							}
-						}}
-						class:start={$lines[
-							min(
-								max(i * NUMBER_OF_LINES_PER_COLUMN + j + -1, 0),
-								$lines.length - 1,
-							)
-						].divider ||
-							(i == 0 && j == 0)}
-						class:end={$lines[
-							min(i * NUMBER_OF_LINES_PER_COLUMN + j + 0, $lines.length - 1)
-						].divider ||
-							i * NUMBER_OF_LINES_PER_COLUMN + j == $lines.length - 1}
+					<p
+						class="lyric-text"
+						style="font-size: 14px; font-family: {$fontFamily}; color: {$textColor}"
 					>
-						<p
-							class="lyric-text"
-							style="font-size: 14px; font-family: {$fontFamily}; color: {$textColor}"
-						>
-							<textarea
-								type="text"
-								class="lyric-input"
-								id="lyric-input-{i * NUMBER_OF_LINES_PER_COLUMN + j}"
-								data-lyric-line-number={i * NUMBER_OF_LINES_PER_COLUMN + j}
-								on:keydown={handleTextAreaEdit}
-								readonly={$editLines}
-								value={line.text}
-								rows="1"
-							/>
-					</button>
-				{/each}
-			</div>
+						<textarea
+							type="text"
+							class="lyric-input"
+							id="lyric-input-{i * NUMBER_OF_LINES_PER_COLUMN + j}"
+							data-lyric-line-number={i * NUMBER_OF_LINES_PER_COLUMN + j}
+							on:keydown={handleTextAreaEdit}
+							readonly={$editLines}
+							value={line.text}
+							rows="1"
+						/>
+					</p></button
+				>
+			{/each}
+		</div>
 		<!-- {/if} -->
 	{/each}
 </div>
 
 <div id="column-nagivation">
-	<button id="read-from-clipboard" on:click={readClipboard}>Read from Clipboard</button>
-	<button id="create-new-song" on:click={createNewSong}>Create New Song <span style="font-weight: bolder;">+</span></button>
+	<button id="read-from-clipboard" on:click={readClipboard}
+		>Read from Clipboard</button
+	>
+	<button id="create-new-song" on:click={createNewSong}
+		>Create New Song <span style="font-weight: bolder;">+</span></button
+	>
 </div>
-		<p id="save-message" style="color: {$workIsUnsaved ? '#ff0000' : '#00af35'};">{$workIsUnsaved ? "Unsaved changes" : "Changes saved"}</p>
+<p id="save-message" style="color: {$workIsUnsaved ? '#ff0000' : '#00af35'};">
+	{$workIsUnsaved ? "Unsaved changes" : "Changes saved"}
+</p>
 
 <style>
 	button.line-border {
@@ -391,8 +417,8 @@
 		flex: 0 0 var(--scroll-extra-px);
 	}
 
-
-	.lyric-column { /*This is where I am working. I need to contain this within a scroll view(?) which is n% of the entire screen. */
+	.lyric-column {
+		/*This is where I am working. I need to contain this within a scroll view(?) which is n% of the entire screen. */
 		align-items: center;
 		display: flex;
 		flex: 1;
@@ -411,7 +437,7 @@
 		margin: 0;
 		padding: 0 2rem;
 		border-radius: 10px;
-		scroll-snap-align: start
+		scroll-snap-align: start;
 	}
 
 	p {
@@ -444,7 +470,6 @@
 	#songInfoAndEditMode {
 		display: flex;
 		flex-direction: row;
-		
 	}
 
 	#songInformation {
@@ -507,12 +532,11 @@
 	/* .lyric-column p.lyric-text:not(.is-dividing-lines p.lyric-text), */
 	/* .lyric-column textarea.lyric-input:not(.is-dividing-lines textarea.lyric-input) */
 	.is-dividing-lines p.lyric-text,
-	.is-dividing-lines textarea.lyric-input
-	{
+	.is-dividing-lines textarea.lyric-input {
 		cursor: pointer;
 	}
 	::-webkit-scrollbar {
-		width:17px;
+		width: 17px;
 	}
 	::-webkit-scrollbar-track {
 		background-color: var(--black);

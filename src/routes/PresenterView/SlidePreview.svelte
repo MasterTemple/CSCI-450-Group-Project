@@ -2,16 +2,20 @@
 	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
 	import { min } from "../functions.js";
-	import { currentSlideIndex, includeTitleSlide, lyricsBySlide } from "../stores.js";
+	import {
+		currentSlideIndex,
+		includeTitleSlide,
+		lyricsBySlide,
+	} from "../stores.js";
 	import Slides from "./Slides.svelte";
-    import TitleSlide from "./TitleSlide.svelte";
+	import TitleSlide from "./TitleSlide.svelte";
 
 	//Need to fix slide preview
 
 	const lyrics = writable([]);
 
 	currentSlideIndex.subscribe((newIndex) => {
-		if($includeTitleSlide) newIndex--;
+		if ($includeTitleSlide) newIndex--;
 		if ($currentSlideIndex < 0) return;
 		if (!$lyricsBySlide[newIndex]) return;
 		lyrics.set($lyricsBySlide[newIndex]);
@@ -40,37 +44,31 @@
 				<div class="slides-and-index">
 					<button
 						class="slide-outline"
-						class:current-slide={3 * i + j ==
-							$currentSlideIndex - baseIndex}
-						class:next-slide={3 * i + j ==
-							$currentSlideIndex - baseIndex + 1}
+						class:current-slide={3 * i + j == $currentSlideIndex - baseIndex}
+						class:next-slide={3 * i + j == $currentSlideIndex - baseIndex + 1}
 						on:click={currentSlideIndex.set(
 							min(
 								baseIndex + 3 * i + j,
-								$lyricsBySlide.length + ($includeTitleSlide) - 1,
-							)
+								$lyricsBySlide.length + $includeTitleSlide - 1,
+							),
 						)}
 					>
 						<div class="slide-zoom">
 							<div class="slide-preview">
 								{#if $includeTitleSlide}
 									{#if i == 0 && j == 0 && $currentSlideIndex < 5}
-										<TitleSlide fontSizeOverride={10}/>
+										<TitleSlide fontSizeOverride={10} />
 									{:else}
 										<Slides
-											lyrics={$lyricsBySlide?.[
-												baseIndex + 3 * i + j - 1
-											]}
+											lyrics={$lyricsBySlide?.[baseIndex + 3 * i + j - 1]}
 											fontSizeOverride={10}
 										/>
 									{/if}
-									{:else}
-										<Slides
-											lyrics={$lyricsBySlide?.[
-												baseIndex + 3 * i + j
-											]}
-											fontSizeOverride={10}
-										/>
+								{:else}
+									<Slides
+										lyrics={$lyricsBySlide?.[baseIndex + 3 * i + j]}
+										fontSizeOverride={10}
+									/>
 								{/if}
 							</div>
 						</div>

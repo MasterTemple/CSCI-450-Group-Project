@@ -10,13 +10,11 @@
 		title,
 		inputReserved,
 		switchTabIndex,
-
-        includeTitleSlide
-
+		includeTitleSlide,
 	} from "../stores.js";
 	import Slides from "./Slides.svelte";
 	import SwitchSong from "./SwitchSong.svelte";
-    import TitleSlide from "./TitleSlide.svelte";
+	import TitleSlide from "./TitleSlide.svelte";
 
 	export let lyrics;
 	const searchValue = writable("");
@@ -37,7 +35,10 @@
 
 	function advanceSlides() {
 		currentSlideIndex.set(
-			min($lyricsBySlide.length - 1 + ($includeTitleSlide ? 1 : 0), $currentSlideIndex + 1),
+			min(
+				$lyricsBySlide.length - 1 + ($includeTitleSlide ? 1 : 0),
+				$currentSlideIndex + 1,
+			),
 		);
 	}
 
@@ -56,42 +57,43 @@
 	let switchSongDialog;
 	onMount(() => {
 		switchSongDialog = document.getElementById("switch-song-dialog");
-	})
+	});
 
 	function openSwitchSongDialog() {
 		switchSongDialog.style.display = "block";
 		inputReserved.set(true);
-		searchValue.set("")
-		document.querySelector("#search-input").focus()
-		document.querySelector("#search-input").value = ""
+		searchValue.set("");
+		document.querySelector("#search-input").focus();
+		document.querySelector("#search-input").value = "";
 	}
 	function closeSwitchSongDialog() {
 		switchSongDialog.style.display = "none";
 		inputReserved.set(false);
-		searchValue.set("")
-		document.querySelector("#search-input").value = ""
+		searchValue.set("");
+		document.querySelector("#search-input").value = "";
 		switchTabIndex.set(0);
 	}
 </script>
 
 <div id="button-stack">
 	<!-- <a href="/"> -->
-	<button id="backButton" on:click={exit} 
-		>Back</button
-	>
+	<button id="backButton" on:click={exit}>Back</button>
 	<!-- </a> -->
 
 	<div id="elapsedTime">
 		<p>{elapsedTime} Elapsed</p>
 	</div>
 </div>
-<button
-	id="switch-song-button"
-	on:click={openSwitchSongDialog}
->Switch Song</button>
+<button id="switch-song-button" on:click={openSwitchSongDialog}
+	>Switch Song</button
+>
 
-<div id="songSlideStack"
-	style="--title-ch-width: {max($title.length, 20)}ch;--author-ch-width: {max($author.length, 20)}ch;"
+<div
+	id="songSlideStack"
+	style="--title-ch-width: {max($title.length, 20)}ch;--author-ch-width: {max(
+		$author.length,
+		20,
+	)}ch;"
 >
 	<div id="songInfo">
 		<div id="songTitle">
@@ -106,7 +108,7 @@
 	<div id="currentSlide">
 		{#if $includeTitleSlide && $currentSlideIndex == 0}
 			<TitleSlide />
-		{:else}	
+		{:else}
 			<Slides {lyrics} fontSizeOverride={26} />
 		{/if}
 	</div>
@@ -115,18 +117,20 @@
 		<button
 			id="slideLeft"
 			disabled={$currentSlideIndex == 0}
-			on:click={retreatSlides}>
-			←
-		</button
+			on:click={retreatSlides}
 		>
+			←
+		</button>
 
 		<p id="slideCounter">
-			{$currentSlideIndex + 1}/{$lyricsBySlide.length + ($includeTitleSlide ? 1 : 0)}
+			{$currentSlideIndex + 1}/{$lyricsBySlide.length +
+				($includeTitleSlide ? 1 : 0)}
 		</p>
 
 		<button
 			id="slideRight"
-			disabled={$currentSlideIndex == $lyricsBySlide.length + ($includeTitleSlide ? 1 : 0) - 1}
+			disabled={$currentSlideIndex ==
+				$lyricsBySlide.length + ($includeTitleSlide ? 1 : 0) - 1}
 			on:click={advanceSlides}>→</button
 		>
 	</div>
@@ -134,7 +138,7 @@
 
 <div id="switch-song-dialog" class="modal">
 	<div class="modal-content">
-		<SwitchSong closeModal={closeSwitchSongDialog} searchValue={searchValue}/>
+		<SwitchSong closeModal={closeSwitchSongDialog} {searchValue} />
 	</div>
 </div>
 
@@ -270,8 +274,7 @@
 	}
 
 	#slideLeft,
-	#slideRight 
-	{
+	#slideRight {
 		all: unset;
 		text-align: center;
 		color: var(--white);

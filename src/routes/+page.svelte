@@ -42,9 +42,7 @@
 		if (allCloudSongs.length > 0) {
 			allCloudSongs.sort((a, b) => b.songId - a.songId);
 			localStorage.setItem("allSongs", JSON.stringify(allCloudSongs));
-			let thisSong = allCloudSongs.find(
-				(s) => s.songId == $currentSongId,
-			);
+			let thisSong = allCloudSongs.find((s) => s.songId == $currentSongId);
 			if (!thisSong) thisSong = allCloudSongs[0];
 			localStorage.setItem("currentSong", JSON.stringify(thisSong));
 		}
@@ -69,10 +67,7 @@
 			if ($workIsUnsaved) {
 				workIsUnsaved.set(false);
 				const data = JSON.stringify($currentSong);
-				if (
-					$lines?.length == 0 ||
-					$rawClipboardContents == EMPTY_SONG_CONTENTS
-				)
+				if ($lines?.length == 0 || $rawClipboardContents == EMPTY_SONG_CONTENTS)
 					return;
 
 				// update current local storage
@@ -80,9 +75,7 @@
 
 				// update all songs locally (memory and storage)
 				allSongs.update((songs) => {
-					const index = songs.findIndex(
-						(s) => s.songId == $currentSongId,
-					);
+					const index = songs.findIndex((s) => s.songId == $currentSongId);
 					songs[index] = $currentSong;
 					localStorage.setItem("allSongs", JSON.stringify(songs));
 					return songs;
@@ -127,9 +120,7 @@
 				<NavBar />
 			</nav>
 			<div id="content">
-				<div
-					id="saved"
-				>
+				<div id="saved">
 					<SavedSongList />
 				</div>
 				<div id="editor">
@@ -137,9 +128,7 @@
 						<LyricEditor />
 					{/key}
 				</div>
-				<div
-					id="settings"
-				>
+				<div id="settings">
 					<Settings />
 				</div>
 			</div>

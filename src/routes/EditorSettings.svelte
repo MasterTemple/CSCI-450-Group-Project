@@ -82,14 +82,14 @@
 					return { text, divider: false };
 				});
 			});
-		} else if(selectedAction == "removeMatch") {
-			removeMatchText
+		} else if (selectedAction == "removeMatch") {
+			removeMatchText;
 			let matchText = removeMatchText;
-			if(removeMatchText.match(/^\/.*\/$/)) {
-				matchText = new RegExp(removeMatchText.match(/^\/(.*)\/$/)[1])
+			if (removeMatchText.match(/^\/.*\/$/)) {
+				matchText = new RegExp(removeMatchText.match(/^\/(.*)\/$/)[1]);
 			}
 			for (let i = 0; i < $lines.length; i++) {
-				$lines[i].text = $lines[i].text.replace(matchText, "")
+				$lines[i].text = $lines[i].text.replace(matchText, "");
 				// if (
 				// 	$lines[i].text.toLowerCase().includes(divideAtMatchWord.toLowerCase())
 				// ) {
@@ -187,21 +187,21 @@
 <!-- <h2>Settings</h2> -->
 
 <!-- <div class="editor-settings-items" id="settings-container"> -->
-	<!-- <label -->
-	<!-- 	>Columns <input -->
-	<!-- 		name="editor-settings" -->
-	<!-- 		type="number" -->
-	<!-- 		min="1" -->
-	<!-- 		max="6" -->
-	<!-- 		id="numberOfColumns" -->
-	<!-- 		bind:value={$numberOfColumns} -->
-	<!-- 	/></label -->
-	<!-- > -->
+<!-- <label -->
+<!-- 	>Columns <input -->
+<!-- 		name="editor-settings" -->
+<!-- 		type="number" -->
+<!-- 		min="1" -->
+<!-- 		max="6" -->
+<!-- 		id="numberOfColumns" -->
+<!-- 		bind:value={$numberOfColumns} -->
+<!-- 	/></label -->
+<!-- > -->
 <!-- </div> -->
 
 <style>
-	#applyChangesButton:hover { 
-		background-color: #01AE35;
+	#applyChangesButton:hover {
+		background-color: #01ae35;
 		color: white;
 	}
 	#applyChangesButton {
@@ -215,7 +215,7 @@
 	}
 
 	#applyChangesButton:active {
-		background-color: #01AE35;
+		background-color: #01ae35;
 		box-shadow: 0 3px #666;
 		transform: translateY(4px);
 	}
@@ -245,7 +245,7 @@
 		-moz-appearance: textfield;
 	}
 
-	#settings-container  {
+	#settings-container {
 		-webkit-touch-callout: none;
 		-webkit-user-select: none;
 		-khtml-user-select: none;
@@ -254,7 +254,7 @@
 		user-select: none;
 	}
 
-	#actions-container  {
+	#actions-container {
 		-webkit-touch-callout: none;
 		-webkit-user-select: none;
 		-khtml-user-select: none;
@@ -262,7 +262,4 @@
 		-ms-user-select: none;
 		user-select: none;
 	}
-	
-
-
 </style>

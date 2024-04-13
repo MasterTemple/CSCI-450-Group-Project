@@ -5,31 +5,30 @@
 		fontSize,
 		includeTitleSlide,
 		textColor,
-        title,
-		author
+		title,
+		author,
 	} from "../stores.js";
 
 	export let fontSizeOverride;
-
 </script>
 
 <!-- style="background-color: {$backgroundColor}; color: {$textColor}; font-family: {$fontFamily}; font-size:{$fontSize}" -->
 <div id="slide">
 	<div id="lyrics">
-			<p
-				style="color: {$textColor}; font-family: {$fontFamily}; font-size: {fontSizeOverride
-					? fontSizeOverride * 1.25
-					: $fontSize * 2}px;"
-			>
-				{$title}
-			</p>
-			<p
-				style="color: {$textColor}; font-family: {$fontFamily}; font-size: {fontSizeOverride
-					? fontSizeOverride
-					: $fontSize}px;"
-			>
-				{$author}
-			</p>
+		<p
+			style="color: {$textColor}; font-family: {$fontFamily}; font-size: {fontSizeOverride
+				? fontSizeOverride * 1.25
+				: $fontSize * 2}px;"
+		>
+			{$title}
+		</p>
+		<p
+			style="color: {$textColor}; font-family: {$fontFamily}; font-size: {fontSizeOverride
+				? fontSizeOverride
+				: $fontSize}px;"
+		>
+			{$author}
+		</p>
 	</div>
 </div>
 
@@ -43,7 +42,7 @@
 		color: var(--text-color);
 		font-size: var(--font-size);
 		font-family: var(--font-family);
-		height: 97%; 
+		height: 97%;
 		max-height: 100px;
 		min-height: 140px;
 		/* width: 8vw; */

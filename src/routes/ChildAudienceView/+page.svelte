@@ -30,15 +30,13 @@
 		if (event.data.msg == "setLyrics") {
 			// console.log({ data: event.data });
 			lyrics.set([...event.data.lyrics]);
-			showTitleSlide.set(false)
-		}
-		else if (event.data.msg == "setTitleSlide") {
+			showTitleSlide.set(false);
+		} else if (event.data.msg == "setTitleSlide") {
 			// console.log({ data: event.data });
 			title.set(event.data.title);
 			author.set(event.data.author);
-			showTitleSlide.set(true)
-		}
-		else if (event.data.msg == "close") {
+			showTitleSlide.set(true);
+		} else if (event.data.msg == "close") {
 			window.close();
 		}
 	};
@@ -63,13 +61,9 @@
 		});
 
 		// load data
-		const allLocalSongs = JSON.parse(
-			localStorage.getItem("allSongs") || "[]",
-		);
+		const allLocalSongs = JSON.parse(localStorage.getItem("allSongs") || "[]");
 		const currentSongId = JSON.parse(localStorage.getItem("currentSongId"));
-		let savedCurrentSong = allLocalSongs.find(
-			(s) => s.songId == currentSongId,
-		);
+		let savedCurrentSong = allLocalSongs.find((s) => s.songId == currentSongId);
 
 		console.log({ savedCurrentSong });
 		if (savedCurrentSong) {
@@ -90,15 +84,16 @@
 		<p>Click anywhere to enter Fullscreen Mode</p>
 	{:else}
 		<div id="lyrics">
-
 			{#if $showTitleSlide}
 				<p
-					style="color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize * 2.5}px;"
+					style="color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize *
+						2.5}px;"
 				>
 					{$title}
 				</p>
 				<p
-					style="color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize * 1.25}px;"
+					style="color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize *
+						1.25}px;"
 				>
 					{$author}
 				</p>

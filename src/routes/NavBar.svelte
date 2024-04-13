@@ -184,8 +184,7 @@
 	>
 		<span
 			class="material-symbols-rounded"
-			style="font-variation-settings: 'FILL' 1; font-size: 35px"
-			>download</span
+			style="font-variation-settings: 'FILL' 1; font-size: 35px">download</span
 		>
 		<h1 id="exportButtonText">Export</h1>
 	</button>
@@ -216,9 +215,7 @@
 					bind:value={$emailAddress}
 				/>
 			</label>
-			<button id="email-submit-button" on:click={sendEmail}
-				>Continue</button
-			>
+			<button id="email-submit-button" on:click={sendEmail}>Continue</button>
 		</div>
 	</div>
 </div>
@@ -279,7 +276,7 @@
 		background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 	}
 	.modal-content {
-		text-align:left;
+		text-align: left;
 		background-color: var(--dark1);
 		color: var(--white);
 		margin: 15% auto; /* 15% from the top and centered */
@@ -287,12 +284,12 @@
 		border: 1px solid #888;
 		width: 40%; /* Could be more or less, depending on screen size */
 	}
-	#logout{
+	#logout {
 		border: none;
 	}
-	 #logout:hover{
+	#logout:hover {
 		background-color: #cdcccc;
-	} 
+	}
 	.close {
 		color: var(--white);
 		float: right;
@@ -384,16 +381,14 @@
 	}
 
 	@media (max-width: 700px) {
-		#exportButtonContainer{
-			width: fit-content;;
+		#exportButtonContainer {
+			width: fit-content;
 			min-width: 80px;
-	
 		}
 
-		#exportButton{
-			width: fit-content;;
+		#exportButton {
+			width: fit-content;
 			min-width: 80px;
-
 		}
 
 		#exportButtonText {
@@ -401,18 +396,16 @@
 			padding-right: 8px;
 		}
 
-		#presentButtonContainer{
+		#presentButtonContainer {
 			width: fit-content;
 			min-width: 80px;
-			right: 180px
-	
+			right: 180px;
 		}
 
-		#presentButton{
+		#presentButton {
 			width: fit-content;
 			min-width: 80px;
 			height: 40px;
-			
 		}
 
 		#presentButtonText {
@@ -420,11 +413,8 @@
 			padding-right: 8px;
 		}
 
-		.material-symbols-rounded{
-			font-size: 10px
+		.material-symbols-rounded {
+			font-size: 10px;
 		}
-
-
 	}
-
 </style>

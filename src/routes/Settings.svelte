@@ -41,13 +41,11 @@
 </div>
 
 <style>
-	
 	#settings-list {
 		font-family: var(--font-family);
 		/* justify-content: center; */
 		height: 100%;
 		width: 100%;
-		
 	}
 
 	#settings-section-select {
@@ -70,7 +68,6 @@
 		background-color: black;
 		border-top-left-radius: 10px;
 		border-bottom-left-radius: 10px;
-
 	}
 
 	#settings-content {

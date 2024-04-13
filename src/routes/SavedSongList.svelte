@@ -15,9 +15,7 @@
 		).toLowerCase();
 		const terms = query.split(/ +/);
 		if (terms.length == 0) return true;
-		return terms.every(
-			(term) => title.includes(term) || author.includes(term),
-		);
+		return terms.every((term) => title.includes(term) || author.includes(term));
 	}
 </script>
 
@@ -34,8 +32,7 @@
 				<SavedSong
 					songTitle={song["title"]}
 					songId={song["songId"]}
-					songAuthor={song["author"] ||
-						UNKNOWN_SONG_AUTHOR_PLACEHOLDER}
+					songAuthor={song["author"] || UNKNOWN_SONG_AUTHOR_PLACEHOLDER}
 					firstSlideLyrics={song["slides"][0]}
 					dateCreated={new Date(parseInt(song["songId"]))}
 				/>
@@ -46,7 +43,7 @@
 
 <style>
 	#saved-song-list {
-		display:flex;
+		display: flex;
 		align-items: center;
 		/* justify-content: center; */
 		flex-direction: column;
@@ -74,7 +71,7 @@
 	}
 
 	#songs {
-		height: 100%;		
+		height: 100%;
 		/* align-content: center; */
 		overflow-x: hidden;
 		overflow-y: scroll;
@@ -85,7 +82,7 @@
 		scrollbar-track-color: red !important;
 	}
 	::-webkit-scrollbar {
-		width:17px;
+		width: 17px;
 	}
 	::-webkit-scrollbar-track {
 		background-color: transparent;
