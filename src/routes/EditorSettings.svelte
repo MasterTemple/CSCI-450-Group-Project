@@ -14,6 +14,7 @@
 		rawClipboardContents,
 		textColor,
 	} from "./stores.js";
+    import { removeAtIndex } from "./functions.js";
 
 	let divideEveryNLinesCount = 4;
 	let divideAtMatchWord = "";
@@ -87,16 +88,10 @@
 			}
 			for (let i = 0; i < $lines.length; i++) {
 				$lines[i].text = $lines[i].text.replace(matchText, "");
-				// if (
-				// 	$lines[i].text.toLowerCase().includes(divideAtMatchWord.toLowerCase())
-				// ) {
-				// 	counter++;
-				// 	$lines[i].divider = true;
-				// 	$lyricsBySlide[counter] = [];
-				// } else {
-				// 	$lines[i].divider = false;
-				// }
-				// $lyricsBySlide[counter].push($lines[i].text);
+				// line becomes empty
+				if($lines[i].text == "") {
+					lines.set(removeAtIndex($lines, i))
+				}
 			}
 		}
 		action.set("")
