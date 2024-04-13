@@ -54,7 +54,7 @@
 		// right arrow: advance slide
 		if (["ArrowRight", " ", "l"].includes(key)) {
 			currentSlideIndex.set(
-				min($lyricsBySlide.length - 1 + $includeTitleSlide, $currentSlideIndex + 1),
+				min($lyricsBySlide.length - 1 + ($includeTitleSlide ? 1 : 0), $currentSlideIndex + 1),
 			);
 		}
 		// left arrow: retreat slide
