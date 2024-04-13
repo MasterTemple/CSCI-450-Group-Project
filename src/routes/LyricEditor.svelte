@@ -515,7 +515,9 @@
 		width:17px;
 	}
 	::-webkit-scrollbar-track {
-		background-color: transparent;
+		background-color: var(--black);
+		border-radius: 6px;
+		margin: 0 1rem;
 	}
 	::-webkit-scrollbar-thumb {
 		background-color: var(--tertiary);
