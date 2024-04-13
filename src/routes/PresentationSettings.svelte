@@ -79,7 +79,7 @@
 				name="editor-settings"
 				type="checkbox"
 				id="titleSlide"
-				bind:value={$includeTitleSlide}
+				bind:checked={$includeTitleSlide}
 			/></label
 		>
 	</div>
