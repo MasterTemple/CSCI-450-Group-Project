@@ -12,9 +12,7 @@
 		textColor,
 		title,
 		author,
-
-        includeTitleSlide
-
+		includeTitleSlide,
 	} from "../stores.js";
 
 	const bc = new BroadcastChannel("lyric_of_lyrics");
@@ -24,10 +22,10 @@
 	currentSlideIndex.subscribe((newIndex) => {
 		// offset cause of title slide
 		if ($currentSlideIndex < 0) return;
-		if($includeTitleSlide) newIndex--;
+		if ($includeTitleSlide) newIndex--;
 		if (!$lyricsBySlide[newIndex]) return;
 		lyrics.set($lyricsBySlide[newIndex]);
-		console.log({$lyricsBySlide, $currentSlideIndex, newIndex})
+		console.log({ $lyricsBySlide, $currentSlideIndex, newIndex });
 	});
 
 	function goFullscreen() {
@@ -44,7 +42,10 @@
 		// right arrow: advance slide
 		if (["ArrowRight", " ", "l"].includes(key)) {
 			currentSlideIndex.set(
-				min($lyricsBySlide.length - 1 + ($includeTitleSlide ? 1 : 0), $currentSlideIndex + 1),
+				min(
+					$lyricsBySlide.length - 1 + ($includeTitleSlide ? 1 : 0),
+					$currentSlideIndex + 1,
+				),
 			);
 		}
 		// left arrow: retreat slide
@@ -81,13 +82,9 @@
 		});
 
 		// load data
-		const allLocalSongs = JSON.parse(
-			localStorage.getItem("allSongs") || "[]",
-		);
+		const allLocalSongs = JSON.parse(localStorage.getItem("allSongs") || "[]");
 		const currentSongId = JSON.parse(localStorage.getItem("currentSongId"));
-		let savedCurrentSong = allLocalSongs.find(
-			(s) => s.songId == currentSongId,
-		);
+		let savedCurrentSong = allLocalSongs.find((s) => s.songId == currentSongId);
 
 		console.log({ savedCurrentSong });
 		if (savedCurrentSong) {
@@ -111,12 +108,14 @@
 	<div id="lyrics">
 		{#if $currentSlideIndex == 0 && $includeTitleSlide}
 			<p
-				style="color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize * 2.5}px;"
+				style="color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize *
+					2.5}px;"
 			>
 				{$title}
 			</p>
 			<p
-				style="color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize * 1.25}px;"
+				style="color: {$textColor}; font-family: {$fontFamily}; font-size: {$fontSize *
+					1.25}px;"
 			>
 				{$author}
 			</p>
@@ -147,7 +146,7 @@
 		align-content: center;
 		text-align: center;
 		vertical-align: middle;
-		padding:10px;
+		padding: 10px;
 	}
 	p {
 		text-align: center;
