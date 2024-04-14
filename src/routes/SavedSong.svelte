@@ -54,9 +54,11 @@
 </script>
 
 <div class="saved-song column">
+
 	<button id="image" on:click={loadSongFromId}>
 		<Slide lyrics={firstSlideLyrics} fontSizeOverride={12} />
 	</button>
+
 	<div class="song-info">
 		<p id="songTitle">{songTitle}</p>
 		<div class="row">
@@ -71,6 +73,7 @@
 			</button>
 		</div>
 	</div>
+
 </div>
 
 <style>
