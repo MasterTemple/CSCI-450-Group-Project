@@ -23,6 +23,7 @@
 	const editLines = writable(true);
 	// let workIsUnsaved = false;
 	let column_ch_width = writable(30);
+	let title_ch_width = writable(30);
 	let scroll_extra_px = writable(0);
 
 	function createNewSong() {
@@ -256,10 +257,7 @@
 <div id="songInfoAndEditMode">
 	<div
 		id="songInformation"
-		style="--title-ch-width: {max(
-			$title?.length || 0,
-			20,
-		)}ch;--author-ch-width: {max($author?.length || 0, 20)}ch;"
+		style="--title-ch-width: {max($title?.length || 0, 20)}ch;--author-ch-width: {max($author?.length || 0, 20)}ch;"
 	>
 		<input
 			type="text"

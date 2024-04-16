@@ -60,16 +60,19 @@
 	</button>
 
 	<div class="song-info">
-		<p id="songTitle">{songTitle}</p>
+		<p id="song-title" class="textborder">{songTitle}</p>
 		<div class="row">
 			<div class="column">
-				<p class="small-info">
-					Author: {songAuthor} <br />
-					Date: {dateCreated.toLocaleDateString()}
+				<p class="small-info textborder">
+					<!-- Author: {songAuthor} <br /> -->
+					<!-- Date: {dateCreated.toLocaleDateString()} -->
+					<span class="author">{songAuthor}</span> <br />
+					{dateCreated.toLocaleDateString()}
 				</p>
 			</div>
 			<button class="delete-icon" on:click={deleteSong}>
-				<img src="./trash.svg" alt="" srcset="" />
+				<!-- putting svg here lets me use css on it -->
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#626569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
 			</button>
 		</div>
 	</div>
@@ -78,24 +81,61 @@
 
 <style>
 	.song-info {
-		width: 100%;
-		margin-top: 20px;
+		width: 95%;
+		padding: 0.2rem;
+		/* margin-top: 20px; */
 		background-color: var(--dark1);
-		border-radius: var(--border-radius);
+		border-radius: calc(var(--border-radius) * 2);
+		border: 2px solid var(--dark2);
+		margin-bottom: 1rem;
 	}
+
+	#song-title {
+		font-size: medium;
+		position: relative;
+		text-align: center;
+		margin: 0;
+	}
+
+	.small-info {
+		font-size: smaller;
+		/* position: relative; */
+		min-width: 20ch;
+		min-height: 100%;
+		/* overflow-x: hidden; */
+		/* text-overflow: ellipsis; */
+		text-align: start;
+		/* min-width: 80%; */
+		align-items: start;
+		margin: 0;
+		margin-left: 0.5rem;
+	}
+
 	.delete-icon {
 		/* height: 4ch; */
-		/* width: 4ch; */
+		/* min-width: 100%; */
 		padding: 0.25rem;
 		margin: 0.25rem;
+		margin-right: 0.5rem;
 		display: flex;
 		justify-content: center;
-		background-color: red;
+		background-color: var(--dark0);
 		border: none;
 		border-radius: 5px;
+		border: 2px solid var(--dark3);
+	}
+	.delete-icon > svg {
+		/* stroke: var(--dark5); */
+		stroke: color-mix(in srgb, var(--dark5) 70%, var(--warning));
+	}
+	.delete-icon:hover {
+		border-color: var(--warning);
+	}
+	.delete-icon:hover > svg {
+		stroke: var(--warning);
 	}
 	p {
-		margin: 0.25rem;
+		/* margin: 0.25rem; */
 		padding: 0;
 	}
 	.column {
@@ -103,15 +143,15 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: start;
+		text-align: start;
+		width: 100%;
 	}
 	.row {
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
-		width: 220px;
 		height: fit-content;
-		min-height: 70px;
 	}
 	.saved-song {
 		display: flex;
@@ -126,25 +166,29 @@
 		width: 100%;
 		position: relative;
 		/* left: 3%; */
-		top: 20px;
+		/* top: 1rem; */
 		border: none;
 		border-radius: 10px;
 		overflow: hidden;
 	}
 
-	#songTitle {
-		font-size: medium;
-		position: relative;
-		left: 3%;
-		top: 10px;
+	div.row > div > p {
+		width: 70%;
 	}
 
-	.small-info {
-		font-size: smaller;
-		/* position: relative; */
-		width: 21ch;
-		text-overflow: ellipsis;
-		/* left: 3%;
-		top: 0px; */
+	.row > button {
+		width: 30%;
+	}
+
+	span.author {
+		font-style: italic;
+	}
+
+	.textborder {
+		padding: 0;
+		background-color: var(--dark0);
+		padding: 0.25rem;
+		border-radius: 10px;
+		border: 2px solid var(--dark3);
 	}
 </style>
