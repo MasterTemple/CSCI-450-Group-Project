@@ -6,7 +6,7 @@
 	--action: #00af35;
 	--info: #a100c2;
 	--accent: #ff5e00;
-	--warning: #ff0000;
+	--warning: #ff4a53;
 
 	--black: #000000;
 	--dark0: #111111;
@@ -16,6 +16,7 @@
 	--dark4: #424549;
 	--dark5: #525559;
 	--dark6: #626569;
+	--dark7: #727579;
 
 	--border-radius: 5px;
 }
