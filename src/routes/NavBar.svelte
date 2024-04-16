@@ -18,10 +18,14 @@
 	} from "./stores";
 
 	const loginCode = writable("");
-	loginCode.subscribe((v) => {
-		let str = $loginCode.toString();
-		if (str.length > 6) {
-			loginCode.set(parseInt(str.slice(0, 6)));
+	const loginCodeValue = writable("");
+	loginCodeValue.subscribe((v) => {
+		let str = v?.toString();
+		if (str?.length > 6) {
+			loginCodeValue.set(parseInt(str.slice(0, 6)));
+		}
+		if(str?.match(/^\d+$/g)) {
+			loginCode.set(str)
 		}
 	});
 
@@ -234,12 +238,12 @@
 					name=""
 					maxlength="6"
 					id="verification-code"
-					bind:value={$loginCode}
+					bind:value={$loginCodeValue}
 				/>
 			</label>
 			<button
 				on:click={verifyLogin}
-				disabled={$loginCode.toString().length != 6}>Continue</button
+				disabled={$loginCode.length != 6}>Continue</button
 			>
 		</div>
 	</div>
