@@ -80,7 +80,7 @@
 
 	<div class="editor-settings-items">
 		<div class="row">
-			<p>Include Title Slide</p>
+			<p on:click={() => includeTitleSlide.set(!$includeTitleSlide)}>Include Title Slide</p>
 			<input
 				name="editor-settings"
 				type="checkbox"
