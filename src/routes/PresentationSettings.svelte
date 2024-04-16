@@ -71,7 +71,7 @@
 
 	<div class="editor-settings-items">
 		<label for="Font Family">Font</label>
-		<select name="editor-settings" id="fontFamily" bind:value={$fontFamily}>
+		<select name="editor-settings" id="font-family" bind:value={$fontFamily}>
 			<option value="Arial" selected>Arial</option>
 			<option value="Times New Roman">Times New Roman</option>
 			<option value="Helvetica">Helvetica</option>
@@ -243,4 +243,16 @@
 	input[type="checkbox"] {
 		width: 2ch;
 	}
+
+	#font-family {
+		all: unset;
+		color: var(--white);
+		background-color: var(--dark0);
+		border-radius: calc(var(--border-radius));
+		border: 2px solid var(--dark2);
+		margin: 0.25rem;
+		padding: 0.25rem;
+		margin-left: 1rem;
+	}
+
 </style>
