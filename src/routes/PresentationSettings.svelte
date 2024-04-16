@@ -156,13 +156,9 @@
 
 	.editor-settings-items {
 		width: 90%;
-		height: 2rem;
+		min-height: 2rem;
 		margin: 0.5vw;
-		padding: 0.5vw;
-		background-color: var(--black);
-		border: 2px solid var(--dark2);
-		border-radius: calc(2 * var(--border-radius));
-		justify-content: center;
+		padding: 0.5vw 0;
 
 		background-color: var(--black);
 		border: 2px solid var(--dark5);
@@ -176,15 +172,12 @@
 	input {
 		color: var(--white);
 		width: 90%;
-		/* max-width: 12vw; */
-		margin: 0.5vw;
-		padding: 0.5vw;
-		/* padding: 0.5rem; */
 		background-color: var(--dark0);
 		border: 2px solid var(--dark2);
 		border-radius: calc(2 * var(--border-radius));
 		justify-content: center;
 	}
+
 	input[type="color"] {
 		all: unset;
 		height: 2rem;
@@ -194,6 +187,7 @@
 		justify-content: center;
 		align-items: center;
 		padding: 0.25rem;
+		margin-left: 0.5rem;
 		background-color: var(--dark0);
 		border: 2px solid var(--dark2);
 		border-radius: calc(2 * var(--border-radius));
@@ -203,8 +197,8 @@
 	.info-hint {
 		font-size: 12px;
 		padding: 0;
-		padding-top: 0.25rem;
 		margin: 0;
+		margin-top: 0.5rem;
 	}
 
 	#apply-changes-button {
