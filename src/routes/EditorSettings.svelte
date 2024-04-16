@@ -236,7 +236,7 @@
 	}
 
 	* {
-		font-size: medium;
+		font-size: large;
 	}
 
 	#actions-container > button {
