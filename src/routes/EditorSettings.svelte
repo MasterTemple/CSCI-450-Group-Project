@@ -43,21 +43,8 @@
 					counter++;
 					$lines[i].divider = true;
 					$lyricsBySlide[counter] = [];
-				} else {
-					$lines[i].divider = false;
 				}
 				$lyricsBySlide[counter].push($lines[i].text);
-			}
-		} else if ($action == "autodetectCheck") {
-			var counter = 0;
-			$lyricsBySlide = [[]];
-			for (i = 0; i < $lines.length; i++) {
-				if ($lines[i].divider) {
-					counter++;
-					$lyricsBySlide[counter] = [];
-				} else {
-					$lyricsBySlide[counter].push($lines[i].text);
-				}
 			}
 		} else if ($action == "divideAtMatchCheck") {
 			counter = 0;
@@ -65,9 +52,6 @@
 				return; //TODO: Implement error
 			}
 			let matchText = new RegExp(divideAtMatchWord, "gim");
-			// if (divideAtMatchWord.match(/^\/.*\/$/)) {
-			// 	matchText = new RegExp(divideAtMatchWord.match(/^\/(.*)\/$/)[1], "gim");
-			// }
 			for (let i = 0; i < $lines.length; i++) {
 				if (
 					$lines[i].text.match(matchText)
@@ -75,8 +59,6 @@
 					counter++;
 					$lines[i].divider = true;
 					$lyricsBySlide[counter] = [];
-				} else {
-					$lines[i].divider = false;
 				}
 				$lyricsBySlide[counter].push($lines[i].text);
 			}
@@ -88,10 +70,6 @@
 			});
 		} else if ($action == "removeMatch") {
 			let matchText = new RegExp(removeMatchText, "gim");
-			// let matchText = removeMatchText;
-			// if (removeMatchText.match(/^\/.*\/$/)) {
-			// 	matchText = new RegExp(removeMatchText.match(/^\/(.*)\/$/)[1], "gim");
-			// }
 			for (let i = 0; i < $lines.length; i++) {
 				$lines[i].text = $lines[i].text.replace(matchText, "");
 				// line becomes empty
