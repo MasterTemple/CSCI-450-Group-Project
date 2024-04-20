@@ -10,6 +10,7 @@
 		setCurrrentSong,
 		workIsUnsaved,
 	} from "./stores";
+	export let song;
 	export let songTitle;
 	export let songId;
 	export let songAuthor;

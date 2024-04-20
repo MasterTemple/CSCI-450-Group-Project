@@ -199,8 +199,12 @@
 			.replace(/\[[^\]]+\]/g, "")
 			// remove indexes in hymns
 			.replace(/^\d\D/g, "")
+			// // remove leading whitespace
+			// .replace(/^\s+/g, "")
+			// // remove trailing whitespace
+			// .replace(/\s+$/g, "")
 			// remove annotations
-			.replace(/^(Refrain|Verse|Chorus):?/g, "")
+			// .replace(/^(Refrain|Verse|Chorus):?/g, "")
 			.trim()
 			.split(/\n/)
 			// remove leading and trailing whitespace
