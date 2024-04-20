@@ -15,6 +15,7 @@
 		emailAddress,
 		lyricsBySlide,
 		title,
+		fontFamily,
 	} from "./stores";
 
 	const loginCode = writable("");
@@ -24,8 +25,8 @@
 		if (str?.length > 6) {
 			loginCodeValue.set(parseInt(str.slice(0, 6)));
 		}
-		if(str?.match(/^\d+$/g)) {
-			loginCode.set(str)
+		if (str?.match(/^\d+$/g)) {
+			loginCode.set(str);
 		}
 	});
 
@@ -57,7 +58,7 @@
 		);
 		console.log({ res });
 		localStorage.setItem("emailAddress", $emailAddress);
-		document.getElementById("email-submit-button").disabled = true;
+		// document.getElementById("email-submit-button").disabled = true;
 	}
 
 	async function verifyLogin() {
@@ -189,7 +190,8 @@
 		>
 			<span
 				class="material-symbols-rounded"
-				style="font-variation-settings: 'FILL' 1; font-size: 35px">download</span
+				style="font-variation-settings: 'FILL' 1; font-size: 35px"
+				>download</span
 			>
 			<h1 id="exportButtonText">Export</h1>
 		</button>
@@ -210,9 +212,10 @@
 <div id="enter-email-popup" class="modal">
 	<div class="modal-content">
 		<button on:click={closeEmailModal} class="close">&times;</button>
+		<!-- <div class="modal-center"> -->
 		<div class="column">
 			<h1>Login/Signup</h1>
-			<label for="">
+			<div class="row">
 				<p>Enter email address:</p>
 				<input
 					type="email"
@@ -220,8 +223,9 @@
 					id="email-address"
 					bind:value={$emailAddress}
 				/>
-			</label>
+			</div>
 			<button id="email-submit-button" on:click={sendEmail}>Continue</button>
+			<!-- </div> -->
 		</div>
 	</div>
 </div>
@@ -241,9 +245,8 @@
 					bind:value={$loginCodeValue}
 				/>
 			</label>
-			<button
-				on:click={verifyLogin}
-				disabled={$loginCode.length != 6}>Continue</button
+			<button on:click={verifyLogin} disabled={$loginCode.length != 6}
+				>Continue</button
 			>
 		</div>
 	</div>
@@ -264,10 +267,16 @@
 </div>
 
 <style>
+	.row {
+		display: flex;
+		flex-direction: row;
+	}
 	.column {
-		/* display: flex;
-		flex-direction: column; */
-		/* float:left; */
+		display: flex;
+		flex-direction: column;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
 	}
 	.modal {
 		display: none; /* Hidden by default */
@@ -279,23 +288,81 @@
 		height: 100%; /* Full height */
 		overflow: auto; /* Enable scroll if needed */
 		background-color: rgb(0, 0, 0); /* Fallback color */
-		background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+		background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
+		font-family: var(--font-family);
+		text-align: center;
+		justify-content: center;
+		align-items: center;
 	}
 	.modal-content {
-		text-align: left;
-		background-color: var(--dark1);
+		background-color: var(--dark0);
 		color: var(--white);
 		margin: 15% auto; /* 15% from the top and centered */
 		padding: 20px;
-		border: 1px solid #888;
-		width: 40%; /* Could be more or less, depending on screen size */
+		border: 2px solid var(--dark0);
+		width: 40vw; /* Could be more or less, depending on screen size */
+		height: 40vh;
+		border-radius: 1rem;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
 	}
-	#logout {
+
+	.modal-content > div > h1 {
+		margin-top: 8rem;
+		font-size: xx-large;
+	}
+
+
+	.modal-content input {
+		all: unset;
+		color: var(--white);
+		background-color: var(--black);
+		border-radius: calc(2 * var(--border-radius));
+		border: 2px solid var(--dark2);
+		margin: 0.5rem;
+		padding: 0.5rem;
+		margin-left: 0.5rem;
+		min-width: 20ch;
+	}
+
+
+	.modal-content div button {
 		border: none;
+		border-radius: 10px;
+		height: 3vh;
+		width: 18ch;
+		color: var(--white);
+		background-color: var(--dark1);
+		border: 2px solid var(--dark5);
+		border-radius: calc(2 * var(--border-radius));
+		margin: 1rem;
+		padding: 1rem;
+		display: flex;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
 	}
-	#logout:hover {
-		background-color: #cdcccc;
+
+	.modal-content div button:hover {
+		border-color: var(--primary);
+		background-color: var(--black);
 	}
+
+	.modal-content div button:active {
+		background-color: var(--primary);
+	}
+
+	.modal-content div button:disabled {
+		color: var(--dark4)
+	}
+
+	.modal-center {
+		width: 100%;
+		height: 100%;
+		align-content: center;
+	}
+
 	.close {
 		color: var(--white);
 		float: right;
@@ -305,7 +372,7 @@
 		border: none;
 	}
 	.close:hover {
-		color: #cdcccc;
+		color: var(--primary);
 	}
 	#logoContainer {
 		position: fixed;
@@ -395,7 +462,6 @@
 			padding-right: 8px;
 		}
 
-
 		/* #presentButtonContainer { */
 		/* 	width: fit-content; */
 		/* 	min-width: 80px; */
@@ -417,4 +483,19 @@
 			font-size: 10px;
 		}
 	}
+
+	/* https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp */
+
+	/* Chrome, Safari, Edge, Opera */
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	/* Firefox */
+	input[type="number"] {
+		-moz-appearance: textfield;
+	}
+
 </style>
