@@ -41,7 +41,14 @@
 		}
 	};
 
-	const RESERVED_KEYS = ["ArrowRight", "ArrowLeft", "Escape"];
+	const RESERVED_KEYS = [
+		"ArrowRight",
+		"ArrowLeft",
+		"Escape",
+		" ",
+		"h",
+		"l",
+	];
 	// send keys to presenter view
 	onMount(() => {
 		document.addEventListener("mousedown", (event) => {
