@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from "svelte";
 	import Slide from "./PresenterView/Slides.svelte";
     import { EMPTY_SONG_AUTHOR, EMPTY_SONG_TITLE } from "./constants";
 	import { req } from "./db.js";
@@ -11,6 +12,7 @@
 		setCurrrentSong,
 		workIsUnsaved,
 	} from "./stores";
+	export let song;
 	export let songTitle;
 	export let songId;
 	export let songAuthor;
@@ -20,16 +22,30 @@
 	// let title = thisSong.title;
 	// let date = new Date(parseInt(thisSong["songId"])).toDateString();
 
-	async function deleteSong() {
+	async function deleteSong(songId) {
 		// delete locally for update and so we dont save it again on server
 		deleteSongFromLocalList(songId);
 		// delete from server
 		let data = {};
 		data["songId"] = songId;
 		const res = await req("delete", data, $authToken);
+		console.log({
+			song,
+			res,
+			songId,
+			currentSong_songId: $currentSong.songId
+		})
+		if(songId == $currentSong.songId) {
+			console.log("Delete current song!")
+			// setTimeout(() => {
+			// 	setCurrrentSong($allSongs[0])
+			// }, 500)
+			loadSongFromId($allSongs[0].songId)
+		}
 	}
 
-	async function loadSongFromId() {
+	async function loadSongFromId(songId) {
+			console.log(`Switching to ${songId}`)
 		let newSong = $allSongs.find((s) => s["songId"] == songId);
 		console.log({ newSong });
 		// save current song
@@ -52,11 +68,14 @@
 		currentSongId.set(songId);
 		setCurrrentSong(newSong);
 	}
+	onMount(() => {
+			console.log({songTitle, songId})
+		})
 </script>
 
 <div class="saved-song column">
 
-	<button id="image" on:click={loadSongFromId}>
+	<button id="image" on:click={() => loadSongFromId(songId)}>
 		<Slide lyrics={firstSlideLyrics} fontSizeOverride={12} />
 	</button>
 
@@ -71,7 +90,7 @@
 					{dateCreated.toLocaleDateString()}
 				</p>
 			</div>
-			<button class="delete-icon" on:click={deleteSong}>
+			<button class="delete-icon" on:click={() => deleteSong(songId)}>
 				<!-- putting svg here lets me use css on it -->
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#626569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
 			</button>

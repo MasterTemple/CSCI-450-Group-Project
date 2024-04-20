@@ -33,6 +33,7 @@
 		{#each $allSongs.sort((a, b) => b.songId - a.songId) as song}
 			{#if isSearchMatch($searchValue, song)}
 				<SavedSong
+					song={song}
 					songTitle={song["title"]}
 					songId={song["songId"]}
 					songAuthor={song["author"] || EMPTY_SONG_AUTHOR}
