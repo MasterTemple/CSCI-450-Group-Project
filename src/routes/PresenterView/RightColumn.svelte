@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from "svelte";
-	import { backgroundColor, currentSlideIndex, lyricsBySlide } from "../stores";
+	import { backgroundColor, currentSlideIndex, lyricsBySlide, includeTitleSlide } from "../stores";
 	import SlidePreview from "./SlidePreview.svelte";
 	import Slides from "./Slides.svelte";
 
@@ -17,7 +17,7 @@
 <div id="previewStack">
 	<div id="nextSlidePreview">
 		<Slides
-			lyrics={$lyricsBySlide?.[$currentSlideIndex + 1]}
+			lyrics={$lyricsBySlide?.[$currentSlideIndex + 1 - ($includeTitleSlide ? 1 : 0)]}
 			fontSizeOverride={16}
 		/>
 	</div>
