@@ -78,9 +78,9 @@
 		</select>
 	</div>
 
-	<div class="editor-settings-items">
+	<div class="editor-settings-items" on:click={() => includeTitleSlide.set(!$includeTitleSlide)}>
 		<div class="row">
-			<p on:click={() => includeTitleSlide.set(!$includeTitleSlide)}>Include Title Slide</p>
+			<p>Include Title Slide</p>
 			<input
 				name="editor-settings"
 				type="checkbox"
