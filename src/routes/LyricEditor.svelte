@@ -29,6 +29,7 @@
 	function createNewSong() {
 		// new id
 		const newId = new Date().getTime().toString();
+		console.log(`newId: ${newId}`)
 		songId.set(newId);
 		currentSongId.set(newId);
 		// clear everything

@@ -77,7 +77,8 @@
 				allSongs.update((songs) => {
 					const index = songs.findIndex((s) => s.songId == $currentSongId);
 					if (index == -1) {
-						songs.push($currentSong);
+						// songs.push($currentSong);
+						songs = [$currentSong, ...songs]
 					}
 					else {
 						songs[index] = $currentSong;
