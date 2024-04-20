@@ -15,6 +15,7 @@
 	import Slides from "./Slides.svelte";
 	import SwitchSong from "./SwitchSong.svelte";
 	import TitleSlide from "./TitleSlide.svelte";
+    import { EMPTY_SONG_AUTHOR, EMPTY_SONG_TITLE } from "../constants.js";
 
 	export let lyrics;
 	const searchValue = writable("");
@@ -97,10 +98,10 @@
 >
 	<div id="songInfo">
 		<div id="songTitle">
-			<p>{$title}</p>
+			<p>{$title || EMPTY_SONG_TITLE}</p>
 		</div>
 		<div id="songArtist">
-			<p>{$author || "No Author"}</p>
+			<p>{$author || EMPTY_SONG_AUTHOR}</p>
 		</div>
 	</div>
 

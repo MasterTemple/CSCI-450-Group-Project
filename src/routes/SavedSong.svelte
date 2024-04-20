@@ -1,5 +1,6 @@
 <script>
 	import Slide from "./PresenterView/Slides.svelte";
+    import { EMPTY_SONG_AUTHOR, EMPTY_SONG_TITLE } from "./constants";
 	import { req } from "./db.js";
 	import {
 		allSongs,
@@ -60,13 +61,13 @@
 	</button>
 
 	<div class="song-info">
-		<p id="song-title" class="textborder">{songTitle}</p>
+		<p id="song-title" class="textborder">{songTitle || EMPTY_SONG_TITLE}</p>
 		<div class="row">
 			<div class="column">
 				<p class="small-info textborder">
 					<!-- Author: {songAuthor} <br /> -->
 					<!-- Date: {dateCreated.toLocaleDateString()} -->
-					<span class="author">{songAuthor}</span> <br />
+					<span class="author">{songAuthor || EMPTY_SONG_AUTHOR}</span> <br />
 					{dateCreated.toLocaleDateString()}
 				</p>
 			</div>

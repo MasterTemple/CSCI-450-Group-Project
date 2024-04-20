@@ -2,21 +2,24 @@
 	import { writable } from "svelte/store";
 	import SavedSong from "./SavedSong.svelte";
 	import { allSongs, color, savedSongsIsOpen } from "./stores";
+	import { onMount } from "svelte";
+	import { EMPTY_SONG_AUTHOR, EMPTY_SONG_TITLE } from "./constants";
 
-	let icons = [">", "<"];
-	const UNKNOWN_SONG_AUTHOR_PLACEHOLDER = "Unknown";
-	var icon = 1;
 	const searchValue = writable("");
 	function isSearchMatch(query, song) {
 		query = query.toLowerCase();
-		const title = song["title"].toLowerCase();
+		const title = (song["title"] || EMPTY_SONG_TITLE).toLowerCase();
 		const author = (
-			song["author"] || UNKNOWN_SONG_AUTHOR_PLACEHOLDER
+			song["author"] || EMPTY_SONG_AUTHOR
 		).toLowerCase();
 		const terms = query.split(/ +/);
 		if (terms.length == 0) return true;
 		return terms.every((term) => title.includes(term) || author.includes(term));
 	}
+	allSongs.subscribe((newAllSongs) => {
+		console.log({newAllSongs})
+	})
+
 </script>
 
 <div id="saved-song-list">
@@ -27,12 +30,12 @@
 		bind:value={$searchValue}
 	/>
 	<div id="songs">
-		{#each $allSongs as song}
+		{#each $allSongs.sort((a, b) => b.songId - a.songId) as song}
 			{#if isSearchMatch($searchValue, song)}
 				<SavedSong
 					songTitle={song["title"]}
 					songId={song["songId"]}
-					songAuthor={song["author"] || UNKNOWN_SONG_AUTHOR_PLACEHOLDER}
+					songAuthor={song["author"] || EMPTY_SONG_AUTHOR}
 					firstSlideLyrics={song["slides"][0]}
 					dateCreated={new Date(parseInt(song["songId"]))}
 				/>

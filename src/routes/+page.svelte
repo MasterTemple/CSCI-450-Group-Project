@@ -76,7 +76,13 @@
 				// update all songs locally (memory and storage)
 				allSongs.update((songs) => {
 					const index = songs.findIndex((s) => s.songId == $currentSongId);
-					songs[index] = $currentSong;
+					if (index == -1) {
+						songs.push($currentSong);
+					}
+					else {
+						songs[index] = $currentSong;
+					}
+
 					localStorage.setItem("allSongs", JSON.stringify(songs));
 					return songs;
 				});

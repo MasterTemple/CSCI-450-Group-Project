@@ -93,3 +93,6 @@ export const EMPTY_SONG_CONTENTS =
 	`Copy Lyrics to Your Clipboard
 Press CTRL + V to Paste
 Begin editing!`;
+
+export const EMPTY_SONG_TITLE = "No Title";
+export const EMPTY_SONG_AUTHOR = "No Author";
