@@ -51,7 +51,7 @@
 			if (divideAtMatchWord == "") {
 				return; //TODO: Implement error
 			}
-			let matchText = new RegExp(divideAtMatchWord, "gim");
+			let matchText = new RegExp(`(${divideAtMatchWord})`, "gim");
 			for (let i = 0; i < $lines.length; i++) {
 				if (
 					$lines[i].text.match(matchText)
@@ -69,7 +69,7 @@
 				});
 			});
 		} else if ($action == "removeMatch") {
-			let matchText = new RegExp(removeMatchText, "gim");
+			let matchText = new RegExp(`(${removeMatchText})`, "gim");
 			for (let i = 0; i < $lines.length; i++) {
 				$lines[i].text = $lines[i].text.replace(matchText, "");
 				// line becomes empty
