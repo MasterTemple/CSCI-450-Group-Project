@@ -199,7 +199,7 @@
 			// remove something like [Refrain]
 			.replace(/\[[^\]]+\]/g, "")
 			// remove indexes in hymns
-			.replace(/^\d\D/g, "")
+			.replace(/^\d /gm, "")
 			// // remove leading whitespace
 			// .replace(/^\s+/g, "")
 			// // remove trailing whitespace
