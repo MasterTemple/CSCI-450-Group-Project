@@ -295,7 +295,7 @@
 	id="lyric-region"
 	style="--column-ch-width: {$column_ch_width}ch; --scroll-extra-px: {$scroll_extra_px}px;"
 >
-	{#each { length: Math.floor($lines.length / NUMBER_OF_LINES_PER_COLUMN + 0.5) } as _, i}
+	{#each { length: Math.floor($lines.length / NUMBER_OF_LINES_PER_COLUMN + 0.9 ) } as _, i}
 		<div
 			id="column-{i}"
 			class="lyric-column"
